@@ -1,0 +1,206 @@
+{
+	{
+		"state": "AK",
+		"score": 0.46
+	},
+	{
+		"state": "AL",
+		"score": 0.66
+	},
+	{
+		"state": "AR",
+		"score": 0.45
+	},
+	{
+		"state": "AZ",
+		"score": 0.55
+	},
+	{
+		"state": "CA",
+		"score": 0.5
+	},
+	{
+		"state": "CO",
+		"score": 0.46
+	},
+	{
+		"state": "CT",
+		"score": 0.59
+	},
+	{
+		"state": "DC",
+		"score": 0.65
+	},
+	{
+		"state": "DE",
+		"score": 0.58
+	},
+	{
+		"state": "FL",
+		"score": 0.56
+	},
+	{
+		"state": "GA",
+		"score": 0.74
+	},
+	{
+		"state": "HI",
+		"score": 0.15
+	},
+	{
+		"state": "IA",
+		"score": 0.5
+	},
+	{
+		"state": "ID",
+		"score": 0.32
+	},
+	{
+		"state": "IL",
+		"score": 0.63
+	},
+	{
+		"state": "IN",
+		"score": 0.49
+	},
+	{
+		"state": "KS",
+		"score": 0.4
+	},
+	{
+		"state": "KY",
+		"score": 0.75
+	},
+	{
+		"state": "LA",
+		"score": 0.7
+	},
+	{
+		"state": "MA",
+		"score": 0.52
+	},
+	{
+		"state": "MD",
+		"score": 0.63
+	},
+	{
+		"state": "ME",
+		"score": 1.02
+	},
+	{
+		"state": "MI",
+		"score": 0.37
+	},
+	{
+		"state": "MN",
+		"score": 0.41
+	},
+	{
+		"state": "MO",
+		"score": 0.46
+	},
+	{
+		"state": "MS",
+		"score": 0.72
+	},
+	{
+		"state": "MT",
+		"score": 0.45
+	},
+	{
+		"state": "NC",
+		"score": 0.47
+	},
+	{
+		"state": "ND",
+		"score": 0.28
+	},
+	{
+		"state": "NE",
+		"score": 0.61
+	},
+	{
+		"state": "NH",
+		"score": 0.56
+	},
+	{
+		"state": "NJ",
+		"score": 0.72
+	},
+	{
+		"state": "NM",
+		"score": 0.5
+	},
+	{
+		"state": "NV",
+		"score": 0.46
+	},
+	{
+		"state": "NY",
+		"score": 0.67
+	},
+	{
+		"state": "OH",
+		"score": 0.45
+	},
+	{
+		"state": "OK",
+		"score": 0.54
+	},
+	{
+		"state": "OR",
+		"score": 0.37
+	},
+	{
+		"state": "PA",
+		"score": 0.48
+	},
+	{
+		"state": "RI",
+		"score": 0.78
+	},
+	{
+		"state": "SC",
+		"score": 0.73
+	},
+	{
+		"state": "SD",
+		"score": 0.33
+	},
+	{
+		"state": "TN",
+		"score": 0.64
+	},
+	{
+		"state": "TX",
+		"score": 0.53
+	},
+	{
+		"state": "UT",
+		"score": 0.68
+	},
+	{
+		"state": "VA",
+		"score": 0.58
+	},
+	{
+		"state": "VT",
+		"score": 0.13
+	},
+	{
+		"state": "WA",
+		"score": 0.49
+	},
+	{
+		"state": "WI",
+		"score": 0.57
+	},
+	{
+		"state": "WV",
+		"score": 0.56
+	},
+	{
+		"state": "WY",
+		"score": 0.24
+	}
+}

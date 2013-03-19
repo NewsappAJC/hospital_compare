@@ -1,0 +1,13 @@
+rect:hover {
+	fill: lightblue;
+}
+div#new-measures {
+	backgound: lightgrey;
+}
+
+.x-axis path,
+.x-axis line {
+	fill: none;
+	stroke: lightgrey;
+	shape-rendering: crispEdges;
+}
