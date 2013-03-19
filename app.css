@@ -1,4 +1,4 @@
-rect:hover {
+rect.bar:hover {
 	fill: lightblue;
 }
 div#new-measures {

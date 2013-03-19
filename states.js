@@ -17,7 +17,7 @@ $(function() {
 
 	function drawBarChart(dataset, tag, headline) {
 		var w = 850, h = 175, barpad = 3, toppad = 10;
-		var max = d3.max(dataset, function(d) {return parseFloat(d.score);}),
+		var max = 2.5,
 		    min = 0;
 		var scale = d3.scale.linear()
 			.domain([0,max])
@@ -39,6 +39,7 @@ $(function() {
 				.attr('height', function(d){
 					return scale(parseFloat(d.score)) - toppad;
 				})
+				.attr('class', 'bar')
 				.attr('fill', function(d){return d.state === 'GA' ? 'darkblue' : 'lightgrey'})
 			.append('title')
 				.text( function(d, i) {

@@ -6,8 +6,8 @@ $(function() {
 
 	function drawDotChart(dataset) {
 		var w = 750,
-		    h = 2000,
-		    pad = 20
+		    h = 400,
+		    pad = 50
 		    radius = 6;
 		var max = Math.max( 
 			d3.max(dataset, function(d) {return parseFloat(d.clabsi_ratio);}),
@@ -17,12 +17,24 @@ $(function() {
 		var min = 0;
 		var scale = d3.scale.linear()
 			.domain([0,Math.ceil(max)])
-			.range([310, w-10]);
+			.range([225, w-10]);
 
 		var svg = d3.select('#hospitals')
 			.append('svg')
 				.attr('width', w)
 				.attr('height', h);
+
+		// Horizontal grib bars
+		var hgrid = svg.selectAll('rect')
+			.data(dataset)
+			.enter().append('rect')
+			.attr('x', 225)
+			.attr('y', function(d,i){
+					return i * 20 + pad - 8;
+				})
+			.attr('fill', '#F8F8F8')
+			.attr('width', scale(Math.ceil(max)))
+			.attr('height', 16)
 
 		// CLABSI symbols
 		svg.selectAll('path')
@@ -50,7 +62,8 @@ $(function() {
 						+ (scale(d.cauti_ratio)+5) + ','
 					  + (i * 20 + pad) + ')';})
 			.attr('d', d3.svg.symbol().type('square'))
-			.attr('fill','lightgrey')
+			.attr('fill','lightblue')
+			//.attr('stroke', 'blue')
 		.append('title')
 			.text(function(d) {
 				return "CAUTI score: " + d.cauti_ratio;
@@ -67,7 +80,8 @@ $(function() {
 						+ (scale(d.ssicolon_ratio)+5) + ','
 					  + (i * 20 + pad) + ')';})
 			.attr('d', d3.svg.symbol().type('triangle-up'))
-			.attr('fill','lightgrey')
+			.attr('fill','lightblue')
+			//.attr('stroke', 'blue')
 		.append('title')
 			.text(function(d) {
 				return "SSI:Colon score: " + d.ssicolon_ratio;
@@ -92,7 +106,7 @@ $(function() {
 
 		svg.append('g')
 			.attr('class', 'x-axis')
-			.attr('transform', 'translate(0,' + (dataset.length * 20 + 10) + ')')
+			.attr('transform', 'translate(0,' + (dataset.length * 20 + pad) + ')')
 			.call(xAxis);
 	}
 });
