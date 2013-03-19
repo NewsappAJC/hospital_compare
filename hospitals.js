@@ -24,57 +24,54 @@ $(function() {
 				.attr('width', w)
 				.attr('height', h);
 
-		// CLABSI dots
-		var circle = svg.selectAll('circle')
+		// CLABSI symbols
+		svg.selectAll('path')
 			.data(dataset)
-			.enter()
-			.append('circle')
-				.attr('cx', function(d){ return 5 + scale(d.clabsi_ratio)})
-				.attr('cy', function(d,i){
-					return i * 20 + pad;
-				})
-				.attr('r', radius)
-				.attr('fill', 'blue')
+			.enter().append('svg:path')
+				.attr('transform', function(d,i){ return 'translate('
+							+ (scale(d.clabsi_ratio)+5) + ','
+						  + (i * 20 + pad) + ')';})
+				.attr('d', d3.svg.symbol().type('circle'))
+				.attr('fill','blue')
 			.append('title')
 				.text(function(d) {
 					return "CLABSI score: " + d.clabsi_ratio;
 				});
 
-		// CAUTI dots
+
+		// CAUTI symbols
 		var cauti = svg.selectAll('g')
 			.data(dataset)
 			.enter()
 			.append('g')
 				.attr('class', 'cauti')
-		cauti.append('circle')
-			.attr('cx', function(d){ return 5 + scale(d.cauti_ratio)})
-			.attr('cy', function(d,i){
-					return i * 20 + pad;
-			})
-			.attr('r', radius)
-			.attr('fill', 'lightgrey')
-			.append('title')
-				.text(function(d) {
-					return "CAUTI score: " + d.cauti_ratio;
-				});
+		cauti.append('svg:path')
+			.attr('transform', function(d,i){ return 'translate('
+						+ (scale(d.cauti_ratio)+5) + ','
+					  + (i * 20 + pad) + ')';})
+			.attr('d', d3.svg.symbol().type('square'))
+			.attr('fill','lightgrey')
+		.append('title')
+			.text(function(d) {
+				return "CAUTI score: " + d.cauti_ratio;
+			});
 
-		// SSI:Colon dots
+		// SSI:Colon symbols
 		var ssicol = svg.selectAll('g.sicol')
 			.data(dataset)
 			.enter()
 			.append('svg:g')
 				.attr('class', 'ssicol');
-		cauti.append('circle')
-				.attr('cx', function(d){ return 5 + scale(d.ssicolon_ratio)})
-				.attr('cy', function(d,i){
-					return i * 20 + pad;
-				})
-				.attr('r', radius)
-				.attr('fill', 'lightgrey')
-			.append('title')
-				.text(function(d) {
-					return "SSI:Colon score: " + d.ssicolon_ratio;
-				});
+		ssicol.append('svg:path')
+			.attr('transform', function(d,i){ return 'translate('
+						+ (scale(d.ssicolon_ratio)+5) + ','
+					  + (i * 20 + pad) + ')';})
+			.attr('d', d3.svg.symbol().type('triangle-up'))
+			.attr('fill','lightgrey')
+		.append('title')
+			.text(function(d) {
+				return "SSI:Colon score: " + d.ssicolon_ratio;
+			});
 
 		// Hospital names
 		svg.selectAll('text')
