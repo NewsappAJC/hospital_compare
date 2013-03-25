@@ -16,7 +16,7 @@ $(function() {
 	});
 
 	function drawBarChart(dataset, tag, headline) {
-		var w = 850, h = 175, barpad = 3, toppad = 10;
+		var w = 850, h = 250, barpad = 3, toppad = 10;
 		var max = 2.5,
 		    min = 0;
 		var scale = d3.scale.linear()
@@ -62,7 +62,7 @@ $(function() {
 		svg.append('text')
 			.text(headline)
 			.attr('x', 5)
-			.attr('y', 30)
+			.attr('y', 150)
 			.attr('fill','black')
 			.attr('font-size', '20px');
 	}
