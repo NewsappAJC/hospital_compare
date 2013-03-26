@@ -1,12 +1,13 @@
 $(function() {
 	var config = {
 		w: 650,
-    h: 85,
-    leftMargin: 50,
+    h: 100,
+    leftMargin: 10,
     rightMargin: 50,
     topMargin: 45,
     red: '#FF0000',
-    green: '#04B404',
+    green: '#088A08',
+    lightgreen: '#CEF6CE',
     grey: '#A4A4A4',
     id: /\?id=(\d+)$/.exec(window.location.href)[1]
 	};
@@ -14,7 +15,7 @@ $(function() {
 	var legandSvg = d3.select('#legand')
 		.append('svg')
 			.attr('width', config.w)
-			.attr('height', 30);
+			.attr('height', 50);
 
 	legand = legandSvg.append('g');
 
@@ -22,29 +23,38 @@ $(function() {
 			.attr('x', 5)
 			.attr('y', 25);
 	legand.append('line')
-		.attr('x1', 109)
+		.attr('x1', 108)
 		.attr('y1', 10)
-		.attr('x2', 109)
+		.attr('x2', 108)
 		.attr('y2', 30)
 		.attr('stroke', config.grey)
 		.attr('stroke-width', 5);
-	legand.append('text').text('Observed cases, less than predicted:')
+	legand.append('text').text('Predicted error margin:')
 			.attr('x', 125)
 			.attr('y', 25);
+	legand.append('rect')
+		.attr('x', 260)
+		.attr('y', 10)
+		.attr('width', 20)
+		.attr('height', 20)
+		.attr('fill', config.lightgreen);
+	legand.append('text').text('Actual, fewer than predicted:')
+			.attr('x', 295)
+			.attr('y', 25);
 	legand.append('line')
-		.attr('x1', 350)
+		.attr('x1', 466)
 		.attr('y1', 10)
-		.attr('x2', 350)
+		.attr('x2', 466)
 		.attr('y2', 30)
 		.attr('stroke', config.green)
 		.attr('stroke-width', 5);
-	legand.append('text').text('Observed cases, greater than predicted:')
-			.attr('x', 370)
+	legand.append('text').text('more than predicted:')
+			.attr('x', 485)
 			.attr('y', 25);
 	legand.append('line')
-		.attr('x1', 610)
+		.attr('x1', 608)
 		.attr('y1', 10)
-		.attr('x2', 610)
+		.attr('x2', 608)
 		.attr('y2', 30)
 		.attr('stroke', config.red)
 		.attr('stroke-width', 5);
@@ -57,28 +67,39 @@ $(function() {
 	});
 
 	function drawDetailChart(data, source, config) {
-		var provider = _.findWhere(data, {provider_id: config.id}),
+		var provider  = _.findWhere(data, {provider_id: config.id}),
 		    observed  = provider[source + '_observed'],
 		    predicted = provider[source + '_predicted']
-		    ratio     = provider[source + '_ratio'];
+		    ratio     = provider[source + '_ratio'],
+		    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
+		    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0;
 
 		var max = d3.max( data, function(d){return parseInt(d[source + '_observed'])}),
 		    scale = d3.scale.linear()
 			  	.domain([0,max + 1])
 			  	.range([config.leftMargin, config.w - config.rightMargin]);
 
-		var svg = d3.select('#' + source.toLowerCase() )
+		var svg = d3.select('#' + source.toLowerCase() + '-graphic' )
 			.append('svg')
 				.attr('width', config.w)
 				.attr('height', config.h);
 
 		// Headline
 		svg.append('text')
-			.text(source + ' (ratio: ' + ratio + ')')
-			.attr('x', config.leftMargin)
-			.attr('y', 15);
+			.text('(ratio: ' + ratio + ')')
+			.attr('x', 10)
+			.attr('y', 20);
 
 		var chart = svg.append('g')
+
+		if (lower > 0 & upper > 0 ) {
+			chart.append('rect')
+				.attr('x', function(){ return scale(lower) })
+				.attr('y', 3 + config.topMargin )
+				.attr('width', function(){ return scale(upper - lower) })
+				.attr('height', 17)
+				.attr('fill', config.lightgreen)
+		}
 
 		// predicted value marker
 		chart.append('line')
@@ -99,7 +120,7 @@ $(function() {
 				.attr('y1', 3 + config.topMargin)
 				.attr('x2', function(){ return scale(observed) })
 				.attr('y2', 20 + config.topMargin)
-				.attr('stroke', function(){ return parseFloat(observed) > parseFloat(predicted) ? config.red : config.green})
+				.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green})
 				.attr('stroke-width', 5);
 		chart.append('text').text( observed )
 			.attr('x', function(){ return scale(observed) } )
