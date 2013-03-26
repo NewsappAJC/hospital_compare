@@ -59,7 +59,7 @@ $(function() {
 		.attr('stroke', config.red)
 		.attr('stroke-width', 5);
 
-	d3.csv("detail.csv", function(data) {
+	d3.csv("data/detail.csv", function(data) {
 		window.data = data;
 		drawDetailChart(data, 'CLABSI',   config);
 		drawDetailChart(data, 'CAUTI',    config);

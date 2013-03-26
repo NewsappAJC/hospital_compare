@@ -1,5 +1,5 @@
 $(function() {
-	d3.csv("hospitals.csv", function(data) {
+	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
 		window.dataset = data
 	});

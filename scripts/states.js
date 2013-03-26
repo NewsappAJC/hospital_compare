@@ -1,15 +1,15 @@
 $(function() {
-	d3.csv("cauti_states.csv", function(data) {
+	d3.csv("data/cauti_states.csv", function(data) {
 		drawBarChart(_.sortBy(data, function(d){return parseFloat(d.score)}),
 			           '#cauti-state',
 			           'Catheter Associated Urinary Tract Infections');
 	});
-	d3.csv("clabsi_states.csv", function(data) {
+	d3.csv("data/clabsi_states.csv", function(data) {
 		drawBarChart(_.sortBy(data, function(d){return parseFloat(d.score)}),
 			          '#clabsi-state',
 			          'Central-Line-Associated Blood Stream Infections');
 	});
-	d3.csv("ssicolon_states.csv", function(data) {
+	d3.csv("data/ssicolon_states.csv", function(data) {
 		drawBarChart(_.sortBy(data, function(d){return parseFloat(d.score)}),
 			           '#ssicolon-state',
 			           'Surgical Site Infection from colon surgery');
