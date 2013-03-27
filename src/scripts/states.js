@@ -1,24 +1,29 @@
 $(function() {
+	'use strict';
+
 	d3.csv("data/cauti_states.csv", function(data) {
-		drawBarChart(_.sortBy(data, function(d){return parseFloat(d.score)}),
+		drawBarChart(_.sortBy(data,
+								 function(d){return parseFloat(d.score);}),
 			           '#cauti-state',
 			           'Catheter Associated Urinary Tract Infections');
 	});
 	d3.csv("data/clabsi_states.csv", function(data) {
-		drawBarChart(_.sortBy(data, function(d){return parseFloat(d.score)}),
+		drawBarChart(_.sortBy(data,
+							  function(d){return parseFloat(d.score);}),
 			          '#clabsi-state',
 			          'Central-Line-Associated Blood Stream Infections');
 	});
 	d3.csv("data/ssicolon_states.csv", function(data) {
-		drawBarChart(_.sortBy(data, function(d){return parseFloat(d.score)}),
+		drawBarChart(_.sortBy(data,
+								 function(d){return parseFloat(d.score);}),
 			           '#ssicolon-state',
 			           'Surgical Site Infection from colon surgery');
 	});
 
 	function drawBarChart(dataset, tag, headline) {
 		var w = 850, h = 250, barpad = 3, toppad = 10;
-		var max = 2.5,
-		    min = 0;
+		var max = 2.5;
+
 		var scale = d3.scale.linear()
 			.domain([0,max])
 			.range([0,h]);
@@ -40,7 +45,7 @@ $(function() {
 					return scale(parseFloat(d.score)) - toppad;
 				})
 				.attr('class', 'bar')
-				.attr('fill', function(d){return d.state === 'GA' ? 'darkblue' : 'lightgrey'})
+				.attr('fill', function(d){return d.state === 'GA' ? 'darkblue' : 'lightgrey';})
 			.append('title')
 				.text( function(d, i) {
 					return "State: " + d.state + "; Score: " + d.score + "; Rank: " + (i+1) ;
@@ -56,7 +61,7 @@ $(function() {
 				})
 				.attr('y', h - 2)
 				.attr('font-size', '8px')
-				.attr('fill', function(d){return d.state == 'GA' ? 'white' : 'black';})
+				.attr('fill', function(d){return d.state === 'GA' ? 'white' : 'black';})
 				.attr('text-anchor', 'middle');
 
 		svg.append('text')

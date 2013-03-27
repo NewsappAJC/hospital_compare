@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      all: [
+      files: [
         'Grintfile.js',
         'src/scripts/*.js'
       ],
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         curly: true,
         eqeqeq: true,
         latedef: true,
-        quotmark: true,
+        //quotmark: true,
         undef: true,
         unused: true,
         strict: true,

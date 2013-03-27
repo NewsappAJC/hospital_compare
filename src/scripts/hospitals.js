@@ -1,7 +1,9 @@
 $(function() {
+	"use strict";
+
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
-		window.dataset = data
+		window.dataset = data;
 	});
 
 	function drawDotChart(dataset) {
@@ -10,12 +12,11 @@ $(function() {
 		    pad = 50,
 		    left_pad = 225;
 
-		var max = Math.max( 
+		var max = Math.max(
 			d3.max(dataset, function(d) {return parseFloat(d.clabsi_ratio);}),
 			d3.max(dataset, function(d) {return parseFloat(d.cauti_ratio);}),
 			d3.max(dataset, function(d) {return parseFloat(d.ssicolon_ratio);})
 		);
-		var min = 0;
 		var scale = d3.scale.linear()
 			.domain([0,Math.ceil(max)])
 			.range([225, w-10]);
@@ -26,7 +27,7 @@ $(function() {
 				.attr('height', h);
 
 		// Horizontal grib bars
-		var hgrid_green = svg.selectAll('rect')
+		svg.selectAll('rect')
 			.data(dataset)
 			.enter().append('rect')
 			.attr('x', left_pad)
@@ -53,9 +54,9 @@ $(function() {
 		svg.selectAll('path')
 			.data(dataset)
 			.enter().append('svg:path')
-				.attr('transform', function(d,i){ return 'translate('
-							+ (scale(d.clabsi_ratio)+5) + ','
-						  + (i * 20 + pad) + ')';})
+				.attr('transform', function(d,i){ return 'translate(' +
+							(scale(d.clabsi_ratio)+5) +
+							',' + (i * 20 + pad) + ')';})
 				.attr('d', d3.svg.symbol().type('circle'))
 				.attr('fill','#0101DF')
 			.append('title')
@@ -69,11 +70,11 @@ $(function() {
 			.data(dataset)
 			.enter()
 			.append('svg:g')
-				.attr('class', 'cauti')
+				.attr('class', 'cauti');
 		cauti.append('svg:path')
-			.attr('transform', function(d,i){ return 'translate('
-						+ (scale(d.cauti_ratio)+5) + ','
-					  + (i * 20 + pad) + ')';})
+			.attr('transform', function(d,i){ return 'translate(' +
+						(scale(d.cauti_ratio)+5) + ',' +
+					  (i * 20 + pad) + ')';})
 			.attr('d', d3.svg.symbol().type('square'))
 			.attr('fill','#5882FA')
 		.append('title')
@@ -88,9 +89,9 @@ $(function() {
 			.append('svg:g')
 				.attr('class', 'ssicol');
 		ssicol.append('svg:path')
-			.attr('transform', function(d,i){ return 'translate('
-						+ (scale(d.ssicolon_ratio)+5) + ','
-					  + (i * 20 + pad) + ')';})
+			.attr('transform', function(d,i){ return 'translate(' +
+						(scale(d.ssicolon_ratio)+5) + ',' +
+					  (i * 20 + pad) + ')';})
 			.attr('d', d3.svg.symbol().type('triangle-up'))
 			.attr('fill','#5882FA')
 		.append('title')
@@ -103,11 +104,11 @@ $(function() {
 			.data(dataset)
 			.enter()
 			.append('text')
-			.text(function(d){ return d.hospital_name})
+			.text(function(d){ return d.hospital_name;})
 			.attr('y', function(d,i){
 					return i * 20 + pad + 5;
 				})
-			.attr('x', 5)
+			.attr('x', 5);
 
 		// X axis
 		var xAxis = d3.svg.axis()
