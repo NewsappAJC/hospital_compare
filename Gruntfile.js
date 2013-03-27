@@ -2,7 +2,7 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    aws: grunt.file.readJSON('config/aws.json')
+    aws: grunt.file.readJSON('config/aws.json'),
     copy: {
       target: {
         files: [
@@ -17,6 +17,16 @@ module.exports = function(grunt) {
       ],
       options: {
         browser: true,
+        curly: true,
+        eqeqeq: true,
+        latedef: true,
+        quotmark: true,
+        undef: true,
+        unused: true,
+        strict: true,
+        trailing: true,
+        smarttabs: true,
+        indent: 2,
         globals: {
           JQuery: true,
           $: true
@@ -49,14 +59,25 @@ module.exports = function(grunt) {
           'build/detail.html': 'src/detail.html'
         }
       }
+    },
+    cssmin: {
+      compress: {
+        options: {
+          report: 'gzip'
+        },
+        files: {
+          'build/style/app.css': ['src/style/*.css']
+        }
+      }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-s3');
 
-  grunt.registerTask('default', ['copy','uglify','htmlmin']);
+  grunt.registerTask('default', ['copy','uglify','htmlmin','cssmin']);
 };
 
