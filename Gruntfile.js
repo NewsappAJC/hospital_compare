@@ -6,7 +6,8 @@ module.exports = function(grunt) {
     copy: {
       target: {
         files: [
-          { expand: true, flatten: true, src: ['src/scripts/lib/*.js'], dest: 'build/scripts/lib/' }
+          { expand: true, flatten: true, src: ['src/scripts/lib/*.js'], dest: 'build/scripts/lib/' },
+          { expand: true, flatten: true, src: ['src/data/*'], dest: 'build/data/' }
         ]
       }
     },
