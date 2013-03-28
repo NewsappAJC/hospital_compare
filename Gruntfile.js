@@ -36,8 +36,9 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        mangle: { except: ['d3'] },
-        compress: true
+        mangle: { except: ['d3', '_','$'] },
+        compress: true,
+        report: 'gzip'
       },
       my_target: {
         files: {
@@ -70,6 +71,21 @@ module.exports = function(grunt) {
           'build/style/app.css': ['src/style/*.css']
         }
       }
+    },
+    s3: {
+      key: "<%= aws.key %>",
+      secret: "<%= aws.secret %>",
+      bucket: "<%= aws.bucket %>",
+      access: "public-read",
+      gzip: true,
+      debug: false,
+      upload: [
+        { src: 'build/*.html', dest: '.' },
+        { src: 'build/scripts/*', dest: 'scripts/' },
+        { src: 'build/scripts/lib/*', dest: 'scripts/lib/' },
+        { src: 'build/data/*', dest: 'data/' },
+        { src: 'build/style/*', dest: 'style/' }
+      ]
     }
   });
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -79,6 +95,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-s3');
 
-  grunt.registerTask('default', ['copy','uglify','htmlmin','cssmin']);
+  grunt.registerTask('default', ['copy','uglify','htmlmin','cssmin','s3']);
 };
 
