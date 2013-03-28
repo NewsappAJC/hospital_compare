@@ -56,9 +56,9 @@ module.exports = function(grunt) {
           useShortDoctype: true
         },
         files: {
-          'build/index.html': 'src/index.html',
+          'build/index.html'    : 'src/index.html',
           'build/hospitals.html': 'src/hospitals.html',
-          'build/detail.html': 'src/detail.html'
+          'build/detail.html'   : 'src/detail.html'
         }
       }
     },

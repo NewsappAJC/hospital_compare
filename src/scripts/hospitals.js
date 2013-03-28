@@ -100,15 +100,18 @@ $(function() {
 			});
 
 		// Hospital names
-		svg.selectAll('text')
+		svg.selectAll('a')
 			.data(dataset)
 			.enter()
+			.append('svg:a')
+				.attr('xlink:href', function(d){ return 'detail.html?id=' + d.provider_id })
 			.append('text')
-			.text(function(d){ return d.hospital_name;})
-			.attr('y', function(d,i){
-					return i * 20 + pad + 5;
-				})
-			.attr('x', 5);
+				.attr('y', function(d,i){ return i * 20 + pad + 5; })
+				.attr('x', 5)
+				.attr('text-anchor', 'right')
+				.text(function(d){ return d.hospital_name;})
+			.on('mouseover', function(){ return d3.select(this).attr('fill','grey'); })
+			.on('mouseout', function(){ return d3.select(this).attr('fill','black');});
 
 		// X axis
 		var xAxis = d3.svg.axis()

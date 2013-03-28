@@ -3,7 +3,7 @@ $(function() {
 
 	var config = {
 		w: 650,
-    h: 100,
+    h: 120,
     leftMargin: 10,
     rightMargin: 50,
     topMargin: 45,
@@ -17,11 +17,11 @@ $(function() {
 	var legendSvg = d3.select('#legend')
 		.append('svg')
 			.attr('width', config.w)
-			.attr('height', 50);
+			.attr('height', 60);
 
 	var legend = legendSvg.append('g');
 
-	legend.append('text').text('Predicted cases:')
+	legend.append('text').text('Expected cases:')
 			.attr('x', 5)
 			.attr('y', 25);
 	legend.append('line')
@@ -31,26 +31,26 @@ $(function() {
 		.attr('y2', 30)
 		.attr('stroke', config.grey)
 		.attr('stroke-width', 5);
-	legend.append('text').text('Predicted error margin:')
+	legend.append('text').text('Expected range:')
 			.attr('x', 125)
 			.attr('y', 25);
 	legend.append('rect')
-		.attr('x', 260)
+		.attr('x', 225)
 		.attr('y', 10)
 		.attr('width', 20)
 		.attr('height', 20)
 		.attr('fill', config.lightgreen);
-	legend.append('text').text('Actual, fewer than predicted:')
-			.attr('x', 295)
+	legend.append('text').text('Actual cases, fewer than expected:')
+			.attr('x', 260)
 			.attr('y', 25);
 	legend.append('line')
-		.attr('x1', 466)
+		.attr('x1', 470)
 		.attr('y1', 10)
-		.attr('x2', 466)
+		.attr('x2', 470)
 		.attr('y2', 30)
 		.attr('stroke', config.green)
 		.attr('stroke-width', 5);
-	legend.append('text').text('more than predicted:')
+	legend.append('text').text('more than expected:')
 			.attr('x', 485)
 			.attr('y', 25);
 	legend.append('line')
@@ -88,9 +88,9 @@ $(function() {
 
 		// Headline
 		svg.append('text')
-			.text('(ratio: ' + ratio + ')')
-			.attr('x', 10)
-			.attr('y', 20);
+			.text('(ratio: ' + (ratio > 0 ? ratio : 'NA') + ')')
+			.attr('x', 5)
+			.attr('y', 15);
 
 		var chart = svg.append('g');
 
