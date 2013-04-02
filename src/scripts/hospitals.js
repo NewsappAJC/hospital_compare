@@ -7,9 +7,10 @@ $(function() {
 	});
 
 	function drawDotChart(dataset) {
-		var w = 750,
-		    h = 400,
-		    pad = 50,
+		var margin = {top: 20, right: 10, bottom: 20, left: 10},
+		    w = 750 - margin.left - margin.right,
+		    h = 400 - margin.top - margin.bottom,
+		    pad = 8,
 		    left_pad = 225;
 
 		var max = Math.max(
@@ -19,12 +20,14 @@ $(function() {
 		);
 		var scale = d3.scale.linear()
 			.domain([0,Math.ceil(max)])
-			.range([225, w-10]);
+			.range([left_pad, w]);
 
 		var svg = d3.select('#hospitals')
 			.append('svg')
-				.attr('width', w)
-				.attr('height', h);
+				.attr('width', w + margin.left + margin.right)
+				.attr('height', h + margin.top + margin.bottom)
+			.append('g')
+				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 		// Horizontal grib bars
 		svg.selectAll('rect')
@@ -32,7 +35,7 @@ $(function() {
 			.enter().append('rect')
 			.attr('x', left_pad)
 			.attr('y', function(d,i){
-					return i * 20 + pad - 8;
+					return i * 20;
 				})
 			.attr('fill', '#E0F8E0')
 			.attr('width', scale(1) - left_pad - 2)
@@ -44,19 +47,18 @@ $(function() {
 		hgrid_red.append('svg:rect')
 			.attr('x', scale(1) + 2)
 			.attr('y', function(d,i){
-					return i * 20 + pad - 8;
+					return i * 20;
 				})
 			.attr('fill', '#F8E0E0')
 			.attr('width', scale(5) - scale(1) + left_pad + 2)
 			.attr('height', 16);
 
 		// CLABSI symbols
-		svg.selectAll('path')
+		var clabsi = svg.selectAll('path')
 			.data(dataset)
 			.enter().append('svg:path')
 				.attr('transform', function(d,i){ return 'translate(' +
-							(scale(d.clabsi_ratio)+5) +
-							',' + (i * 20 + pad) + ')';})
+							(scale(d.clabsi_ratio)+5) + ',' + (i * 20 + pad) + ')';})
 				.attr('d', d3.svg.symbol().type('circle'))
 				.attr('fill','#0101DF')
 			.append('title')
