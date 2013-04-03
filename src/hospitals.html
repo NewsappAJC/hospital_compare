@@ -13,10 +13,15 @@
   <link rel="stylesheet" href="style/app.css" type="text/css"/>
 </head>
 <body>
-  <a href='#' id='clabsi' class='sort-link'>Central-Line-Associated Blood Stream Infections</a><br/>
-  <a href='#' id='cauti' class='sort-link'>Surgical Site Infection from colon surgery</a><br/>
-  <a href='#' id='ssicolon' class='sort-link'>Catheter Associated Urinary Tract Infections</a><br/>
+  Sort by:
+  <select id="sortby">
+    <option value='clabsi'>Central-line-associated blood stream infections</option>
+    <option value='cauti'>Catheter associated urinary tract infections</option>
+    <option value='ssicolon'>Surgical site infection from colon surgery</option>
+  </select>
+  
   <div id="hospitals"></div>
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="scripts/lib/underscore-min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
