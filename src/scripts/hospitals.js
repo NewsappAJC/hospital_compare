@@ -66,10 +66,21 @@ $(function() {
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
 				.attr('r', 5)
 				.attr('fill','#0101DF')
-			.append('title')
-				.text(function(d) {
-					return "CLABSI score: " + d.clabsi_ratio;
-				});
+			.on('mouseover', function(d) {
+				var x = parseFloat(d3.select(this).attr('cx')),
+				    y = parseFloat(d3.select(this).attr('cy') - 6);
+				svg.append('text')
+					.attr('id', 'tooltip')
+					.attr('x', x)
+					.attr('y', y)
+					.attr('text-anchor', 'middle')
+					.text(function() {
+						return "CLABSI score: " + d.clabsi_ratio;
+					})
+			})
+			.on('mouseout', function(){
+				d3.select('#tooltip').remove();
+			});
 
 
 		// CAUTI symbols
@@ -84,9 +95,20 @@ $(function() {
 				.attr('height', 8)
 				.attr('fill','black')
 				.attr('opacity', 0.3)
-		.append('title')
-			.text(function(d) {
-				return "CAUTI score: " + d.cauti_ratio;
+			.on('mouseover', function(d) {
+				var x = parseFloat(d3.select(this).attr('x')),
+				    y = parseFloat(d3.select(this).attr('y') - 4);
+				svg.append('text')
+					.attr('id', 'tooltip')
+					.attr('x', x)
+					.attr('y', y)
+					.attr('text-anchor', 'middle')
+					.text(function() {
+						return "CAUTI score: " + d.clabsi_ratio;
+					})
+			})
+			.on('mouseout', function(){
+				d3.select('#tooltip').remove();
 			});
 
 		// SSI:Colon symbols
@@ -100,9 +122,20 @@ $(function() {
 				.attr('r', 4)
 				.attr('fill','black')
 				.attr('opacity', 0.3)
-		.append('title')
-			.text(function(d) {
-				return "SSI:Colon score: " + d.ssicolon_ratio;
+			.on('mouseover', function(d) {
+				var x = parseFloat(d3.select(this).attr('cx')),
+				    y = parseFloat(d3.select(this).attr('cy') - 6);
+				svg.append('text')
+					.attr('id', 'tooltip')
+					.attr('x', x)
+					.attr('y', y)
+					.attr('text-anchor', 'middle')
+					.text(function() {
+						return "SSI Colon score: " + d.clabsi_ratio;
+					})
+			})
+			.on('mouseout', function(){
+				d3.select('#tooltip').remove();
 			});
 
 		// Hospital names
