@@ -73,7 +73,7 @@ $(function() {
 		svg.append('text')
 			.text(headline)
 			.attr('x', 5)
-			.attr('y', 150)
+			.attr('y', 120)
 			.attr('fill','black')
 			.attr('font-size', '20px');
 	}
