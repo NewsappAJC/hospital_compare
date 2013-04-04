@@ -21,16 +21,22 @@ $(function() {
 	});
 
 	function drawBarChart(dataset, tag, headline) {
-		var w = 850, h = 250, barpad = 3, toppad = 10;
-		var max = 2.5;
+		var margin = {top: 20, right: 10, bottom: 20, left: 10},
+		    w = 850 - margin.left - margin.right,
+		    h = 250 - margin.top - margin.bottom,
+		    barpad = 3,
+		    toppad = 10,
+		    max = 2.5;
 
 		var scale = d3.scale.linear()
 			.domain([0,max])
 			.range([0,h]);
 		var svg = d3.select(tag)
 			.append('svg')
-				.attr('width', w)
-				.attr('height', h);
+				.attr('width', w + margin.left + margin.right)
+				.attr('height', h + margin.top + margin.bottom)
+			.append('g')
+				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 		svg.selectAll('rect')
 			.data(dataset)
