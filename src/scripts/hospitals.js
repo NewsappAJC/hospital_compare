@@ -9,7 +9,7 @@ $(function() {
 	function drawDotChart(dataset) {
 		var margin = {top: 20, right: 10, bottom: 20, left: 10},
 		    w = 750 - margin.left - margin.right,
-		    h = 400 - margin.top - margin.bottom,
+		    h = (25 * dataset.length) - margin.top - margin.bottom,
 		    pad = 8,
 		    left_pad = 225;
 
@@ -18,9 +18,13 @@ $(function() {
 			d3.max(dataset, function(d) {return parseFloat(d.cauti_ratio);}),
 			d3.max(dataset, function(d) {return parseFloat(d.ssicolon_ratio);})
 		);
-		var scale = d3.scale.linear()
+		var xScale = d3.scale.linear()
 			.domain([0,Math.ceil(max)])
-			.range([left_pad, w]);
+			.range([left_pad, w]),
+
+			yScale = d3.scale.ordinal()
+				.domain(d3.range(dataset.length))
+				.rangeRoundBands([0,h], 0.2);
 
 		var svg = d3.select('#hospitals')
 			.append('svg')
@@ -35,31 +39,31 @@ $(function() {
 			.enter().append('rect')
 			.attr('x', left_pad)
 			.attr('y', function(d,i){
-					return i * 20;
+					return yScale(i);
 				})
 			.attr('fill', '#E0F8E0')
-			.attr('width', scale(1) - left_pad - 2)
-			.attr('height', 16);
+			.attr('width', xScale(1) - left_pad - 2)
+			.attr('height', yScale.rangeBand());
 
 		var hgrid_red = svg.selectAll('g')
 			.data(dataset)
 			.enter().append('g');
 		hgrid_red.append('svg:rect')
-			.attr('x', scale(1) + 2)
+			.attr('x', xScale(1) + 2)
 			.attr('y', function(d,i){
-					return i * 20;
+					return yScale(i);
 				})
 			.attr('fill', '#F8E0E0')
-			.attr('width', scale(5) - scale(1) + left_pad + 2)
-			.attr('height', 16);
+			.attr('width', xScale(5) - xScale(1) + left_pad + 2)
+			.attr('height', yScale.rangeBand());
 
 		// CLABSI circles
 		var clabsi = svg.selectAll('.clabsi')
 			.data(dataset)
 			.enter().append('circle')
 				.attr('class', 'clabsi')
-				.attr('cx', function(d){ return scale(d.clabsi_ratio)+5; })
-				.attr('cy', function(d,i){ return i * 20 + pad; })
+				.attr('cx', function(d){ return xScale(d.clabsi_ratio)+5; })
+				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
 				.attr('r', 5)
 				.attr('fill','#0101DF')
 			.append('title')
@@ -74,8 +78,8 @@ $(function() {
 			.enter()
 		  .append('rect')
 		  	.attr('class', 'cauti')
-				.attr('x', function(d){ return scale(d.cauti_ratio)+5-4; })
-				.attr('y', function(d,i){ return i * 20 + pad-4; })
+				.attr('x', function(d){ return xScale(d.cauti_ratio)+5-4; })
+				.attr('y', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2) - 4; })
 				.attr('width', 8)
 				.attr('height', 8)
 				.attr('fill','black')
@@ -91,8 +95,8 @@ $(function() {
 			.enter()
 		  .append('circle')
 		  	.attr('class', 'ssicol')
-				.attr('cx', function(d){ return scale(d.ssicolon_ratio)+5; })
-				.attr('cy', function(d,i){ return i * 20 + pad; })
+				.attr('cx', function(d){ return xScale(d.ssicolon_ratio)+5; })
+				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
 				.attr('r', 4)
 				.attr('fill','black')
 				.attr('opacity', 0.3)
@@ -110,7 +114,7 @@ $(function() {
 				.attr('class', 'hospital')
 			.append('text')
 				.attr('class', 'hospital')
-				.attr('y', function(d,i){ return i * 20 + pad + 5; })
+				.attr('y', function(d,i){ return yScale(i) + yScale.rangeBand() - 2; })
 				.attr('x', 5)
 				.attr('text-anchor', 'right')
 				.text(function(d){ return d.hospital_name;})
@@ -119,13 +123,13 @@ $(function() {
 
 		// X axis
 		var xAxis = d3.svg.axis()
-			.scale(scale)
+			.scale(xScale)
 			.orient('bottom')
 			.ticks(5);
 
 		svg.append('g')
 			.attr('class', 'x-axis')
-			.attr('transform', 'translate(0,' + (dataset.length * 20 + pad) + ')')
+			.attr('transform', 'translate(0,' + (dataset.length * (yScale.rangeBand() * 1.3)) + ')')
 			.call(xAxis);
 
 		// sort by different infection sources
@@ -141,10 +145,10 @@ $(function() {
 					.transition()
 					.duration(1000).ease('bounce')
 					.attr('opacity', function() {
-						return infection === 'clabsi' ? 1.0 : 0.5; 
+						return infection === 'clabsi' ? 1.0 : 0.4; 
 					})
 					.attr('cy', function(d,i){
-						return i * 20 + pad;
+						return yScale(i) + (yScale.rangeBand() / 2);
 					});
 
 				svg.selectAll('.cauti')
@@ -156,7 +160,7 @@ $(function() {
 					.attr('opacity', function() {
 						return infection === 'cauti' ? 0.7 : 0.3; 
 					})
-					.attr('y', function(d,i){ return i * 20 + pad-4; });
+					.attr('y', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2) - 4; });
 
 				svg.selectAll('.ssicol')
 					.sort(function(a,b){
@@ -168,7 +172,7 @@ $(function() {
 						return infection === 'ssicolon' ? 0.7 : 0.3; 
 					})
 					.attr('cy', function(d,i){
-						return i * 20 + pad;
+						return yScale(i) + (yScale.rangeBand() / 2);
 					});
 
 				svg.selectAll('text.hospital')
@@ -177,7 +181,7 @@ $(function() {
 					})
 					.transition()
 					.duration(1000).ease('bounce')
-					.attr('y', function(d,i){ return i * 20 + pad + 5; })
+					.attr('y', function(d,i){ return yScale(i) + yScale.rangeBand() - 2; })
 			});
 	  }
 });
