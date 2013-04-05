@@ -4,10 +4,25 @@ rect.bar:hover {
 div#new-measures {
 	backgound: lightgrey;
 }
-
 .x-axis path,
 .x-axis line {
 	fill: none;
 	stroke: lightgrey;
 	shape-rendering: crispEdges;
+}
+#tooltip {
+  position: absolute;
+  width: 100px;
+  padding: 1px 10px;
+  background-color: white;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+#tooltip.hidden {
+  display: none;
+}
+#tooltip p {
+  margin: 0;
+  font-family: sans-serif;
+  fotn-size: 16px;
 }

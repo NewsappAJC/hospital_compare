@@ -10,8 +10,8 @@ $(function() {
 		var margin = {top: 20, right: 10, bottom: 20, left: 10},
 		    w = 750 - margin.left - margin.right,
 		    h = (25 * dataset.length) - margin.top - margin.bottom,
-		    pad = 8,
-		    left_pad = 225;
+		    //pad = 8,
+		    left_pad = 235;
 
 		var max = Math.max(
 			d3.max(dataset, function(d) {return parseFloat(d.clabsi_ratio);}),
@@ -67,19 +67,17 @@ $(function() {
 				.attr('r', 5)
 				.attr('fill','#0101DF')
 			.on('mouseover', function(d) {
-				var x = parseFloat(d3.select(this).attr('cx')),
-				    y = parseFloat(d3.select(this).attr('cy') - 6);
-				svg.append('text')
-					.attr('id', 'tooltip')
-					.attr('x', x)
-					.attr('y', y)
-					.attr('text-anchor', 'middle')
-					.text(function() {
-						return "CLABSI score: " + d.clabsi_ratio;
-					})
+				var x = parseFloat(d3.select(this).attr('cx') + 10),
+				    y = parseFloat(d3.select(this).attr('cy') - 18);
+				var tt = d3.select('#tooltip')
+					.style('left', x + 'px')
+					.style('top', y + 'px');
+				tt.select('#source').text('CLABSI');
+				tt.select('#score').text('score: ' + d.clabsi_ratio);
+				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip').remove();
+				d3.select('#tooltip').classed('hidden', true);
 			});
 
 
@@ -96,19 +94,18 @@ $(function() {
 				.attr('fill','black')
 				.attr('opacity', 0.3)
 			.on('mouseover', function(d) {
-				var x = parseFloat(d3.select(this).attr('x')),
-				    y = parseFloat(d3.select(this).attr('y') - 4);
-				svg.append('text')
-					.attr('id', 'tooltip')
-					.attr('x', x)
-					.attr('y', y)
-					.attr('text-anchor', 'middle')
-					.text(function() {
-						return "CAUTI score: " + d.clabsi_ratio;
-					})
+				var x = parseFloat(d3.select(this).attr('x') + 10),
+				    y = parseFloat(d3.select(this).attr('y') - 18);
+				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
+				var tt = d3.select('#tooltip')
+					.style('left', x + 'px')
+					.style('top', y + 'px');
+				tt.select('#source').text('CLAUTI');
+				tt.select('#score').text('score: ' + d.cauti_ratio);
+				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip').remove();
+				d3.select('#tooltip').classed('hidden', true);
 			});
 
 		// SSI:Colon symbols
@@ -123,19 +120,18 @@ $(function() {
 				.attr('fill','black')
 				.attr('opacity', 0.3)
 			.on('mouseover', function(d) {
-				var x = parseFloat(d3.select(this).attr('cx')),
-				    y = parseFloat(d3.select(this).attr('cy') - 6);
-				svg.append('text')
-					.attr('id', 'tooltip')
-					.attr('x', x)
-					.attr('y', y)
-					.attr('text-anchor', 'middle')
-					.text(function() {
-						return "SSI Colon score: " + d.clabsi_ratio;
-					})
+				var x = parseFloat(d3.select(this).attr('cx') + 10),
+				    y = parseFloat(d3.select(this).attr('cy') - 18);
+				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
+				var tt = d3.select('#tooltip')
+					.style('left', x + 'px')
+					.style('top', y + 'px');
+				tt.select('#source').text('SSI Colon');
+				tt.select('#score').text('score: ' + d.ssicolon_ratio);
+				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip').remove();
+				d3.select('#tooltip').classed('hidden', true);
 			});
 
 		// Hospital names
@@ -150,9 +146,17 @@ $(function() {
 				.attr('y', function(d,i){ return yScale(i) + yScale.rangeBand() - 2; })
 				.attr('x', 5)
 				.attr('text-anchor', 'right')
+				.attr('font-size', '13px')
 				.text(function(d){ return d.hospital_name;})
-			.on('mouseover', function(){ return d3.select(this).attr('fill','grey'); })
-			.on('mouseout', function(){ return d3.select(this).attr('fill','black');});
+			.on('mouseover', function(){ 
+				return d3.select(this)
+									.attr('fill','grey')
+									.attr('font-size', '14px');
+			})
+			.on('mouseout', function(){ 
+				return d3.select(this)
+								 .attr('fill','black')
+								 .attr('font-size', '13px');});
 
 		// X axis
 		var xAxis = d3.svg.axis()
@@ -213,8 +217,19 @@ $(function() {
 							return b[infection + '_ratio'] - a[infection + '_ratio'];
 					})
 					.transition()
-					.duration(1000).ease('bounce')
+					.duration(500).ease('circular')
 					.attr('y', function(d,i){ return yScale(i) + yScale.rangeBand() - 2; })
 			});
+
+			var tooltip = function(d) {
+				var x = parseFloat(d3.select(this).attr('cx') + 10),
+				    y = parseFloat(d3.select(this).attr('cy') - 15);
+				var tt = d3.select('#tooltip')
+					.style('left', x + 'px')
+					.style('top', y + 'px');
+				tt.select('#source').text('CLABSI');
+				tt.select('#score').text('score: ' + d.clabsi_ratio);
+				d3.select('#tooltip').classed('hidden', false);
+			}
 	  }
 });
