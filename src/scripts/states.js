@@ -52,10 +52,22 @@ $(function() {
 				})
 				.attr('class', 'bar')
 				.attr('fill', function(d){return d.state === 'GA' ? 'darkblue' : 'lightgrey';})
-			.append('title')
-				.text( function(d, i) {
-					return "State: " + d.state + "; Score: " + d.score + "; Rank: " + (i+1) ;
-				});
+			.on('mouseover', function(d,i) {
+				var x = parseFloat(d3.select(this).attr('x')),
+				    y = parseFloat(d3.select(this).attr('y') - 50),
+				    tt = d3.select('#tooltip')
+				    			 .style('left', x + 'px')
+				    			 .style('top', y + 'px');
+
+				// console.log(x + ', ', y);
+				tt.select('#state').text('State: ' + d.state);
+				tt.select('#score').text('Score: ' + d.score);
+				tt.select('#rank').text('Rank: ' + (i+1));
+				tt.classed('hidden', false);
+			})
+			.on('mouseout', function() {
+				d3.select('#tooltip').classed('hidden', true);
+			});
 
 		svg.selectAll('text')
 			.data(dataset)

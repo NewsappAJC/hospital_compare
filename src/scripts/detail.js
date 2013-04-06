@@ -2,7 +2,7 @@ $(function() {
 	"use strict";
 
 	var config = {
-		w: 650,
+		w: 750,
     h: 120,
     leftMargin: 10,
     rightMargin: 50,
