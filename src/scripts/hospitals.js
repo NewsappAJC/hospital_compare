@@ -335,15 +335,13 @@ $(function() {
 
 				var chart = svg.append('g');
 
-				if (lower > 0 & upper > 0 ) {
-					chart.append('rect')
-						.attr('id', 'range-' + source)
-						.attr('x', function(){ return scale(lower); })
-						.attr('y', 3 + config.topMargin )
-						.attr('width', function(){ return scale(upper - lower); })
-						.attr('height', 17)
-						.attr('fill', config.lightgreen);
-				}
+				chart.append('rect')
+					.attr('id', 'range-' + source)
+					.attr('x', function(){ return scale(lower); })
+					.attr('y', 3 + config.topMargin )
+					.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; })
+					.attr('height', 17)
+					.attr('fill', config.lightgreen);
 
 				// predicted value marker
 				chart.append('line')
@@ -413,7 +411,7 @@ $(function() {
 	  				.transition().duration(1000)
 						.attr('x', function(){ return scale(lower); })
 						.attr('y', 3 + config.topMargin )
-						.attr('width', function(){ return scale(upper - lower); });
+						.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; });
 
 					d3.select('#predicted-' + source)
 	  				.transition().duration(1000)
