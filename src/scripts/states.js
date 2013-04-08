@@ -4,24 +4,25 @@ $(function() {
 	d3.csv("data/cauti_states.csv", function(data) {
 		drawBarChart(_.sortBy(data,
 								 function(d){return parseFloat(d.score);}),
-			           '#cauti-state',
+			           'cauti',
 			           'Catheter Associated Urinary Tract Infections');
 	});
 	d3.csv("data/clabsi_states.csv", function(data) {
 		drawBarChart(_.sortBy(data,
 							  function(d){return parseFloat(d.score);}),
-			          '#clabsi-state',
+			          'clabsi',
 			          'Central-Line-Associated Blood Stream Infections');
 	});
 	d3.csv("data/ssicolon_states.csv", function(data) {
 		drawBarChart(_.sortBy(data,
 								 function(d){return parseFloat(d.score);}),
-			           '#ssicolon-state',
+			           'ssicolon',
 			           'Surgical Site Infection from colon surgery');
 	});
 
-	function drawBarChart(dataset, tag, headline) {
-		var margin = {top: 20, right: 10, bottom: 20, left: 10},
+	function drawBarChart(dataset, source, headline) {
+		var tag = '#' + source + '-state',
+		    margin = {top: 20, right: 10, bottom: 20, left: 10},
 		    w = 850 - margin.left - margin.right,
 		    h = 250 - margin.top - margin.bottom,
 		    barpad = 3,
@@ -50,16 +51,16 @@ $(function() {
 				.attr('height', function(d){
 					return scale(parseFloat(d.score)) - toppad;
 				})
-				.attr('class', 'bar')
+				.attr('class', 'bar-' + source)
 				.attr('fill', function(d){return d.state === 'GA' ? 'darkblue' : 'lightgrey';})
 			.on('mouseover', function(d,i) {
-				var x = parseFloat(d3.select(this).attr('x')),
-				    y = parseFloat(d3.select(this).attr('y') - 50),
+				var x = parseFloat(window.event.clientX) + 10,
+				    y = parseFloat(window.event.clientY) - 70,
 				    tt = d3.select('#tooltip')
 				    			 .style('left', x + 'px')
 				    			 .style('top', y + 'px');
+				// console.log(x + ', ' + y);
 
-				// console.log(x + ', ', y);
 				tt.select('#state').text('State: ' + d.state);
 				tt.select('#score').text('Score: ' + d.score);
 				tt.select('#rank').text('Rank: ' + (i+1));
