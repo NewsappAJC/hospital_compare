@@ -254,6 +254,7 @@ $(function() {
 					.attr('x1', xScale(ga_avg[infection]))
 					.attr('x2', xScale(ga_avg[infection]));
 				svg.select('#avg-text')
+					.transition().duration(500).ease('circular')
 					.text(infection.toUpperCase() + ' state average')
 					.attr('x', xScale(ga_avg[infection]));
 			});
