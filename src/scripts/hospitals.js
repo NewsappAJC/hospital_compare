@@ -9,6 +9,11 @@ $(function() {
     lightgreen: '#CEF6CE',
     grey: '#A4A4A4'
 	}
+	var ga_avg = {
+		clabsi   : 0.74,
+		cauti    : 0.71,
+		ssicolon : 0.98
+	};
 
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
@@ -169,6 +174,20 @@ $(function() {
 								 .attr('fill','black')
 								 .attr('font-size', '13px');});
 
+		svg.append('line')
+			.attr('x1', xScale(ga_avg.clabsi))
+			.attr('x2', xScale(ga_avg.clabsi))
+			.attr('y1', 3)
+			.attr('y2', height)
+			.attr('stroke', 'black')
+			.attr('id', 'avg-marker');
+		svg.append('text')
+			.text('CLABSI state average')
+			.attr('x', xScale(ga_avg.clabsi))
+			.attr('y', 0)
+			.attr('text-anchor', 'middle')
+			.attr('id', 'avg-text');
+
 		// X axis
 		var xAxis = d3.svg.axis()
 			.scale(xScale)
@@ -179,6 +198,7 @@ $(function() {
 			.attr('class', 'x-axis')
 			.attr('transform', 'translate(0,' + (dataset.length * (yScale.rangeBand() * 1.3)) + ')')
 			.call(xAxis);
+
 
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
@@ -228,6 +248,14 @@ $(function() {
 					.transition()
 					.duration(500).ease('circular')
 					.attr('y', function(d,i){ return yScale(i) + yScale.rangeBand() - 2; })
+
+				svg.select('#avg-marker')
+					.transition().duration(500).ease('circular')
+					.attr('x1', xScale(ga_avg[infection]))
+					.attr('x2', xScale(ga_avg[infection]));
+				svg.select('#avg-text')
+					.text(infection.toUpperCase() + ' state average')
+					.attr('x', xScale(ga_avg[infection]));
 			});
 
 			var tooltip = function(d) {
