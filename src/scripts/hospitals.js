@@ -183,7 +183,7 @@ $(function() {
 			.attr('stroke', 'black')
 			.attr('id', 'avg-marker');
 		svg.append('text')
-			.text('CLABSI state average')
+			.text('CLABSI state average (' + ga_avg.clabsi + ')')
 			.attr('x', xScale(ga_avg.clabsi))
 			.attr('y', 0)
 			.attr('text-anchor', 'middle')
@@ -256,7 +256,7 @@ $(function() {
 					.attr('x2', xScale(ga_avg[infection]));
 				svg.select('#avg-text')
 					.transition().duration(500).ease('circular')
-					.text(infection.toUpperCase() + ' state average')
+					.text(infection.toUpperCase() + ' state average (' + ga_avg[infection] + ')')
 					.attr('x', xScale(ga_avg[infection]));
 			});
 
@@ -343,7 +343,7 @@ $(function() {
 				var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
 				    scale = d3.scale.linear()
 					  	.domain([0,max + 1])
-					  	.range([0, config.width - margin.right - margin.left]);
+					  	.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
 
 				d3.select('#hospital_name').text(provider.hospital_name);
 
