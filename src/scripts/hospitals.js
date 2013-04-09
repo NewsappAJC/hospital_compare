@@ -5,6 +5,7 @@ $(function() {
 	var config = {
 		width: 750 - margin.left - margin.right,
     red: '#FF0000',
+    lightred: '#F8E0E0',
     green: '#088A08',
     lightgreen: '#CEF6CE',
     grey: '#A4A4A4'
@@ -48,12 +49,12 @@ $(function() {
 		svg.selectAll('rect')
 			.data(dataset)
 			.enter().append('rect')
-			.attr('x', left_pad)
+			.attr('x', left_pad - 5)
 			.attr('y', function(d,i){
 					return yScale(i);
 				})
-			.attr('fill', '#E0F8E0')
-			.attr('width', xScale(1) - left_pad - 2)
+			.attr('fill', config.lightgreen)
+			.attr('width', xScale(1) - left_pad + 3)
 			.attr('height', yScale.rangeBand());
 
 		var hgrid_red = svg.selectAll('g')
@@ -64,7 +65,7 @@ $(function() {
 			.attr('y', function(d,i){
 					return yScale(i);
 				})
-			.attr('fill', '#F8E0E0')
+			.attr('fill', config.lightred)
 			.attr('width', xScale(5) - xScale(1) + left_pad + 2)
 			.attr('height', yScale.rangeBand());
 
@@ -73,7 +74,7 @@ $(function() {
 			.data(dataset)
 			.enter().append('circle')
 				.attr('class', 'clabsi')
-				.attr('cx', function(d){ return xScale(d.clabsi_ratio)+5; })
+				.attr('cx', function(d){ return xScale(d.clabsi_ratio); })
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
 				.attr('r', 5)
 				.attr('fill','#0101DF')
@@ -98,7 +99,7 @@ $(function() {
 			.enter()
 		  .append('rect')
 		  	.attr('class', 'cauti')
-				.attr('x', function(d){ return xScale(d.cauti_ratio)+5-4; })
+				.attr('x', function(d){ return xScale(d.cauti_ratio)-4; })
 				.attr('y', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2) - 4; })
 				.attr('width', 8)
 				.attr('height', 8)
@@ -125,7 +126,7 @@ $(function() {
 			.enter()
 		  .append('circle')
 		  	.attr('class', 'ssicol')
-				.attr('cx', function(d){ return xScale(d.ssicolon_ratio)+5; })
+				.attr('cx', function(d){ return xScale(d.ssicolon_ratio); })
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
 				.attr('r', 4)
 				.attr('fill','black')
@@ -277,7 +278,7 @@ $(function() {
 
 			var legendSvg = d3.select('#legend')
 				.append('svg')
-					.attr('width', config.w)
+					.attr('width', config.width)
 					.attr('height', 60)
 				.append('g')
 					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
