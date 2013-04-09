@@ -1,16 +1,23 @@
 $(function() {
 	"use strict";
 
+	var margin = {top: 20, right: 10, bottom: 20, left: 10};
+	var config = {
+		width: 750 - margin.left - margin.right,
+    red: '#FF0000',
+    green: '#088A08',
+    lightgreen: '#CEF6CE',
+    grey: '#A4A4A4'
+	}
+
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
 		detail();
 	});
 
 	function drawDotChart(dataset) {
-		var margin = {top: 20, right: 10, bottom: 20, left: 10},
-		    w = 750 - margin.left - margin.right,
-		    h = (25 * dataset.length) - margin.top - margin.bottom,
-		    left_pad = 235;
+		var height = (25 * dataset.length) - margin.top - margin.bottom,
+    		left_pad = 235;
 
 		var max = Math.max(
 			d3.max(dataset, function(d) {return parseFloat(d.clabsi_ratio);}),
@@ -19,16 +26,16 @@ $(function() {
 		);
 		var xScale = d3.scale.linear()
 			.domain([0,Math.ceil(max)])
-			.range([left_pad, w]),
+			.range([left_pad, config.width]),
 
 			yScale = d3.scale.ordinal()
 				.domain(d3.range(dataset.length))
-				.rangeRoundBands([0,h], 0.2);
+				.rangeRoundBands([0,height], 0.2);
 
 		var svg = d3.select('#hospitals')
 			.append('svg')
-				.attr('width', w + margin.left + margin.right)
-				.attr('height', h + margin.top + margin.bottom)
+				.attr('width', config.width + margin.left + margin.right)
+				.attr('height', height + margin.top + margin.bottom)
 			.append('g')
 				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
@@ -236,24 +243,15 @@ $(function() {
 	  }
 
 	  function detail(id) {
-			var config = {
-				w: 750,
-		    h: 120,
-		    leftMargin: 10,
-		    rightMargin: 50,
-		    topMargin: 45,
-		    red: '#FF0000',
-		    green: '#088A08',
-		    lightgreen: '#CEF6CE',
-		    grey: '#A4A4A4',
-		    id: id || '110079'
-			};
-			window.config = config;
+	  	id = id || '110079';
+	  	var height = 150 - margin.top - margin.bottom;
 
 			var legendSvg = d3.select('#legend')
 				.append('svg')
 					.attr('width', config.w)
-					.attr('height', 60);
+					.attr('height', 60)
+				.append('g')
+					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 			var legend = legendSvg.append('g');
 
@@ -305,9 +303,8 @@ $(function() {
 			});
 
 			function drawDetailChart(data, source, config) {
-				var provider  = _.findWhere(data, {provider_id: config.id});
-				window.provider = provider;
-				var observed  = provider[source + '_observed'],
+				var provider  = _.findWhere(data, {provider_id: id}),
+				    observed  = provider[source + '_observed'],
 				    predicted = provider[source + '_predicted'],
 				    ratio     = provider[source + '_ratio'],
 				    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
@@ -316,29 +313,32 @@ $(function() {
 				var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
 				    scale = d3.scale.linear()
 					  	.domain([0,max + 1])
-					  	.range([config.leftMargin, config.w - config.rightMargin]);
+					  	.range([0, config.width - margin.right - margin.left]);
 
 				d3.select('#hospital_name').text(provider.hospital_name);
 
 				var svg = d3.select('#' + source.toLowerCase() + '-detail' )
 					.append('svg')
-						.attr('width', config.w)
-						.attr('height', config.h)
-						.attr('class', 'svg-detail');
+						.attr('width', config.width)
+						.attr('height', height)
+						.attr('class', 'svg-detail')
+					.append('g')
+						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 				// Headline
 				svg.append('text')
 					.text('(ratio: ' + (ratio > 0 ? ratio : 'NA') + ')')
 					.attr('id', 'ratio-' + source)
-					.attr('x', 5)
-					.attr('y', 15);
+					.attr('x', 0)
+					.attr('y', 0);
 
-				var chart = svg.append('g');
+				var chart = svg.append('g')
+						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 				chart.append('rect')
 					.attr('id', 'range-' + source)
 					.attr('x', function(){ return scale(lower); })
-					.attr('y', 3 + config.topMargin )
+					.attr('y', 3 + margin.top )
 					.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; })
 					.attr('height', 17)
 					.attr('fill', config.lightgreen);
@@ -347,30 +347,30 @@ $(function() {
 				chart.append('line')
 					.attr('id', 'predicted-' + source)
 					.attr('x1', function(){ return scale(predicted); })
-					.attr('y1', 3 + config.topMargin)
+					.attr('y1', 3 + margin.top)
 					.attr('x2', function(){ return scale(predicted); })
-					.attr('y2', 20 + config.topMargin)
+					.attr('y2', 20 + margin.top)
 					.attr('stroke', config.grey)
 					.attr('stroke-width', Math.abs(observed - predicted) >= (max/20) ? 5 : 7);
 				chart.append('text').text( predicted )
 					.attr('id', 'predicted-text-' + source)
 					.attr('x', function(){ return scale(predicted); } )
-					.attr('y', Math.abs(observed - predicted) >= (max/20) ? config.topMargin : config.topMargin - 13)
+					.attr('y', Math.abs(observed - predicted) >= (max/20) ? margin.top : margin.top - 13)
 					.attr('text-anchor', 'middle');
 
 				// observed value marker
 				chart.append('line')
 					.attr('id', 'observed-' + source)
 					.attr('x1', function(){ return scale(observed); })
-					.attr('y1', 3 + config.topMargin)
+					.attr('y1', 3 + margin.top)
 					.attr('x2', function(){ return scale(observed); })
-					.attr('y2', 20 + config.topMargin)
+					.attr('y2', 20 + margin.top)
 					.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green; })
 					.attr('stroke-width', 5);
 				chart.append('text').text( observed )
 					.attr('id', 'observed-text-' + source)
 					.attr('x', function(){ return scale(observed); } )
-					.attr('y', config.topMargin)
+					.attr('y', margin.top)
 					.attr('text-anchor', 'middle');
 
 				// Axis
@@ -381,7 +381,7 @@ $(function() {
 
 				svg.append('g')
 					.attr('class', 'x-axis')
-					.attr('transform', 'translate(0,' + (20 + config.topMargin) + ')' )
+					.attr('transform', 'translate(' + margin.left + ',' + (margin.top + 45) + ')' )
 					.call(axis);
 			}
 		}
@@ -393,7 +393,7 @@ $(function() {
 	  			.text(provider.hospital_name);
 
 	  		['CLABSI','CAUTI','SSIcolon'].forEach( function(source) {
-	  			console.log(source);
+	  			// console.log(source);
 			    var observed  = provider[source + '_observed'],
 					    predicted = provider[source + '_predicted'],
 					    ratio     = provider[source + '_ratio'],
@@ -403,41 +403,41 @@ $(function() {
 					var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
 					    scale = d3.scale.linear()
 						  	.domain([0,max + 1])
-						  	.range([config.leftMargin, config.w - config.rightMargin]);
+						  	.range([0,config.width - margin.right - margin.left]);
 
 	  			d3.select('#ratio-' + source).text('(ratio: ' + (ratio > 0 ? ratio : 'NA') + ')');
 
 	  			d3.select('#range-' + source)
 	  				.transition().duration(1000)
 						.attr('x', function(){ return scale(lower); })
-						.attr('y', 3 + config.topMargin )
+						.attr('y', 3 + margin.top )
 						.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; });
 
 					d3.select('#predicted-' + source)
 	  				.transition().duration(1000)
 							.attr('x1', function(){ return scale(predicted); })
-							.attr('y1', 3 + config.topMargin)
+							.attr('y1', 3 + margin.top)
 							.attr('x2', function(){ return scale(predicted); })
-							.attr('y2', 20 + config.topMargin)
+							.attr('y2', 20 + margin.top)
 					d3.select('#predicted-text-' + source)
 						.transition().duration(1000)
 						.text( predicted )
 							.attr('x', function(){ return scale(predicted); } )
-							.attr('y', Math.abs(observed - predicted) >= (max/20) ? 45 : 32)
+							.attr('y', Math.abs(observed - predicted) >= (max/20) ? margin.top : margin.top - 13)
 							.attr('text-anchor', 'middle');
 
 					d3.select('#observed-' + source)
 	  				.transition().duration(1000)
 							.attr('x1', function(){ return scale(observed); })
-							.attr('y1', 3 + config.topMargin)
+							.attr('y1', 4 + margin.top)
 							.attr('x2', function(){ return scale(observed); })
-							.attr('y2', 20 + config.topMargin)
+							.attr('y2', 20 + margin.top)
 							.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green; })
 					d3.select('#observed-text-' + source)
 						.transition().duration(1000)
 						.text( observed )
 							.attr('x', function(){ return scale(observed); } )
-							.attr('y', config.topMargin)
+							.attr('y', margin.top)
 							.attr('text-anchor', 'middle');
 		  	});
 	  	});
