@@ -51,7 +51,7 @@ $(function() {
 				.attr('height', function(d){
 					return scale(parseFloat(d.score)) - toppad;
 				})
-				.attr('class', 'bar-' + source)
+				.attr('class', 'bar bar-' + source)
 				.attr('fill', function(d){return d.state === 'GA' ? 'darkblue' : 'lightgrey';})
 			.on('mouseover', function(d,i) {
 				var x = parseFloat(window.event.clientX) + 10,
