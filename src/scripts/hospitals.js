@@ -3,7 +3,7 @@ $(function() {
 
 	var margin = {top: 20, right: 10, bottom: 20, left: 10};
 	var config = {
-		width: 450 - margin.left - margin.right,
+		width: 650 - margin.left - margin.right,
     red: '#FF0000',
     lightred: '#F8E0E0',
     green: '#088A08',
