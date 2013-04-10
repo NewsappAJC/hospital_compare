@@ -17,6 +17,7 @@ div#new-measures {
   background-color: white;
   box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
   pointer-events: none;
+  z-index: 3;
 }
 #tooltip.hidden {
   display: none;

@@ -68,7 +68,8 @@ module.exports = function(grunt) {
           report: 'gzip'
         },
         files: {
-          'build/style/app.css': ['src/style/*.css']
+          'build/style/app.css': ['src/style/app.css'],
+          'build/style/skeleton.css': ['src/style/skeleton.css']
         }
       }
     },

@@ -3,7 +3,7 @@ $(function() {
 
 	var margin = {top: 20, right: 10, bottom: 20, left: 10};
 	var config = {
-		width: 650 - margin.left - margin.right,
+		width: 460 - margin.left - margin.right,
     red: '#FF0000',
     lightred: '#F8E0E0',
     green: '#088A08',
@@ -335,10 +335,11 @@ $(function() {
 			function drawDetailChart(data, source, config) {
 				var provider  = _.findWhere(data, {provider_id: id}),
 				    observed  = provider[source + '_observed'],
-				    predicted = provider[source + '_predicted'],
+				    predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
 				    ratio     = provider[source + '_ratio'],
 				    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
-				    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0;
+				    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
+				    ySpacing  = 10;
 
 				var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
 				    scale = d3.scale.linear()
@@ -368,7 +369,8 @@ $(function() {
 				chart.append('rect')
 					.attr('id', 'range-' + source)
 					.attr('x', function(){ return scale(lower); })
-					.attr('y', 3 + margin.top )
+					// .attr('y', 3 + margin.top )
+					.attr('y', ySpacing)
 					.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; })
 					.attr('height', 17)
 					.attr('fill', config.lightgreen);
@@ -377,30 +379,30 @@ $(function() {
 				chart.append('line')
 					.attr('id', 'predicted-' + source)
 					.attr('x1', function(){ return scale(predicted); })
-					.attr('y1', 3 + margin.top)
+					.attr('y1', ySpacing)
 					.attr('x2', function(){ return scale(predicted); })
-					.attr('y2', 20 + margin.top)
+					.attr('y2', ySpacing + 17)
 					.attr('stroke', config.grey)
 					.attr('stroke-width', Math.abs(observed - predicted) >= (max/20) ? 5 : 7);
 				chart.append('text').text( predicted )
 					.attr('id', 'predicted-text-' + source)
 					.attr('x', function(){ return scale(predicted); } )
-					.attr('y', Math.abs(observed - predicted) >= (max/20) ? margin.top : margin.top - 13)
+					.attr('y', Math.abs(observed - predicted) >= (max/20) ? ySpacing - 2 : ySpacing - 14)
 					.attr('text-anchor', 'middle');
 
 				// observed value marker
 				chart.append('line')
 					.attr('id', 'observed-' + source)
 					.attr('x1', function(){ return scale(observed); })
-					.attr('y1', 3 + margin.top)
+					.attr('y1', ySpacing)
 					.attr('x2', function(){ return scale(observed); })
-					.attr('y2', 20 + margin.top)
+					.attr('y2', ySpacing + 17)
 					.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green; })
 					.attr('stroke-width', 5);
 				chart.append('text').text( observed )
 					.attr('id', 'observed-text-' + source)
 					.attr('x', function(){ return scale(observed); } )
-					.attr('y', margin.top)
+					.attr('y', ySpacing - 2)
 					.attr('text-anchor', 'middle');
 
 				// Axis
@@ -411,24 +413,24 @@ $(function() {
 
 				svg.append('g')
 					.attr('class', 'x-axis')
-					.attr('transform', 'translate(' + margin.left + ',' + (margin.top + 45) + ')' )
+					.attr('transform', 'translate(' + margin.left + ',' + (ySpacing + 40) + ')' )
 					.call(axis);
 			}
 		}
 	  var updateDetail = function(id) {
 			d3.csv("data/detail.csv", function(data) {
-	  		var provider  = _.findWhere(data, {provider_id: id});
+	  		var provider  = _.findWhere(data, {provider_id: id}),
+	  		    ySpacing = 10;
 	  		d3.select('#hospital_name')
-	  			.transition().delay(700)
 	  			.text(provider.hospital_name);
 
 	  		['CLABSI','CAUTI','SSIcolon'].forEach( function(source) {
-	  			// console.log(source);
 			    var observed  = provider[source + '_observed'],
-					    predicted = provider[source + '_predicted'],
+					    predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
 					    ratio     = provider[source + '_ratio'],
 					    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
-					    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0;
+					    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
+					    ySpacing  = 10;
 
 					var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
 					    scale = d3.scale.linear()
@@ -440,34 +442,33 @@ $(function() {
 	  			d3.select('#range-' + source)
 	  				.transition().duration(1000)
 						.attr('x', function(){ return scale(lower); })
-						.attr('y', 3 + margin.top )
 						.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; });
 
 					d3.select('#predicted-' + source)
 	  				.transition().duration(1000)
 							.attr('x1', function(){ return scale(predicted); })
-							.attr('y1', 3 + margin.top)
+							.attr('y1', ySpacing)
 							.attr('x2', function(){ return scale(predicted); })
-							.attr('y2', 20 + margin.top)
+							.attr('y2', ySpacing + 17)
 					d3.select('#predicted-text-' + source)
 						.transition().duration(1000)
 						.text( predicted )
 							.attr('x', function(){ return scale(predicted); } )
-							.attr('y', Math.abs(observed - predicted) >= (max/20) ? margin.top : margin.top - 13)
+							.attr('y', Math.abs(observed - predicted) >= (max/20) ? ySpacing - 2 : ySpacing - 14)
 							.attr('text-anchor', 'middle');
 
 					d3.select('#observed-' + source)
 	  				.transition().duration(1000)
 							.attr('x1', function(){ return scale(observed); })
-							.attr('y1', 4 + margin.top)
+							.attr('y1', ySpacing)
 							.attr('x2', function(){ return scale(observed); })
-							.attr('y2', 20 + margin.top)
+							.attr('y2', ySpacing + 17)
 							.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green; })
 					d3.select('#observed-text-' + source)
 						.transition().duration(1000)
 						.text( observed )
 							.attr('x', function(){ return scale(observed); } )
-							.attr('y', margin.top)
+							.attr('y', ySpacing - 2)
 							.attr('text-anchor', 'middle');
 		  	});
 	  	});
