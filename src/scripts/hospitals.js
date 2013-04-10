@@ -22,7 +22,7 @@ $(function() {
 	});
 
 	function drawDotChart(dataset) {
-		var height = (25 * dataset.length) - margin.top - margin.bottom,
+		var height = (20 * dataset.length) - margin.top - margin.bottom,
     		left_pad = 235;
 
 		var max = Math.max(
@@ -152,7 +152,7 @@ $(function() {
 			.enter()
 			.append('a')
 				// .attr('xlink:href', function(d){ return 'detail.html?id=' + d.provider_id })
-				.attr('xlink:href', '#')
+				.attr('xlink:href', '#DETAIL')
 				.attr('class', 'hospital')
 			.append('text')
 				.attr('class', 'hospital')

@@ -1,15 +1,27 @@
 "provider_id","hospital_name","clabsi_ratio","cauti_ratio","ssicolon_ratio"
 110079,"Grady Memorial Hospital",2.04,0.66,0.00
 110226,"Dekalb Medical Center at Hillandale",1.84,0.00,0.00
+110229,"Piedmont Newnan Hospital",1.73,0.00,0.00
+110087,"Gwinnett Medical Center",1.68,1.54,0.35
+110191,"Piedmont Henry Hospital",1.63,0.00,0.00
 110219,"South Fulton Medical Center",1.54,0.00,0.00
 110165,"Southern Regional Medical Center",1.39,0.00,0.00
+110091,"Rockdale Medical Center",1.33,0.00,0.00
+110230,"Emory Johns Creek Hospital",1.33,0.00,0.00
 110076,"Dekalb Medical Center",1.16,0.40,0.00
 110078,"Emory University Hospital Midtown",1.15,1.74,4.15
+110215,"Piedmont Fayette Hospital",1.07,0.00,1.09
 110083,"Piedmont Hospital",1.02,2.32,0.26
 110198,"North Fulton Regional Hospital",0.95,0.00,0.00
-110082,"Saint Joseph's Hospital of Atlanta",0.74,1.10,1.57
+110192,"Emory Eastside Medical Center",0.78,0.00,0.00
+110082,"Saint Joseph's Hospital Of Atlanta",0.74,1.10,1.57
+110008,"Northside Hospital Cherokee",0.69,0.00,0.00
 110161,"Northside Hospital",0.68,0.82,0.44
 110115,"Atlanta Medical Center",0.59,0.67,0.00
 110010,"Emory University Hospital",0.54,2.16,1.01
 110143,"Wellstar Cobb Hospital",0.49,2.09,0.00
 110035,"Wellstar Kennestone Hospital",0.46,1.35,0.58
+110184,"Wellstar Douglas Hospital",0.00,0.00,0.00
+110183,"Emory-Adventist Hospital",0.00,0.00,0.00
+110042,"Wellstar Paulding Hospital",0.00,0.00,0.00
+110005,"Northside Hospital Forsyth",0.00,2.30,0.00
