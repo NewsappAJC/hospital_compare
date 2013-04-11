@@ -15,6 +15,11 @@ $(function() {
 		cauti    : 0.71,
 		ssicolon : 0.98
 	};
+	var statements;
+
+	d3.csv('data/statement.csv', function(data) {
+		statements = data;
+	});
 
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
@@ -279,49 +284,50 @@ $(function() {
 			var legendSvg = d3.select('#legend')
 				.append('svg')
 					.attr('width', config.width)
-					.attr('height', 60)
+					.attr('height', 120)
 				.append('g')
 					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 			var legend = legendSvg.append('g');
 
 			legend.append('text').text('Expected cases:')
-					.attr('x', 5)
-					.attr('y', 25);
+					.attr('x', 0)
+					.attr('y', 20);
 			legend.append('line')
 				.attr('x1', 108)
-				.attr('y1', 10)
+				.attr('y1', 0)
 				.attr('x2', 108)
-				.attr('y2', 30)
+				.attr('y2', 20)
 				.attr('stroke', config.grey)
 				.attr('stroke-width', 5);
 			legend.append('text').text('Expected range:')
 					.attr('x', 125)
-					.attr('y', 25);
+					.attr('y', 20);
 			legend.append('rect')
 				.attr('x', 225)
-				.attr('y', 10)
+				.attr('y', 0)
 				.attr('width', 20)
 				.attr('height', 20)
 				.attr('fill', config.lightgreen);
+
 			legend.append('text').text('Actual cases, fewer than expected:')
-					.attr('x', 260)
-					.attr('y', 25);
+					.attr('x', 0)
+					.attr('y', 60);
 			legend.append('line')
-				.attr('x1', 470)
-				.attr('y1', 10)
-				.attr('x2', 470)
-				.attr('y2', 30)
+				.attr('x1', 212)
+				.attr('y1', 40)
+				.attr('x2', 212)
+				.attr('y2', 60)
 				.attr('stroke', config.green)
 				.attr('stroke-width', 5);
 			legend.append('text').text('more than expected:')
-					.attr('x', 485)
-					.attr('y', 25);
+					.attr('x', 225)
+					.attr('y', 60);
 			legend.append('line')
-				.attr('x1', 608)
-				.attr('y1', 10)
-				.attr('x2', 608)
-				.attr('y2', 30)
+				.attr('x1', 350)
+				.attr('y1', 40)
+				.attr('x2', 350)
+				.attr('y2', 60)
 				.attr('stroke', config.red)
 				.attr('stroke-width', 5);
 
@@ -334,6 +340,7 @@ $(function() {
 
 			function drawDetailChart(data, source, config) {
 				var provider  = _.findWhere(data, {provider_id: id}),
+						statement = _.findWhere(statements, {provider_id: id}),
 				    observed  = provider[source + '_observed'],
 				    predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
 				    ratio     = provider[source + '_ratio'],
@@ -347,6 +354,7 @@ $(function() {
 					  	.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
 
 				d3.select('#hospital_name').text(provider.hospital_name);
+				d3.select('#statement').text(statement.text);
 
 				var svg = d3.select('#' + source.toLowerCase() + '-detail' )
 					.append('svg')
@@ -420,9 +428,11 @@ $(function() {
 	  var updateDetail = function(id) {
 			d3.csv("data/detail.csv", function(data) {
 	  		var provider  = _.findWhere(data, {provider_id: id}),
+			  		statement = _.findWhere(statements, {provider_id: id}),
 	  		    ySpacing = 10;
-	  		d3.select('#hospital_name')
-	  			.text(provider.hospital_name);
+
+	  		d3.select('#hospital_name').text(provider.hospital_name);
+	  		d3.select('#statement').text(statement.text);
 
 	  		['CLABSI','CAUTI','SSIcolon'].forEach( function(source) {
 			    var observed  = provider[source + '_observed'],
