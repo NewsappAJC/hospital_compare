@@ -284,7 +284,7 @@ $(function() {
 			var legendSvg = d3.select('#legend')
 				.append('svg')
 					.attr('width', config.width)
-					.attr('height', 120)
+					.attr('height', 100)
 				.append('g')
 					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 

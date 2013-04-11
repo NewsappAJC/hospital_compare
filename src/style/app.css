@@ -27,3 +27,6 @@ div#new-measures {
   font-family: sans-serif;
   fotn-size: 16px;
 }
+.detail {
+  border-top: 1px solid grey;
+}
