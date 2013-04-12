@@ -7,7 +7,7 @@
   <title>Hospital Compare</title>
   <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->    
+  <![endif]-->
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<link rel="stylesheet" href="http://host.coxmediagroup.com/ajc/digitalprojects/global/css/iFrame_Medley.css" type="text/css"/>
   <link rel="stylesheet" href="style/app.css" type="text/css"/>
@@ -18,15 +18,36 @@
     <p id='source'></p>
     <p id='score'></p>
   </div>
+
+  <section id="top-text" class="container row">
+    <article class="five columns">
+      <h3>Central-Line-Associated Bloodstream Infections (CLABSI)</h3>
+      <p>A central line is a narrow tube inserted by a doctor into a large vein of a patient's neck or chest to give important medical treatment. When not put in correctly or kept clean, central lines can become an easy way for germs to enter the body and cause serious infections in the blood. These infections are called Central Line-Associated Bloodstream Infections (CLABSIs), and they can be deadly.</p>
+    </article>
+
+    <article class="five columns">
+      <h3>Catheter-Associated Urinary Tract Infections (CAUTI)</h3>
+      <p>A catheter is a drainage tube that is inserted by a doctor into a patient’s urinary bladder through the urethra and is left in place to collect urine while a patient is immobile or incontinent. When not put in correctly or kept clean, or if left in place for long periods of time, catheters can become an easy way for germs to enter the body and cause serious infections in the urinary tract. These infections are called Catheter-Associated Urinary Tract Infections (CAUTIs), and they can cause additional illness or be deadly.</p>
+    </article>
+
+    <article class="five columns omega">
+      <h3>Surgical Site Infections From Colon Surgery (SSI: Colon)</h3>
+      <p>A surgical operative procedure is one that is performed on a patient in an operating room where a surgeon makes at least one incision through the skin or mucous membrane to give important medical treatment. When not conducted in a sterile environment and following sterile procedures, a surgical site can become an easy way for germs to enter the body and cause serious infections in a patient. These infections are called Surgical Site Infections (SSIs), and they can be deadly.</p>
+    </article>
+  </section>
+
   <div id="graphics" class="container row">
   <div id="hospital-compare" class="eight columns alpha">
+    <h2>Standardized Infection Ratio:</h2>
+    <hr/>
   Sort by:
   <select id="sortby">
     <option value='clabsi'>Central-line-associated blood stream infections (CLABSI)</option>
     <option value='cauti'>Catheter associated urinary tract infections (CAUTI)</option>
     <option value='ssicolon'>Surgical site infection from colon surgery (SSI Colon)</option>
   </select>
-  
+
+
   <div id="hospitals"></div>
   </div>
 
@@ -35,24 +56,28 @@
     <header><h2 id="hospital_name"></h2></header>
     <hr/>
     <div id="legend"></div>
+
     <article id='clabsi' class="detail">
       <header>
         <h3>Central-Line-Associated Blood Stream Infections</h3>
       </header>
       <div id="clabsi-detail"></div>
     </article>
+
     <article id="cauti" class="detail">
       <header>
         <h3>Catheter Associated Urinary Tract Infections</h3>
       </header>
       <div id="cauti-detail"></div>
     </article>
+
     <article id="ssicolon" class="detail">
       <header>
         <h3>Surgical Site Infection from colon surgery</h3>
       </header>
       <div id="ssicolon-detail"></div>
     </article>
+
     <article class="detail" class="detail">
       <h3>Hospital Statement:</h3>
       <div id="statement"></div>
