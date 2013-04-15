@@ -81,11 +81,12 @@ $(function() {
 				.attr('class', 'clabsi')
 				.attr('cx', function(d){ return xScale(d.clabsi_ratio); })
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
-				.attr('r', 5)
-				.attr('fill','#0101DF')
+				.attr('r', 4)
+				.attr('fill','black')
+				.attr('opacity', 1)
 			.on('mouseover', function(d) {
-				var x = parseFloat(d3.select(this).attr('cx') + 10),
-				    y = parseFloat(d3.select(this).attr('cy') - 18);
+				var x = parseFloat(window.event.clientX),
+				    y = parseFloat(window.event.clientY);
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
@@ -102,28 +103,27 @@ $(function() {
 		var cauti = svg.selectAll('.cauti')
 			.data(dataset)
 			.enter()
-		  .append('rect')
-		  	.attr('class', 'cauti')
-				.attr('x', function(d){ return xScale(d.cauti_ratio)-4; })
-				.attr('y', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2) - 4; })
-				.attr('width', 8)
-				.attr('height', 8)
-				.attr('fill','black')
-				.attr('opacity', 0.3)
-			.on('mouseover', function(d) {
-				var x = parseFloat(d3.select(this).attr('x') + 10),
-				    y = parseFloat(d3.select(this).attr('y') - 18);
-				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
-				var tt = d3.select('#tooltip')
-					.style('left', x + 'px')
-					.style('top', y + 'px');
-				tt.select('#source').text('CLAUTI');
-				tt.select('#score').text('score: ' + d.cauti_ratio);
-				d3.select('#tooltip').classed('hidden', false);
-			})
-			.on('mouseout', function(){
-				d3.select('#tooltip').classed('hidden', true);
-			});
+	    .append('circle')
+		   	.attr('class', 'cauti')
+		 		.attr('cx', function(d){ return xScale(d.cauti_ratio); })
+		 		.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
+		 		.attr('r', 0)
+		 		.attr('fill','black')
+		 		.attr('opacity', 0)
+		 	.on('mouseover', function(d) {
+		 		var x = parseFloat(window.event.clientX),
+		 		    y = parseFloat(window.event.clientY);
+		 		x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
+		 		var tt = d3.select('#tooltip')
+		 			.style('left', x + 'px')
+		 			.style('top', y + 'px');
+		 		tt.select('#source').text('CAUTI');
+		 		tt.select('#score').text('score: ' + d.cauti_ratio);
+		 		d3.select('#tooltip').classed('hidden', false);
+		 	})
+		 	.on('mouseout', function(){
+		 		d3.select('#tooltip').classed('hidden', true);
+		 	});
 
 		// SSI:Colon symbols
 		var ssicol = svg.selectAll('.ssicol')
@@ -133,12 +133,12 @@ $(function() {
 		  	.attr('class', 'ssicol')
 				.attr('cx', function(d){ return xScale(d.ssicolon_ratio); })
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
-				.attr('r', 4)
+				.attr('r', 0)
 				.attr('fill','black')
-				.attr('opacity', 0.3)
+				.attr('opacity', 0)
 			.on('mouseover', function(d) {
-				var x = parseFloat(d3.select(this).attr('cx') + 10),
-				    y = parseFloat(d3.select(this).attr('cy') - 18);
+				var x = parseFloat(window.event.clientX),
+				    y = parseFloat(window.event.clientY);
 				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
@@ -170,12 +170,12 @@ $(function() {
 					updateDetail(d.provider_id);
 					return false;
 			})
-			.on('mouseover', function(){ 
+			.on('mouseover', function(){
 				return d3.select(this)
 									.attr('fill','grey')
 									.attr('font-size', '14px');
 			})
-			.on('mouseout', function(){ 
+			.on('mouseout', function(){
 				return d3.select(this)
 								 .attr('fill','black')
 								 .attr('font-size', '13px');});
@@ -188,7 +188,7 @@ $(function() {
 			.attr('stroke', 'black')
 			.attr('id', 'avg-marker');
 		svg.append('text')
-			.text('CLABSI state average (' + ga_avg.clabsi + ')')
+			.text('CLABSI state average: ' + ga_avg.clabsi)
 			.attr('x', xScale(ga_avg.clabsi))
 			.attr('y', 0)
 			.attr('text-anchor', 'middle')
@@ -209,6 +209,7 @@ $(function() {
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
 				var infection = this.value;
+				var warningText = (infection === 'clabsi') ? '' : ' (data for three months only)';
 
 				svg.selectAll('.clabsi')
 					.sort(function(a,b){
@@ -216,8 +217,11 @@ $(function() {
 					})
 					.transition()
 					.duration(1000).ease('bounce')
+					.attr('r', function() {
+						return infection === 'clabsi' ? 4 : 0;
+					})
 					.attr('opacity', function() {
-						return infection === 'clabsi' ? 1.0 : 0.4;
+						return infection === 'clabsi' ? 1 : 0;
 					})
 					.attr('cy', function(d,i){
 						return yScale(i) + (yScale.rangeBand() / 2);
@@ -225,14 +229,19 @@ $(function() {
 
 				svg.selectAll('.cauti')
 					.sort(function(a,b){
-							return b[infection + '_ratio'] - a[infection + '_ratio'];
+						return b[infection + '_ratio'] - a[infection + '_ratio'];
 					})
 					.transition()
 					.duration(1000).ease('bounce')
-					.attr('opacity', function() {
-						return infection === 'cauti' ? 0.7 : 0.3;
+					.attr('r', function() {
+						return infection === 'cauti' ? 4 : 0;
 					})
-					.attr('y', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2) - 4; });
+					.attr('opacity', function() {
+						return infection === 'cauti' ? 0.5 : 0;
+					})
+					.attr('cy', function(d,i){
+						return yScale(i) + (yScale.rangeBand() / 2);
+					});
 
 				svg.selectAll('.ssicol')
 					.sort(function(a,b){
@@ -240,8 +249,11 @@ $(function() {
 					})
 					.transition()
 					.duration(1000).ease('bounce')
+					.attr('r', function() {
+						return infection === 'ssicolon' ? 4 : 0;
+					})
 					.attr('opacity', function() {
-						return infection === 'ssicolon' ? 0.7 : 0.3;
+						return infection === 'ssicolon' ? 0.5 : 0;
 					})
 					.attr('cy', function(d,i){
 						return yScale(i) + (yScale.rangeBand() / 2);
@@ -261,7 +273,7 @@ $(function() {
 					.attr('x2', xScale(ga_avg[infection]));
 				svg.select('#avg-text')
 					.transition().duration(500).ease('circular')
-					.text(infection.toUpperCase() + ' state average (' + ga_avg[infection] + ')')
+					.text(infection.toUpperCase() + ' state average: ' + ga_avg[infection] + warningText)
 					.attr('x', xScale(ga_avg[infection]));
 			});
 
