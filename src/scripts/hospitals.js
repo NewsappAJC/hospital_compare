@@ -217,7 +217,7 @@ $(function() {
 					.transition()
 					.duration(1000).ease('bounce')
 					.attr('opacity', function() {
-						return infection === 'clabsi' ? 1.0 : 0.4; 
+						return infection === 'clabsi' ? 1.0 : 0.4;
 					})
 					.attr('cy', function(d,i){
 						return yScale(i) + (yScale.rangeBand() / 2);
@@ -230,7 +230,7 @@ $(function() {
 					.transition()
 					.duration(1000).ease('bounce')
 					.attr('opacity', function() {
-						return infection === 'cauti' ? 0.7 : 0.3; 
+						return infection === 'cauti' ? 0.7 : 0.3;
 					})
 					.attr('y', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2) - 4; });
 
@@ -241,7 +241,7 @@ $(function() {
 					.transition()
 					.duration(1000).ease('bounce')
 					.attr('opacity', function() {
-						return infection === 'ssicolon' ? 0.7 : 0.3; 
+						return infection === 'ssicolon' ? 0.7 : 0.3;
 					})
 					.attr('cy', function(d,i){
 						return yScale(i) + (yScale.rangeBand() / 2);
@@ -434,7 +434,7 @@ $(function() {
 	  		d3.select('#hospital_name').text(provider.hospital_name);
 	  		d3.select('#statement').text(statement.text);
 
-	  		['CLABSI','CAUTI','SSIcolon'].forEach( function(source) {
+	  		_.each(['CLABSI','CAUTI','SSIcolon'], function(source) {
 			    var observed  = provider[source + '_observed'],
 					    predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
 					    ratio     = provider[source + '_ratio'],
