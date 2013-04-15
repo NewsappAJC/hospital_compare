@@ -15,11 +15,16 @@ $(function() {
 		cauti    : 0.71,
 		ssicolon : 0.98
 	};
-	var statements;
 
+	var statements;
 	d3.csv('data/statement.csv', function(data) {
 		statements = data;
 	});
+
+	var sourceText;
+	d3.csv('data/source_text.csv', function(data) {
+		sourceText = data;
+	})
 
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
@@ -29,11 +34,10 @@ $(function() {
 	function drawDotChart(dataset) {
 		var height = (20 * dataset.length) - margin.top - margin.bottom,
     		left_pad = 235;
-
 		var max = Math.max(
-			d3.max(dataset, function(d) {return parseFloat(d.clabsi_ratio);}),
-			d3.max(dataset, function(d) {return parseFloat(d.cauti_ratio);}),
-			d3.max(dataset, function(d) {return parseFloat(d.ssicolon_ratio);})
+			Math.ceil(d3.max(dataset, function(d) {return parseFloat(d.clabsi_ratio);})),
+			Math.ceil(d3.max(dataset, function(d) {return parseFloat(d.cauti_ratio);})),
+			Math.ceil(d3.max(dataset, function(d) {return parseFloat(d.ssicolon_ratio);}))
 		);
 		var xScale = d3.scale.linear()
 			.domain([0,Math.ceil(max)])
@@ -90,8 +94,10 @@ $(function() {
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
-				tt.select('#source').text('CLABSI');
-				tt.select('#score').text('score: ' + d.clabsi_ratio);
+				// tt.select('#source').text('CLABSI');
+				tt.select('#score').text('ratio: ' + d.clabsi_ratio);
+				tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
+				tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
 				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
@@ -117,8 +123,10 @@ $(function() {
 		 		var tt = d3.select('#tooltip')
 		 			.style('left', x + 'px')
 		 			.style('top', y + 'px');
-		 		tt.select('#source').text('CAUTI');
-		 		tt.select('#score').text('score: ' + d.cauti_ratio);
+		 		// tt.select('#source').text('CAUTI');
+		 		tt.select('#score').text('ratio: ' + d.cauti_ratio);
+		 		tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
+		 		tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
 		 		d3.select('#tooltip').classed('hidden', false);
 		 	})
 		 	.on('mouseout', function(){
@@ -143,8 +151,10 @@ $(function() {
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
-				tt.select('#source').text('SSI Colon');
-				tt.select('#score').text('score: ' + d.ssicolon_ratio);
+				// tt.select('#source').text('SSI Colon');
+				tt.select('#score').text('ratio: ' + d.ssicolon_ratio);
+				tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
+				tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
 				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
@@ -208,8 +218,13 @@ $(function() {
 
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
-				var infection = this.value;
-				var warningText = (infection === 'clabsi') ? '' : ' (data for three months only)';
+				var infection = this.value,
+				    warningText = (infection === 'clabsi') ? '' : ' (data for three months only)',
+				    explainText = _.findWhere( sourceText, {source: infection});
+
+				d3.select('#source-head').text(explainText.head);
+				d3.select('#source-text').text(explainText.text);
+				d3.select('#source-date').text(explainText.data_date);
 
 				svg.selectAll('.clabsi')
 					.sort(function(a,b){
@@ -276,17 +291,6 @@ $(function() {
 					.text(infection.toUpperCase() + ' state average: ' + ga_avg[infection] + warningText)
 					.attr('x', xScale(ga_avg[infection]));
 			});
-
-			var tooltip = function(d) {
-				var x = parseFloat(d3.select(this).attr('cx') + 10),
-				    y = parseFloat(d3.select(this).attr('cy') - 15);
-				var tt = d3.select('#tooltip')
-					.style('left', x + 'px')
-					.style('top', y + 'px');
-				tt.select('#source').text('CLABSI');
-				tt.select('#score').text('score: ' + d.clabsi_ratio);
-				d3.select('#tooltip').classed('hidden', false);
-			}
 	  }
 
 	  function detail(id) {
@@ -296,51 +300,38 @@ $(function() {
 			var legendSvg = d3.select('#legend')
 				.append('svg')
 					.attr('width', config.width)
-					.attr('height', 100)
+					.attr('height', height)
 				.append('g')
 					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 			var legend = legendSvg.append('g');
 
-			legend.append('text').text('Expected cases:')
-					.attr('x', 0)
-					.attr('y', 20);
+			legend.append('text').text('Expected cases and margin of error:')
+				.attr('x', 0)
+				.attr('y', 20);
+			legend.append('rect')
+				.attr('x', 218)
+				.attr('y', 0)
+				.attr('width', 40)
+				.attr('height', 20)
+				.attr('fill', config.lightgreen);
 			legend.append('line')
-				.attr('x1', 108)
+				.attr('x1', 238)
 				.attr('y1', 0)
-				.attr('x2', 108)
+				.attr('x2', 238)
 				.attr('y2', 20)
 				.attr('stroke', config.grey)
 				.attr('stroke-width', 5);
-			legend.append('text').text('Expected range:')
-					.attr('x', 125)
-					.attr('y', 20);
-			legend.append('rect')
-				.attr('x', 225)
-				.attr('y', 0)
-				.attr('width', 20)
-				.attr('height', 20)
-				.attr('fill', config.lightgreen);
 
-			legend.append('text').text('Actual cases, fewer than expected:')
-					.attr('x', 0)
-					.attr('y', 60);
+			legend.append('text').text('Actual cases:')
+					.attr('x', 270)
+					.attr('y', 20);
 			legend.append('line')
-				.attr('x1', 212)
-				.attr('y1', 40)
-				.attr('x2', 212)
-				.attr('y2', 60)
-				.attr('stroke', config.green)
-				.attr('stroke-width', 5);
-			legend.append('text').text('more than expected:')
-					.attr('x', 225)
-					.attr('y', 60);
-			legend.append('line')
-				.attr('x1', 350)
-				.attr('y1', 40)
-				.attr('x2', 350)
-				.attr('y2', 60)
-				.attr('stroke', config.red)
+				.attr('x1', 360)
+				.attr('y1', 0)
+				.attr('x2', 360)
+				.attr('y2', 20)
+				.attr('stroke', 'black')
 				.attr('stroke-width', 5);
 
 			d3.csv("data/detail.csv", function(data) {
@@ -378,7 +369,7 @@ $(function() {
 
 				// Headline
 				svg.append('text')
-					.text('(ratio: ' + (ratio > 0 ? ratio : 'NA') + ')')
+					.text('(ratio: ' + (ratio > 0 ? ratio : 'insufficient data') + ')')
 					.attr('id', 'ratio-' + source)
 					.attr('x', 0)
 					.attr('y', 0);
@@ -417,7 +408,7 @@ $(function() {
 					.attr('y1', ySpacing)
 					.attr('x2', function(){ return scale(observed); })
 					.attr('y2', ySpacing + 17)
-					.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green; })
+					.attr('stroke', 'black')
 					.attr('stroke-width', 5);
 				chart.append('text').text( observed )
 					.attr('id', 'observed-text-' + source)
@@ -459,7 +450,7 @@ $(function() {
 						  	.domain([0,max + 1])
 						  	.range([0,config.width - margin.right - margin.left]);
 
-	  			d3.select('#ratio-' + source).text('(ratio: ' + (ratio > 0 ? ratio : 'NA') + ')');
+	  			d3.select('#ratio-' + source).text('(ratio: ' + (ratio > 0 ? ratio : 'insufficient data') + ')');
 
 	  			d3.select('#range-' + source)
 	  				.transition().duration(1000)

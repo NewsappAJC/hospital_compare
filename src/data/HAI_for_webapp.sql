@@ -1,8 +1,10 @@
-select /*
-provider_id,hospital_name,clabsi_ratio,cauti_ratio,ssicolon_ratio
-*/
+select 
+provider_id,hospital_name,clabsi_ratio,cauti_ratio,ssicolon_ratio,
+clabsi_observed, cauti_observed, ssicolon_observed,
+clabsi_predicted, cauti_predicted, ssicolon_predicted
+/*
 provider_id,hospital_name,address_1,city,state,zip_code,county_name,CAUTI_ratio,CAUTI_lower,CAUTI_observed,CAUTI_predicted,CAUTI_upper,CLABSI_ratio,CLABSI_lower,CLABSI_observed,CLABSI_predicted,CLABSI_upper,SSIcolon_ratio,SSIcolon_lower,SSIcolon_observed,SSIcolon_predicted,SSIcolon_upper
-
+*/
 from `HAI_transposed`
 where provider_id in (
   "110115",
