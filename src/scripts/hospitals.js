@@ -167,7 +167,7 @@ $(function() {
 			.enter()
 			.append('a')
 				// .attr('xlink:href', function(d){ return 'detail.html?id=' + d.provider_id })
-				.attr('xlink:href', '#DETAIL')
+				.attr('xlink:href', 'javascript:void(0);')
 				.attr('class', 'hospital')
 			.append('text')
 				.attr('class', 'hospital')
@@ -177,8 +177,9 @@ $(function() {
 				.attr('font-size', '13px')
 				.text(function(d){ return d.hospital_name;})
 			.on('click', function(d) {
-					updateDetail(d.provider_id);
-					return false;
+				d3.event.preventDefault();
+				updateDetail(d.provider_id);
+				return false;
 			})
 			.on('mouseover', function(){
 				return d3.select(this)
@@ -476,7 +477,7 @@ $(function() {
 							.attr('y1', ySpacing)
 							.attr('x2', function(){ return scale(observed); })
 							.attr('y2', ySpacing + 17)
-							.attr('stroke', function(){ return parseFloat(observed) > parseFloat(upper) ? config.red : config.green; })
+							.attr('stroke', 'black')
 					d3.select('#observed-text-' + source)
 						.transition().duration(1000)
 						.text( observed )

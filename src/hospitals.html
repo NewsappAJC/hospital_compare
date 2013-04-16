@@ -41,56 +41,54 @@
   <div id="hospital-compare" class="eight columns alpha">
     <h2>Standardized Infection Ratio (SIR):</h2>
     <hr/>
-  Infection type:
-  <select id="sortby">
-    <option value='clabsi'>Central-line-associated blood stream infections (CLABSI)</option>
-    <option value='cauti'>Catheter associated urinary tract infections (CAUTI)</option>
-    <option value='ssicolon'>Surgical site infection from colon surgery (SSI Colon)</option>
-  </select>
-  <sectoin class="container row">
-    <article class="columns">
-      <p>The SIR is the number of actual infections divided by expected infections. A smaller ratio is better. A ratio greater than one means more infections than expected for similar hospitals.<p>
-    </article>
-  </section>
+    Infection type:
+    <select id="sortby">
+      <option value='clabsi'>Central-line-associated blood stream infections (CLABSI)</option>
+      <option value='cauti'>Catheter associated urinary tract infections (CAUTI)</option>
+      <option value='ssicolon'>Surgical site infection from colon surgery (SSI Colon)</option>
+    </select>
+    <sectoin class="container row">
+      <article class="columns">
+        <p>The SIR is the number of actual infections divided by expected infections. A smaller ratio is better. A ratio greater than one means more infections than expected for similar hospitals.<p>
+      </article>
+    </section>
 
-  <div id="hospitals"></div>
-  </div>
+    <div id="hospitals"></div>
+    </div>
 
-  <a name="DETAIL"></a>
-  <div id="detail" class="eight columns omega">
-    <header><h2 id="hospital_name"></h2></header>
-    <hr/>
-    <div id="legend"></div>
+    <div id="detail" class="eight columns omega">
+      <header><h2 id="hospital_name"></h2></header>
+      <hr/>
+      <div id="legend"></div>
 
-    <article id='clabsi' class="detail">
-      <header>
-        <h3>Central-Line-Associated Blood Stream Infections</h3>
-      </header>
-      <div id="clabsi-detail"></div>
-    </article>
+      <article id='clabsi' class="detail">
+        <header>
+          <h3>Central-Line-Associated Blood Stream Infections</h3>
+        </header>
+        <div id="clabsi-detail"></div>
+      </article>
 
-    <article id="cauti" class="detail">
-      <header>
-        <h3>Catheter Associated Urinary Tract Infections</h3>
-      </header>
-      <div id="cauti-detail"></div>
-    </article>
+      <article id="cauti" class="detail">
+        <header>
+          <h3>Catheter Associated Urinary Tract Infections</h3>
+        </header>
+        <div id="cauti-detail"></div>
+      </article>
 
-    <article id="ssicolon" class="detail">
-      <header>
-        <h3>Surgical Site Infection from colon surgery</h3>
-      </header>
-      <div id="ssicolon-detail"></div>
-    </article>
-  </div>
-  </div>
+      <article id="ssicolon" class="detail">
+        <header>
+          <h3>Surgical Site Infection from colon surgery</h3>
+        </header>
+        <div id="ssicolon-detail"></div>
+      </article>
 
-  <footer class="container">
-
-    <article id="hospital-statement" class="container row column">
       <h3>Hospital Statement:</h3>
       <p id="statement"></p>
-    </article>
+    </div>
+  </div>
+</div>
+
+  <footer class="container">
 
     <article id="sri-text" class="container row column">
       <a name='sri'>
