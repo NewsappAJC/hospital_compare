@@ -30,3 +30,6 @@ div#new-measures {
 .detail {
   border-top: 1px solid grey;
 }
+#legend {
+  background-color: #F0F0F0;
+}

@@ -166,8 +166,7 @@ $(function() {
 			.data(dataset)
 			.enter()
 			.append('a')
-				// .attr('xlink:href', function(d){ return 'detail.html?id=' + d.provider_id })
-				.attr('xlink:href', 'javascript:void(0);')
+				.attr('xlink:href', '')
 				.attr('class', 'hospital')
 			.append('text')
 				.attr('class', 'hospital')
@@ -307,6 +306,13 @@ $(function() {
 
 			var legend = legendSvg.append('g');
 
+			legend.append('rect')
+				.attr('x', 0)
+				.attr('y', 0)
+				.attr('width', config.width)
+				.attr('height', 50)
+				.attr('fill', '#F0F0F0');
+
 			legend.append('text').text('Expected cases and margin of error:')
 				.attr('x', 0)
 				.attr('y', 20);
@@ -357,7 +363,7 @@ $(function() {
 					  	.domain([0,max + 1])
 					  	.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
 
-				d3.select('#hospital_name').text(provider.hospital_name);
+				d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
 				d3.select('#statement').text(statement.text);
 
 				var svg = d3.select('#' + source.toLowerCase() + '-detail' )
@@ -435,7 +441,7 @@ $(function() {
 			  		statement = _.findWhere(statements, {provider_id: id}),
 	  		    ySpacing = 10;
 
-	  		d3.select('#hospital_name').text(provider.hospital_name);
+	  		d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
 	  		d3.select('#statement').text(statement.text);
 
 	  		_.each(['CLABSI','CAUTI','SSIcolon'], function(source) {
