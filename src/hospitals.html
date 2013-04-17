@@ -12,9 +12,10 @@
 	<link rel="stylesheet" href="http://host.coxmediagroup.com/ajc/digitalprojects/global/css/iFrame_Medley.css" type="text/css"/>
   <link rel="stylesheet" href="style/app.css" type="text/css"/>
   <link rel="stylesheet" href="style/skeleton.css" type="text/css"/>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/ui-lightness/jquery-ui.css" type="text/css">
 </head>
 <body>
-  <div id='tooltip-local' class='hidden'>
+  <div id='tooltip' class='hidden'>
     <p>
       <span id='score'></span><br/>
       <span id='predicted'></span><br/>
@@ -32,7 +33,7 @@
 
   <div id="graphics" class="container row">
   <div id="hospital-compare" class="eight columns alpha">
-    <h2>Standardized Infection Ratio <img src="images/moreinfo.png" alt="More Information" id="sir-link" class="moreinfo"> (SIR):</h2>
+    <h2>Standardized Infection Ratio <img src="images/moreinfo.png" alt="More Information" id="sri-link" class="moreinfo"> (SIR):</h2>
     <hr/>
     <p>Infection type:
     <select id="sortby">
@@ -110,8 +111,8 @@
     </div>
   </footer>"
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
   <script src="scripts/lib/underscore-min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="scripts/hospitals.js"></script>

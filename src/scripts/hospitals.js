@@ -26,9 +26,23 @@ $(function() {
 		sourceText = data;
 	})
 
-	$('.moreinfo').tooltip({
-		content: function() { return "some text"; }
+	$(document).tooltip({
+		items: '.moreinfo',
+		content: function() {
+			var re = /(.+)-link/;
+			var idPrefix = $(this).attr('id').match(re)[1];
+			var infoWindow = $( '#' + idPrefix + '-text' );
+			return $('#' + idPrefix + '-text').html();
+		}
 	});
+	// $('.moreinfo').hover(
+	// 	function(e) {
+	// 		var re = /(.+)-link/;
+	// 		var idPrefix = $(this).attr('id').match(re)[1];
+	// 		var infoWindow = $( '#' + idPrefix + '-text' );
+	// 		infoWindow.style
+	// 		console.log( infoWindow );
+	// 	});
 
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
@@ -95,17 +109,17 @@ $(function() {
 			.on('mouseover', function(d) {
 				var x = parseFloat(window.event.clientX),
 				    y = parseFloat(window.event.clientY);
-				var tt = d3.select('#tooltip-local')
+				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
 				// tt.select('#source').text('CLABSI');
 				tt.select('#score').text('ratio: ' + d.clabsi_ratio);
 				tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
 				tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
-				d3.select('#tooltip-local').classed('hidden', false);
+				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip-local').classed('hidden', true);
+				d3.select('#tooltip').classed('hidden', true);
 			});
 
 
@@ -124,17 +138,17 @@ $(function() {
 		 		var x = parseFloat(window.event.clientX),
 		 		    y = parseFloat(window.event.clientY);
 		 		x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
-		 		var tt = d3.select('#tooltip-local')
+		 		var tt = d3.select('#tooltip')
 		 			.style('left', x + 'px')
 		 			.style('top', y + 'px');
 		 		// tt.select('#source').text('CAUTI');
 		 		tt.select('#score').text('ratio: ' + d.cauti_ratio);
 		 		tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
 		 		tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
-		 		d3.select('#tooltip-local').classed('hidden', false);
+		 		d3.select('#tooltip').classed('hidden', false);
 		 	})
 		 	.on('mouseout', function(){
-		 		d3.select('#tooltip-local').classed('hidden', true);
+		 		d3.select('#tooltip').classed('hidden', true);
 		 	});
 
 		// SSI:Colon symbols
@@ -152,17 +166,17 @@ $(function() {
 				var x = parseFloat(window.event.clientX),
 				    y = parseFloat(window.event.clientY);
 				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
-				var tt = d3.select('#tooltip-local')
+				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
 				// tt.select('#source').text('SSI Colon');
 				tt.select('#score').text('ratio: ' + d.ssicolon_ratio);
 				tt.select('#predicted').text('predicted cases: ' + d.ssicolon_predicted);
 				tt.select('#actual').text('actual cases: ' + d.ssicolon_observed);
-				d3.select('#tooltip-local').classed('hidden', false);
+				d3.select('#tooltip').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip-local').classed('hidden', true);
+				d3.select('#tooltip').classed('hidden', true);
 			});
 
 		// Hospital names
