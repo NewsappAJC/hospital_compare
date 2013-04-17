@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="style/skeleton.css" type="text/css"/>
 </head>
 <body>
-  <div id='tooltip' class='hidden'>
+  <div id='tooltip-local' class='hidden'>
     <p>
       <span id='score'></span><br/>
       <span id='predicted'></span><br/>
@@ -25,39 +25,39 @@
   <section id="top-text" class="container row">
     <article class="column">
       <p>Data about infections in Georgia hospitals is collected by the National Healthcare Safety Network (NHSN) at the U.S Centers for Disease Control and Prevention in Atlanta (CDC). It is the nation’s most widely-used system for tracking healthcare-associated infections. The system now serves 11,000 medical facilities, including hospitals, nursing homes, dialysis centers, surgery centers and others.</p>
-      <p>Information on how well individual hospitals control infections is now available, thanks to new federal reporting requirements. The Atlanta Journal-Constitution believes public reporting of this information is important, but it’s important that readersunderstand the <a href='#limitations'>limitations of this data.</a></p>
+      <p>Information on how well individual hospitals control infections is now available, thanks to new federal reporting requirements. The Atlanta Journal-Constitution believes public reporting of this information is important, but it’s important that readersunderstand the limitations of this data.<img src="images/moreinfo.png" alt="More Information" id='limitations-link' class='moreinfo'/></p>
     </article>
   </section>
 
-  <section id="source-explain" class="container row">
-    <article class="column">
-      <h3 id="source-head">Central-Line-Associated Bloodstream Infections (CLABSI)</h3>
-      <p id="source-text">A central line is a narrow tube inserted by a doctor into a large vein of a patient's neck or chest to give important medical treatment. When not put in correctly or kept clean, central lines can become an easy way for germs to enter the body and cause serious infections in the blood. These infections are called Central Line-Associated Bloodstream Infections (CLABSIs), and they can be deadly.</p>
-      <p><strong><span id="source-date">Data collected 4/1/2011 to 3/31/2012</span></strong><p>
-    </article>
-  </section>
 
   <div id="graphics" class="container row">
   <div id="hospital-compare" class="eight columns alpha">
-    <h2>Standardized Infection Ratio (SIR):</h2>
+    <h2>Standardized Infection Ratio <img src="images/moreinfo.png" alt="More Information" id="sir-link" class="moreinfo"> (SIR):</h2>
     <hr/>
-    Infection type:
+    <p>Infection type:
     <select id="sortby">
       <option value='clabsi'>Central-line-associated blood stream infections (CLABSI)</option>
       <option value='cauti'>Catheter associated urinary tract infections (CAUTI)</option>
       <option value='ssicolon'>Surgical site infection from colon surgery (SSI Colon)</option>
-    </select>
-    <sectoin class="container row">
-      <article class="columns">
-        <p>The SIR is the number of actual infections divided by expected infections. A smaller ratio is better. A ratio greater than one means more infections than expected for similar hospitals.<p>
-      </article>
+    </select></p>
+
+    <section id="source-explain">
+      <h3 id="source-head">Central-Line-Associated Bloodstream Infections (CLABSI)</h3>
+      <p id="source-text">A central line is a narrow tube inserted by a doctor into a large vein of a patient's neck or chest to give important medical treatment. When not put in correctly or kept clean, central lines can become an easy way for germs to enter the body and cause serious infections in the blood. These infections are called Central Line-Associated Bloodstream Infections (CLABSIs), and they can be deadly.</p>
     </section>
 
     <div id="hospitals"></div>
+    <p><strong><span id="source-date">Data collected 4/1/2011 to 3/31/2012</span></strong><p>
     </div>
 
     <div id="detail" class="eight columns omega">
-      <header><h2 id="hospital_name"></h2></header>
+      <header>
+        <h2>
+          <span id="hospital_name"></span>
+          <img src="images/moreinfo.png" alt="More Information" id="detail-link" class="moreinfo">
+        </h2>
+      </header>
+
       <hr/>
       <div id="legend"></div>
 
@@ -90,30 +90,28 @@
 
   <footer class="container">
 
-    <article id="sri-text" class="container row column">
-      <a name='sri'>
+    <div id="sri-text" class="hidden">
       <h3>Standardized Infection Ratio</h3>
       <p>The Standardized Infection Ratio (SIR) compares the number of infections in a hospital to a national benchmark based on data reported to NHSN from 2006 – 2008.  The result is adjusted based on factors such as the type and size of a hospital or ICU, or factors related to the patient and the surgery that was conducted. In the cases of central-line-associated bloodstream infections and catheter-associated urinary tract infections, data is collected only from a hospital's ICU. A ratio of less than 1 means that the hospital had fewer infections than hosp[itals of similar type and size or performing procedures on similar patients. A ratio greater than one means that the hospital had more infections than similar hospitals.</p>
-    </article>
+    </div>
 
-    <article id="detail-text" class="container row column">
-      <a name='detail'>
+    <div id="detail-text" class="hidden">
       <h3>Hospital Detail</h3>
       <p>The detailed information about individual hospitals include the actual numbers of infections, the CDC's estimate of the number or infections expected for similar hospitals, and the 95 percent confidence interval, or margin of error, for the estimate. Infection rates within the estimate margin of error means or below that a hospital has an infection rate similar to comparable hospitals. If a hospital has a number of infections above the top limit of the confidence interval means that the hospital is experiencing a higher infection rate than similar hospitals.</p>
-    </article>
+    </div>
 
-    <article id="limitations-text" class="container row column">
-      <a name="limitations">
+    <div id="limitations-text" class="hidden">
       <h3>Limitations To The Data</h3>
       <ul id="caveats">
         <li><strong>Limited reporting periods.</strong> We are reporting hospital-specific information on two newly available measures: catheter-associated urinary tract infections and surgical site infections for colon surgeries.  This information is based on just three months of data covering Jan 1, 2012, to March 31,2012.One quarter’s worth of data may not fully represent a hospital’s typical performance. Additional data will continued to be rolled out to the public throughout the year, making these measures more reliable. The information on central line-associated bloodstream infections is stronger because it contains a full year’s worth of reports.</li>
         <li><strong>Time lags in reporting.</strong> The infection data available may not represent what’s currently happening in a hospital. Data is usually released about a year after hospitals begin reporting it, so conditions may have changed.</li>
         <li><strong>Validation.</strong> The National Healthcare Safety Network, the CDC’s system that collects this data, is highly respected. But even those who run it would like to see more validation of the data to make sure hospitals are accurately reporting their figures. Deciding which cases to report can be complicated, and this is a new effort for many hospitals. While some states have programs to validate this information, Georgia’s public health officials are just now trying to get such a program off the ground.</li>
       </ul>
-    </article>
+    </div>
   </footer>"
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
   <script src="scripts/lib/underscore-min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="scripts/hospitals.js"></script>

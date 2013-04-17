@@ -26,6 +26,10 @@ $(function() {
 		sourceText = data;
 	})
 
+	$('.moreinfo').tooltip({
+		content: function() { return "some text"; }
+	});
+
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
 		detail();
@@ -91,17 +95,17 @@ $(function() {
 			.on('mouseover', function(d) {
 				var x = parseFloat(window.event.clientX),
 				    y = parseFloat(window.event.clientY);
-				var tt = d3.select('#tooltip')
+				var tt = d3.select('#tooltip-local')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
 				// tt.select('#source').text('CLABSI');
 				tt.select('#score').text('ratio: ' + d.clabsi_ratio);
 				tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
 				tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
-				d3.select('#tooltip').classed('hidden', false);
+				d3.select('#tooltip-local').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip').classed('hidden', true);
+				d3.select('#tooltip-local').classed('hidden', true);
 			});
 
 
@@ -120,17 +124,17 @@ $(function() {
 		 		var x = parseFloat(window.event.clientX),
 		 		    y = parseFloat(window.event.clientY);
 		 		x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
-		 		var tt = d3.select('#tooltip')
+		 		var tt = d3.select('#tooltip-local')
 		 			.style('left', x + 'px')
 		 			.style('top', y + 'px');
 		 		// tt.select('#source').text('CAUTI');
 		 		tt.select('#score').text('ratio: ' + d.cauti_ratio);
 		 		tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
 		 		tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
-		 		d3.select('#tooltip').classed('hidden', false);
+		 		d3.select('#tooltip-local').classed('hidden', false);
 		 	})
 		 	.on('mouseout', function(){
-		 		d3.select('#tooltip').classed('hidden', true);
+		 		d3.select('#tooltip-local').classed('hidden', true);
 		 	});
 
 		// SSI:Colon symbols
@@ -148,17 +152,17 @@ $(function() {
 				var x = parseFloat(window.event.clientX),
 				    y = parseFloat(window.event.clientY);
 				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
-				var tt = d3.select('#tooltip')
+				var tt = d3.select('#tooltip-local')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
 				// tt.select('#source').text('SSI Colon');
 				tt.select('#score').text('ratio: ' + d.ssicolon_ratio);
-				tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
-				tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
-				d3.select('#tooltip').classed('hidden', false);
+				tt.select('#predicted').text('predicted cases: ' + d.ssicolon_predicted);
+				tt.select('#actual').text('actual cases: ' + d.ssicolon_observed);
+				d3.select('#tooltip-local').classed('hidden', false);
 			})
 			.on('mouseout', function(){
-				d3.select('#tooltip').classed('hidden', true);
+				d3.select('#tooltip-local').classed('hidden', true);
 			});
 
 		// Hospital names
@@ -198,7 +202,7 @@ $(function() {
 			.attr('stroke', 'black')
 			.attr('id', 'avg-marker');
 		svg.append('text')
-			.text('CLABSI state average: ' + ga_avg.clabsi)
+			.text('state average: ' + ga_avg.clabsi)
 			.attr('x', xScale(ga_avg.clabsi))
 			.attr('y', 0)
 			.attr('text-anchor', 'middle')
@@ -288,14 +292,14 @@ $(function() {
 					.attr('x2', xScale(ga_avg[infection]));
 				svg.select('#avg-text')
 					.transition().duration(500).ease('circular')
-					.text(infection.toUpperCase() + ' state average: ' + ga_avg[infection] + warningText)
+					.text('state average: ' + ga_avg[infection] + warningText)
 					.attr('x', xScale(ga_avg[infection]));
 			});
 	  }
 
 	  function detail(id) {
 	  	id = id || '110079';
-	  	var height = 150 - margin.top - margin.bottom;
+	  	var height = 160 - margin.top - margin.bottom;
 
 			var legendSvg = d3.select('#legend')
 				.append('svg')

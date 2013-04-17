@@ -10,22 +10,21 @@ div#new-measures {
 	stroke: lightgrey;
 	shape-rendering: crispEdges;
 }
-#tooltip {
+#tooltip-local {
   position: absolute;
-  width: 130px;
   padding: 1px 10px;
   background-color: white;
   box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
   pointer-events: none;
-  z-index: 3;
+  z-index: 101;
 }
-#tooltip.hidden {
+.hidden {
   display: none;
 }
-#tooltip p {
+#tooltip-local p {
   margin: 0;
   font-family: sans-serif;
-  fotn-size: 16px;
+  font-size: 12px;
 }
 .detail {
   border-top: 1px solid grey;
