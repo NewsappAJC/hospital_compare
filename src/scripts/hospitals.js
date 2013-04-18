@@ -453,7 +453,7 @@ $(function() {
 
 				svg.append('g')
 					.attr('class', 'x-axis')
-					.attr('transform', 'translate(' + margin.left + ',' + (ySpacing + 40) + ')' )
+					.attr('transform', 'translate(' + (margin.left - 2) + ',' + (ySpacing + 40) + ')' )
 					.call(axis);
 			}
 		}
@@ -472,6 +472,7 @@ $(function() {
 					    ratio     = provider[source + '_ratio'],
 					    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
 					    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
+					    na        = provider[source.toLowerCase() + '_na'] === '1',
 					    ySpacing  = 10;
 
 					var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
@@ -484,7 +485,7 @@ $(function() {
 	  			d3.select('#range-' + source)
 	  				.transition().duration(1000)
 						.attr('x', function(){ return scale(lower); })
-						.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; });
+						.attr('width', function(){ return na ? 0 : scale(upper - lower); });
 
 					d3.select('#predicted-' + source)
 	  				.transition().duration(1000)
@@ -492,9 +493,10 @@ $(function() {
 							.attr('y1', ySpacing)
 							.attr('x2', function(){ return scale(predicted); })
 							.attr('y2', ySpacing + 17)
+							.attr('opacity', function() { return na ? 0 : 1; });
 					d3.select('#predicted-text-' + source)
 						.transition().duration(1000)
-						.text( predicted )
+						.text( function() { return na ? '' : predicted; } )
 							.attr('x', function(){ return scale(predicted); } )
 							.attr('y', Math.abs(observed - predicted) >= (max/20) ? ySpacing - 2 : ySpacing - 14)
 							.attr('text-anchor', 'middle');
@@ -506,9 +508,10 @@ $(function() {
 							.attr('x2', function(){ return scale(observed); })
 							.attr('y2', ySpacing + 17)
 							.attr('stroke', 'black')
+							.attr('opacity', function() { return na ? 0 : 1; });
 					d3.select('#observed-text-' + source)
 						.transition().duration(1000)
-						.text( observed )
+						.text( function() { return na ? '' : observed; } )
 							.attr('x', function(){ return scale(observed); } )
 							.attr('y', ySpacing - 2)
 							.attr('text-anchor', 'middle');
