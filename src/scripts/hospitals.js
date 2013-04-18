@@ -318,7 +318,7 @@ $(function() {
 
 	  function detail(id) {
 	  	id = id || '110079';
-	  	var height = 160 - margin.top - margin.bottom;
+	  	var height = 170 - margin.top - margin.bottom;
 
 			var legendSvg = d3.select('#legend')
 				.append('svg')
