@@ -11,9 +11,9 @@ $(function() {
     grey: '#A4A4A4'
 	}
 	var ga_avg = {
-		clabsi   : 0.74,
-		cauti    : 0.71,
-		ssicolon : 0.98
+		clabsi   : 0.79,
+		cauti    : 0.80,
+		ssicolon : 0.90
 	};
 
 	var statements;
@@ -35,14 +35,6 @@ $(function() {
 			return $('#' + idPrefix + '-text').html();
 		}
 	});
-	// $('.moreinfo').hover(
-	// 	function(e) {
-	// 		var re = /(.+)-link/;
-	// 		var idPrefix = $(this).attr('id').match(re)[1];
-	// 		var infoWindow = $( '#' + idPrefix + '-text' );
-	// 		infoWindow.style
-	// 		console.log( infoWindow );
-	// 	});
 
 	d3.csv("data/hospitals.csv", function(data) {
 		drawDotChart(data);
@@ -103,12 +95,12 @@ $(function() {
 				.attr('class', 'clabsi')
 				.attr('cx', function(d){ return xScale(d.clabsi_ratio); })
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
-				.attr('r', 4)
+				.attr('r',  function(d) { return d.clabsi_na === "1" ? 0 : 4; })
 				.attr('fill','black')
 				.attr('opacity', 1)
 			.on('mouseover', function(d) {
-				var x = parseFloat(window.event.clientX),
-				    y = parseFloat(window.event.clientY);
+				var x = parseFloat(d3.event.clientX),
+				    y = parseFloat(d3.event.clientY);
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
@@ -131,7 +123,7 @@ $(function() {
 		   	.attr('class', 'cauti')
 		 		.attr('cx', function(d){ return xScale(d.cauti_ratio); })
 		 		.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
-		 		.attr('r', 0)
+		 		.attr('r',  function(d) { return d.cauti_na === "1" ? 0 : 4; })
 		 		.attr('fill','black')
 		 		.attr('opacity', 0)
 		 	.on('mouseover', function(d) {
@@ -143,8 +135,8 @@ $(function() {
 		 			.style('top', y + 'px');
 		 		// tt.select('#source').text('CAUTI');
 		 		tt.select('#score').text('ratio: ' + d.cauti_ratio);
-		 		tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
-		 		tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
+		 		tt.select('#predicted').text('predicted cases: ' + d.cauti_predicted);
+		 		tt.select('#actual').text('actual cases: ' + d.cauti_observed);
 		 		d3.select('#tooltip').classed('hidden', false);
 		 	})
 		 	.on('mouseout', function(){
@@ -159,7 +151,7 @@ $(function() {
 		  	.attr('class', 'ssicol')
 				.attr('cx', function(d){ return xScale(d.ssicolon_ratio); })
 				.attr('cy', function(d,i){ return yScale(i) + (yScale.rangeBand() / 2); })
-				.attr('r', 0)
+				.attr('r',  function(d) { return d.ssicolon_na === "1" ? 0 : 4; })
 				.attr('fill','black')
 				.attr('opacity', 0)
 			.on('mouseover', function(d) {
@@ -237,7 +229,7 @@ $(function() {
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
 				var infection = this.value,
-				    warningText = (infection === 'clabsi') ? '' : ' (data for three months only)',
+				    warningText = (infection === 'clabsi') ? '' : ' (data for six months only)',
 				    explainText = _.findWhere( sourceText, {source: infection});
 
 				d3.select('#source-head').text(explainText.head);
@@ -250,8 +242,12 @@ $(function() {
 					})
 					.transition()
 					.duration(1000).ease('bounce')
-					.attr('r', function() {
-						return infection === 'clabsi' ? 4 : 0;
+					.attr('r', function(d) {
+						if ( infection !== 'clabsi') {
+							return 0;
+						} else {
+							return d.clabsi_na === '1' ? 0 : 4
+						}
 					})
 					.attr('opacity', function() {
 						return infection === 'clabsi' ? 1 : 0;
@@ -266,8 +262,12 @@ $(function() {
 					})
 					.transition()
 					.duration(1000).ease('bounce')
-					.attr('r', function() {
-						return infection === 'cauti' ? 4 : 0;
+					.attr('r', function(d) {
+						if ( infection !== 'cauti') {
+							return 0;
+						} else {
+							return d.cauti_na === '1' ? 0 : 4
+						}
 					})
 					.attr('opacity', function() {
 						return infection === 'cauti' ? 0.5 : 0;
@@ -282,8 +282,12 @@ $(function() {
 					})
 					.transition()
 					.duration(1000).ease('bounce')
-					.attr('r', function() {
-						return infection === 'ssicolon' ? 4 : 0;
+					.attr('r', function(d) {
+						if ( infection !== 'ssicolon') {
+							return 0;
+						} else {
+							return d.ssicolon_na === '1' ? 0 : 4
+						}
 					})
 					.attr('opacity', function() {
 						return infection === 'ssicolon' ? 0.5 : 0;

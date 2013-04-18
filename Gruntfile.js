@@ -7,7 +7,8 @@ module.exports = function(grunt) {
       target: {
         files: [
           { expand: true, flatten: true, src: ['src/scripts/lib/*.js'], dest: 'build/scripts/lib/' },
-          { expand: true, flatten: true, src: ['src/data/*'], dest: 'build/data/' }
+          { expand: true, flatten: true, src: ['src/data/*'], dest: 'build/data/' },
+          { expand: true, flatten: true, src: ['src/images/*'], dest: 'build/images/' }
         ]
       }
     },
@@ -85,7 +86,8 @@ module.exports = function(grunt) {
         { src: 'build/scripts/*', dest: 'scripts/' },
         { src: 'build/scripts/lib/*', dest: 'scripts/lib/' },
         { src: 'build/data/*', dest: 'data/' },
-        { src: 'build/style/*', dest: 'style/' }
+        { src: 'build/style/*', dest: 'style/' },
+        { src: 'build/images/*', dest: 'images/' }
       ]
     }
   });

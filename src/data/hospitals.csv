@@ -1,27 +1,27 @@
-"provider_id","hospital_name","clabsi_ratio","cauti_ratio","ssicolon_ratio","clabsi_observed","cauti_observed","ssicolon_observed","clabsi_predicted","cauti_predicted","ssicolon_predicted"
-110079,"Grady Memorial Hospital",2.04,0.66,0.00,74,10,0,36.366,15.225,0.702
-110226,"Dekalb Medical Center At Hillandale",1.84,0.00,0.00,4,0,0,2.171,0.623,0.109
-110229,"Piedmont Newnan Hospital",1.73,0.00,0.00,2,0,1,1.154,0.696,0.340
-110087,"Gwinnett Medical Center",1.68,1.54,0.35,18,3,1,10.726,1.952,2.841
-110191,"Piedmont Henry Hospital",1.63,0.00,0.00,10,0,0,6.149,0.938,0.921
-110219,"South Fulton Medical Center",1.54,0.00,0.00,8,0,0,5.200,0.816,0.158
-110165,"Southern Regional Medical Center",1.39,0.00,0.00,12,0,0,8.655,1.163,1.110
-110091,"Rockdale Medical Center",1.33,0.00,0.00,5,0,0,3.758,0.713,0.429
-110230,"Emory Johns Creek Hospital",1.33,0.00,0.00,3,0,1,2.261,0.644,0.579
-110076,"Dekalb Medical Center",1.16,0.40,0.00,11,1,1,9.489,2.489,0.696
-110078,"Emory University Hospital Midtown",1.15,1.74,4.15,27,12,5,23.459,6.890,1.205
-110215,"Piedmont Fayette Hospital",1.07,0.00,1.09,5,0,2,4.690,0.767,1.834
-110083,"Piedmont Hospital",1.02,2.32,0.26,25,16,1,24.602,6.900,3.810
-110198,"North Fulton Regional Hospital",0.95,0.00,0.00,5,0,0,5.276,2.768,0.278
-110192,"Eastside Medical Center",0.78,0.00,0.00,4,0,0,5.133,1.460,0.494
-110082,"Saint Joseph's Hospital Of Atlanta",0.74,1.10,1.57,9,4,4,12.228,3.619,2.543
-110008,"Northside Hospital Cherokee",0.69,0.00,0.00,1,1,0,1.444,0.680,0.174
-110161,"Northside Hospital",0.68,0.82,0.44,11,1,1,16.139,1.226,2.283
-110115,"Atlanta Medical Center",0.59,0.67,0.00,13,4,0,21.975,6.010,0.832
-110010,"Emory University Hospital",0.54,2.16,1.01,24,31,2,44.202,14.371,1.981
-110143,"Wellstar Cobb Hospital",0.49,2.09,0.00,3,4,1,6.067,1.916,0.308
-110035,"Wellstar Kennestone Hospital",0.46,1.35,0.58,9,11,2,19.715,8.148,3.435
-110184,"Wellstar Douglas Hospital",0.00,0.00,0.00,0,1,2,1.985,0.503,0.596
-110183,"Emory-Adventist Hospital",0.00,0.00,0.00,0,0,0,0.520,0.209,0.156
-110042,"Wellstar Paulding Hospital",0.00,0.00,0.00,0,0,0,0.133,0.055,0.068
-110005,"Northside Hospital Forsyth",0.00,2.30,0.00,0,3,0,5.992,1.302,1.383
+"provider_id","hospital_name","clabsi_ratio","cauti_ratio","ssicolon_ratio","clabsi_observed","cauti_observed","ssicolon_observed","clabsi_predicted","cauti_predicted","ssicolon_predicted","cauti_na","clabsi_na","ssicolon_na"
+110226,"Dekalb Medical Center At Hillandale",2.04,0,0,4,0,0,1.958,1.008,0.23,1,0,1
+110079,"Grady Memorial Hospital",1.97,0.87,0.55,88,27,1,44.738,31.181,1.83,0,0,0
+110229,"Piedmont Newnan Hospital",1.75,0.77,0,2,1,1,1.143,1.302,0.702,0,0,1
+110087,"Gwinnett Medical Center",1.74,1.52,0.18,19,6,1,10.947,3.956,5.582,0,0,0
+110191,"Piedmont Henry Hospital",1.62,0,0.44,9,0,1,5.569,2.146,2.257,1,0,0
+110219,"South Fulton Medical Center",1.59,0.56,0,9,1,0,5.651,1.776,0.432,0,0,1
+110083,"Piedmont Hospital",1.36,1.64,0.43,33,22,3,24.245,13.442,6.959,0,0,0
+110165,"Southern Regional Medical Center",1.09,0,0,9,0,0,8.28,2.806,2.464,1,0,1
+110078,"Emory University Hospital Midtown",1.07,1.3,4.64,24,18,9,22.438,13.886,1.941,0,0,0
+110076,"Dekalb Medical Center",1,0.44,0.98,9,2,1,9.015,4.545,1.02,0,0,0
+110091,"Rockdale Medical Center",0.99,0,0,4,0,1,4.045,1.385,0.878,1,0,1
+110230,"Emory Johns Creek Hospital",0.81,1.46,0.79,2,2,1,2.46,1.371,1.259,0,0,0
+110215,"Piedmont Fayette Hospital",0.76,0,1.08,4,0,4,5.279,1.464,3.718,1,0,0
+110115,"Atlanta Medical Center",0.68,0.48,0.6,15,6,1,21.961,12.388,1.677,0,0,0
+110082,"Saint Joseph's Hospital Of Atlanta",0.67,0.73,1.23,8,5,6,11.89,6.845,4.886,0,0,0
+110010,"Emory University Hospital",0.63,1.63,0.55,28,50,2,44.576,30.604,3.627,0,0,0
+110192,"Eastside Medical Center",0.62,0.74,0.9,3,2,1,4.862,2.701,1.108,0,0,0
+110008,"Northside Hospital Cherokee",0.59,0.78,0,1,1,0,1.688,1.282,0.679,0,0,1
+110198,"North Fulton Regional Hospital",0.53,0,0,3,0,0,5.677,5.478,0.597,1,0,1
+110035,"Wellstar Kennestone Hospital",0.45,1.43,1.07,9,22,8,20.016,15.414,7.478,0,0,0
+110161,"Northside Hospital",0.45,0.76,0.2,7,2,1,15.638,2.634,5.056,0,0,0
+110143,"Wellstar Cobb Hospital",0.33,1.22,0,2,4,1,6.03,3.289,0.799,0,0,1
+110005,"Northside Hospital Forsyth",0.18,2.13,1.4,1,5,4,5.722,2.351,2.85,0,0,0
+110042,"Wellstar Paulding Hospital",0,0,0,0,0,0,0.173,0.162,0.179,1,1,1
+110183,"Emory-Adventist Hospital",0,0,0,0,0,0,0.472,0.37,0.331,1,1,1
+110184,"Wellstar Douglas Hospital",0,3.56,0,0,4,3,1.987,1.123,0.826,0,1,1

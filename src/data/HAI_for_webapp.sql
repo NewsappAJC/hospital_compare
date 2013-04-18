@@ -1,12 +1,17 @@
 select 
-provider_id,hospital_name,clabsi_ratio,cauti_ratio,ssicolon_ratio,
-clabsi_observed, cauti_observed, ssicolon_observed,
-clabsi_predicted, cauti_predicted, ssicolon_predicted
 /*
-provider_id,hospital_name,address_1,city,state,zip_code,county_name,CAUTI_ratio,CAUTI_lower,CAUTI_observed,CAUTI_predicted,CAUTI_upper,CLABSI_ratio,CLABSI_lower,CLABSI_observed,CLABSI_predicted,CLABSI_upper,SSIcolon_ratio,SSIcolon_lower,SSIcolon_observed,SSIcolon_predicted,SSIcolon_upper
+a.provider_id,b.hospital_name,a.clabsi_ratio,a.cauti_ratio,a.ssicolon_ratio,
+a.clabsi_observed, a.cauti_observed, a.ssicolon_observed,
+a.clabsi_predicted, a.cauti_predicted, a.ssicolon_predicted
 */
-from `HAI_transposed`
-where provider_id in (
+a.provider_id,b.hospital_name,a.address_1,a.city,a.state,a.zip_code,a.county_name,
+a.CAUTI_ratio,a.CAUTI_lower,a.CAUTI_observed,a.CAUTI_predicted,a.CAUTI_upper,
+a.CLABSI_ratio,a.CLABSI_lower,a.CLABSI_observed,a.CLABSI_predicted,a.CLABSI_upper,
+a.SSIcolon_ratio,a.SSIcolon_lower,a.SSIcolon_observed,a.SSIcolon_predicted,a.SSIcolon_upper
+
+from HAI_transposed_20130418 a
+join hospital_names b on a.provider_id = b.provider_id
+where a.provider_id in (
   "110115",
   "110076",
   "110226",
@@ -34,5 +39,6 @@ where provider_id in (
   "110035",
   "110042"
 )
-order by provider_id
+order by clabsi_ratio desc
+
 

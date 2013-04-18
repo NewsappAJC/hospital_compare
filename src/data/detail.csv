@@ -1,27 +1,27 @@
-"provider_id","hospital_name","address_1","city","state","zip_code","county_name","CAUTI_ratio","CAUTI_lower","CAUTI_observed","CAUTI_predicted","CAUTI_upper","CLABSI_ratio","CLABSI_lower","CLABSI_observed","CLABSI_predicted","CLABSI_upper","SSIcolon_ratio","SSIcolon_lower","SSIcolon_observed","SSIcolon_predicted","SSIcolon_upper"
-110005,"Northside Hospital Forsyth","1200 Northside Forsyth Drive","Cumming","GA",30041,"Forsyth",2.30,0.475,3,1.302,6.734,0.00,0.000,0,5.992,0.616,0.00,0.000,0,1.383,2.667
-110008,"Northside Hospital Cherokee","201 Hospital Road","Canton","GA",30114,"Cherokee",0.00,0.000,1,0.680,0.000,0.69,0.018,1,1.444,3.858,0.00,0.000,0,0.174,0.000
-110010,"Emory University Hospital","1364 Clifton Road, NE","Atlanta","GA",30322,"Dekalb",2.16,1.465,31,14.371,3.062,0.54,0.348,24,44.202,0.808,1.01,0.122,2,1.981,3.647
-110035,"Wellstar Kennestone Hospital","677 Church Street","Marietta","GA",30060,"Cobb",1.35,0.674,11,8.148,2.416,0.46,0.209,9,19.715,0.867,0.58,0.071,2,3.435,2.103
-110042,"Wellstar Paulding Hospital","600 W Memorial Dr","Dallas","GA",30132,"Paulding",0.00,0.000,0,0.055,0.000,0.00,0.000,0,0.133,0.000,0.00,0.000,0,0.068,0.000
-110076,"Dekalb Medical Center","2701 N Decatur Road","Decatur","GA",30033,"Dekalb",0.40,0.010,1,2.489,2.239,1.16,0.579,11,9.489,2.074,0.00,0.000,1,0.696,0.000
-110078,"Emory University Hospital Midtown","550 Peachtree St Ne","Atlanta","GA",30308,"Fulton",1.74,0.900,12,6.890,3.042,1.15,0.758,27,23.459,1.675,4.15,1.347,5,1.205,9.683
-110079,"Grady Memorial Hospital","80 Jesse Hill Jr Drive SE","Atlanta","GA",30303,"Fulton",0.66,0.315,10,15.225,1.208,2.04,1.598,74,36.366,2.555,0.00,0.000,0,0.702,0.000
-110082,"Saint Joseph's Hospital Of Atlanta","5665 Peachtree Dunwoody Road","Atlanta","GA",30342,"Fulton",1.10,0.301,4,3.619,2.830,0.74,0.337,9,12.228,1.397,1.57,0.429,4,2.543,4.027
-110083,"Piedmont Hospital","1968 Peachtree Rd NW","Atlanta","GA",30309,"Fulton",2.32,1.325,16,6.900,3.766,1.02,0.657,25,24.602,1.500,0.26,0.007,1,3.810,1.462
-110087,"Gwinnett Medical Center","1000 Medical Center Boulevard","Lawrenceville","GA",30045,"Gwinnett",1.54,0.317,3,1.952,4.491,1.68,0.994,18,10.726,2.652,0.35,0.009,1,2.841,1.961
-110091,"Rockdale Medical Center","1412 Milstead Avenue, NE","Conyers","GA",30012,"Rockdale",0.00,0.000,0,0.713,0.000,1.33,0.432,5,3.758,3.105,0.00,0.000,0,0.429,0.000
-110115,"Atlanta Medical Center","303 Parkway Dr NE","Atlanta","GA",30312,"Fulton",0.67,0.181,4,6.010,1.704,0.59,0.315,13,21.975,1.012,0.00,0.000,0,0.832,0.000
-110143,"Wellstar Cobb Hospital","3950 Austell Rd","Austell","GA",30106,"Cobb",2.09,0.569,4,1.916,5.345,0.49,0.102,3,6.067,1.445,0.00,0.000,1,0.308,0.000
-110161,"Northside Hospital","1000 Johnson Ferry Road, NE","Atlanta","GA",30342,"Fulton",0.82,0.021,1,1.226,4.545,0.68,0.340,11,16.139,1.220,0.44,0.011,1,2.283,2.440
-110165,"Southern Regional Medical Center","11 Upper Riverdale Road, Sw","Riverdale","GA",30274,"Clayton",0.00,0.000,0,1.163,3.172,1.39,0.716,12,8.655,2.422,0.00,0.000,0,1.110,3.323
-110183,"Emory-Adventist Hospital","3949 South Cobb Drive","Smyrna","GA",30080,"Cobb",0.00,0.000,0,0.209,0.000,0.00,0.000,0,0.520,0.000,0.00,0.000,0,0.156,0.000
-110184,"Wellstar Douglas Hospital","8954 Hospital Drive","Douglasville","GA",30134,"Douglas",0.00,0.000,1,0.503,0.000,0.00,0.000,0,1.985,1.858,0.00,0.000,2,0.596,0.000
-110191,"Piedmont Henry Hospital","1133 Eagle's Landing Parkway","Stockbridge","GA",30281,"Henry",0.00,0.000,0,0.938,0.000,1.63,0.780,10,6.149,2.991,0.00,0.000,0,0.921,0.000
-110192,"Eastside Medical Center","1700 Medical Way","Snellville","GA",30078,"Gwinnett",0.00,0.000,0,1.460,2.527,0.78,0.212,4,5.133,1.995,0.00,0.000,0,0.494,0.000
-110198,"North Fulton Regional Hospital","3000 Hospital Boulevard","Roswell","GA",30076,"Fulton",0.00,0.000,0,2.768,1.333,0.95,0.308,5,5.276,2.212,0.00,0.000,0,0.278,0.000
-110215,"Piedmont Fayette Hospital","1255 Highway 54 West","Fayetteville","GA",30214,"Fayette",0.00,0.000,0,0.767,0.000,1.07,0.346,5,4.690,2.488,1.09,0.132,2,1.834,3.939
-110219,"South Fulton Medical Center","1170 Cleveland Avenue","East Point","GA",30344,"Fulton",0.00,0.000,0,0.816,0.000,1.54,0.664,8,5.200,3.031,0.00,0.000,0,0.158,0.000
-110226,"Dekalb Medical Center at Hillandale","2801 Dekalb Medical Parkway","Lithonia","GA",30058,"Dekalb",0.00,0.000,0,0.623,0.000,1.84,0.502,4,2.171,4.717,0.00,0.000,0,0.109,0.000
-110229,"Piedmont Newnan Hospital","745 Poplar Road","Newnan","GA",30265,"Coweta",0.00,0.000,0,0.696,0.000,1.73,0.210,2,1.154,6.261,0.00,0.000,1,0.340,0.000
-110230,"Emory Johns Creek Hospital","6325 Hospital Parkway","Johns Creek","GA",30097,"Chattooga",0.00,0.000,0,0.644,0.000,1.33,0.274,3,2.261,3.878,0.00,0.000,1,0.579,0.000
+"provider_id","hospital_name","address_1","city","state","zip_code","county_name","CAUTI_ratio","CAUTI_lower","CAUTI_observed","CAUTI_predicted","CAUTI_upper","CLABSI_ratio","CLABSI_lower","CLABSI_observed","CLABSI_predicted","CLABSI_upper","SSIcolon_ratio","SSIcolon_lower","SSIcolon_observed","SSIcolon_predicted","SSIcolon_upper","cauti_na","clabsi_na","ssicolon_na"
+110005,"Northside Hospital Forsyth","1200 NORTHSIDE FORSYTH DRIVE","CUMMING","GA",30041,"FORSYTH",2.13,0.691,5,2.351,4.963,0.18,0.004,1,5.722,0.974,1.4,0.382,4,2.85,3.594,0,0,0
+110008,"Northside Hospital Cherokee","201 HOSPITAL ROAD","CANTON","GA",30114,"CHEROKEE",0.78,0.02,1,1.282,4.346,0.59,0.015,1,1.688,3.301,0,0,0,0.679,0,0,0,1
+110010,"Emory University Hospital","1364 CLIFTON ROAD, NE","ATLANTA","GA",30322,"DEKALB",1.63,1.213,50,30.604,2.154,0.63,0.417,28,44.576,0.908,0.55,0.067,2,3.627,1.992,0,0,0
+110035,"Wellstar Kennestone Hospital","677 CHURCH STREET","MARIETTA","GA",30060,"COBB",1.43,0.894,22,15.414,2.161,0.45,0.206,9,20.016,0.854,1.07,0.462,8,7.478,2.108,0,0,0
+110042,"Wellstar Paulding Hospital","600 W MEMORIAL DR","DALLAS","GA",30132,"PAULDING",0,0,0,0.162,0,0,0,0,0.173,0,0,0,0,0.179,0,1,1,1
+110076,"Dekalb Medical Center","2701 N DECATUR ROAD","DECATUR","GA",30033,"DEKALB",0.44,0.053,2,4.545,1.59,1,0.457,9,9.015,1.895,0.98,0.025,1,1.02,5.462,0,0,0
+110078,"Emory University Hospital Midtown","550 PEACHTREE ST NE","ATLANTA","GA",30308,"FULTON",1.3,0.768,18,13.886,2.049,1.07,0.685,24,22.438,1.592,4.64,2.12,9,1.941,8.802,0,0,0
+110079,"Grady Memorial Hospital","80 JESSE HILL, JR DRIVE SE","ATLANTA","GA",30303,"FULTON",0.87,0.571,27,31.181,1.26,1.97,1.578,88,44.738,2.423,0.55,0.014,1,1.83,3.045,0,0,0
+110082,"Saint Joseph's Hospital Of Atlanta","5665 PEACHTREE DUNWOODY ROAD","ATLANTA","GA",30342,"FULTON",0.73,0.237,5,6.845,1.705,0.67,0.29,8,11.89,1.326,1.23,0.451,6,4.886,2.673,0,0,0
+110083,"Piedmont Hospital","1968 PEACHTREE RD NW","ATLANTA","GA",30309,"FULTON",1.64,1.025,22,13.442,2.478,1.36,0.937,33,24.245,1.912,0.43,0.089,3,6.959,1.26,0,0,0
+110087,"Gwinnett Medical Center","1000 MEDICAL CENTER BOULEVARD","LAWRENCEVILLE","GA",30045,"GWINNETT",1.52,0.557,6,3.956,3.301,1.74,1.044,19,10.947,2.711,0.18,0.005,1,5.582,0.998,0,0,0
+110091,"Rockdale Medical Center","1412 MILSTEAD AVENUE, NE","CONYERS","GA",30012,"ROCKDALE",0,0,0,1.385,2.663,0.99,0.269,4,4.045,2.532,0,0,1,0.878,0,1,0,1
+110115,"Atlanta Medical Center","303 PARKWAY DR NE","ATLANTA","GA",30312,"FULTON",0.48,0.178,6,12.388,1.054,0.68,0.382,15,21.961,1.127,0.6,0.015,1,1.677,3.322,0,0,0
+110143,"Wellstar Cobb Hospital","3950 AUSTELL RD","AUSTELL","GA",30106,"COBB",1.22,0.331,4,3.289,3.114,0.33,0.04,2,6.03,1.198,0,0,1,0.799,0,0,0,1
+110161,"Northside Hospital","1000 JOHNSON FERRY ROAD, NE","ATLANTA","GA",30342,"FULTON",0.76,0.092,2,2.634,2.743,0.45,0.18,7,15.638,0.922,0.2,0.005,1,5.056,1.102,0,0,0
+110165,"Southern Regional Medical Center","11 UPPER RIVERDALE ROAD, SW","RIVERDALE","GA",30274,"CLAYTON",0,0,0,2.806,1.315,1.09,0.497,9,8.28,2.063,0,0,0,2.464,1.497,1,0,1
+110183,"Emory-Adventist Hospital","3949 SOUTH COBB DRIVE","SMYRNA","GA",30080,"COBB",0,0,0,0.37,0,0,0,0,0.472,0,0,0,0,0.331,0,1,1,1
+110184,"Wellstar Douglas Hospital","8954 HOSPITAL DRIVE","DOUGLASVILLE","GA",30134,"DOUGLAS",3.56,0.97,4,1.123,9.12,0,0,0,1.987,1.857,0,0,3,0.826,0,0,1,1
+110191,"Piedmont Henry Hospital","1133 EAGLE'S LANDING PARKWAY","STOCKBRIDGE","GA",30281,"HENRY",0,0,0,2.146,1.719,1.62,0.739,9,5.569,3.068,0.44,0.011,1,2.257,2.469,1,0,0
+110192,"Eastside Medical Center","1700 MEDICAL WAY","SNELLVILLE","GA",30078,"GWINNETT",0.74,0.09,2,2.701,2.675,0.62,0.127,3,4.862,1.803,0.9,0.023,1,1.108,5.029,0,0,0
+110198,"North Fulton Regional Hospital","3000 HOSPITAL BOULEVARD","ROSWELL","GA",30076,"FULTON",0,0,0,5.478,0.673,0.53,0.109,3,5.677,1.544,0,0,0,0.597,0,1,0,1
+110215,"Piedmont Fayette Hospital","1255 HIGHWAY 54 WEST","FAYETTEVILLE","GA",30214,"FAYETTE",0,0,0,1.464,2.52,0.76,0.206,4,5.279,1.94,1.08,0.293,4,3.718,2.755,1,0,0
+110219,"South Fulton Medical Center","1170 CLEVELAND AVENUE","EAST POINT","GA",30344,"FULTON",0.56,0.014,1,1.776,3.137,1.59,0.728,9,5.651,3.023,0,0,0,0.432,0,0,0,1
+110226,"Dekalb Medical Center At Hillandale","2801 DEKALB MEDICAL PARKWAY","LITHONIA","GA",30058,"DEKALB",0,0,0,1.008,3.66,2.04,0.557,4,1.958,5.231,0,0,0,0.23,0,1,0,1
+110229,"Piedmont Newnan Hospital","745 POPLAR ROAD","NEWNAN","GA",30265,"COWETA",0.77,0.019,1,1.302,4.279,1.75,0.212,2,1.143,6.321,0,0,1,0.702,0,0,0,1
+110230,"Emory Johns Creek Hospital","6325 HOSPITAL PARKWAY","JOHNS CREEK","GA",30097,"CHATTOOGA",1.46,0.177,2,1.371,5.27,0.81,0.098,2,2.46,2.937,0.79,0.02,1,1.259,4.425,0,0,0
