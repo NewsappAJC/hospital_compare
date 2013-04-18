@@ -33,7 +33,8 @@ $(function() {
 			var idPrefix = $(this).attr('id').match(re)[1];
 			var infoWindow = $( '#' + idPrefix + '-text' );
 			return $('#' + idPrefix + '-text').html();
-		}
+		},
+		hide: 2000
 	});
 
 	d3.csv("data/hospitals.csv", function(data) {
