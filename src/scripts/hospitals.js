@@ -379,6 +379,7 @@ $(function() {
 				    ratio     = provider[source + '_ratio'],
 				    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
 				    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
+				    na        = provider[source.toLowerCase() + '_na'] === '1',
 				    ySpacing  = 10;
 
 				var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
@@ -398,8 +399,14 @@ $(function() {
 						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 				// Headline
+				var ratioText = function() {
+					if ( na ) {
+						return 'No data available';
+					}
+					return ratio > 0 ? 'SRI: ' + ratio : 'Cannot calculate confidence interval if infections = 0'
+				}
 				svg.append('text')
-					.text('(ratio: ' + (ratio > 0 ? ratio : 'insufficient data') + ')')
+					.text(ratioText)
 					.attr('id', 'ratio-' + source)
 					.attr('x', 0)
 					.attr('y', 0);
@@ -481,7 +488,13 @@ $(function() {
 						  	.domain([0,max + 1])
 						  	.range([0,config.width - margin.right - margin.left]);
 
-	  			d3.select('#ratio-' + source).text('(ratio: ' + (ratio > 0 ? ratio : 'insufficient data') + ')');
+			  	var ratioText = function() {
+			  		if ( na ) {
+			  			return 'No data available';
+			  		}
+			  		return ratio > 0 ? 'SRI: ' + ratio : 'Cannot calculate confidence interval if infections = 0'
+			  	}();
+	  			d3.select('#ratio-' + source).text(ratioText);
 
 	  			d3.select('#range-' + source)
 	  				.transition().duration(1000)
