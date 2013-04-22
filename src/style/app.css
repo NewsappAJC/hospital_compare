@@ -40,3 +40,6 @@ div#new-measures {
 #legend {
   background-color: #F0F0F0;
 }
+div.textblock {
+  padding-bottom: 10px;
+}
