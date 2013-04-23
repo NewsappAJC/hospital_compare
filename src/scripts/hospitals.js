@@ -4,9 +4,7 @@ $(function() {
 	var margin = {top: 20, right: 10, bottom: 20, left: 10};
 	var config = {
 		width: $("div#hospitals").width() - margin.left - margin.right,
-    red: '#FF0000',
     lightred: '#F8E0E0',
-    green: '#088A08',
     lightgreen: '#CEF6CE',
     grey: '#A4A4A4'
 	};
@@ -37,9 +35,54 @@ $(function() {
 		hide: 2000
 	});
 
+	// detail legend
+	var legendSvg = d3.select('#legend')
+		.append('svg')
+			.attr('width', config.width)
+			.attr('height', 50)
+		.append('g')
+			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+	var legend = legendSvg.append('g');
+
+	legend.append('rect')
+		.attr('x', 0)
+		.attr('y', 0)
+		.attr('width', config.width)
+		.attr('height', 50)
+		.attr('fill', '#F0F0F0');
+
+	legend.append('text').text('Expected cases and margin of error:')
+		.attr('x', 0)
+		.attr('y', 20);
+	legend.append('rect')
+		.attr('x', 218)
+		.attr('y', 0)
+		.attr('width', 40)
+		.attr('height', 20)
+		.attr('fill', config.lightgreen);
+	legend.append('line')
+		.attr('x1', 238)
+		.attr('y1', 0)
+		.attr('x2', 238)
+		.attr('y2', 20)
+		.attr('stroke', config.grey)
+		.attr('stroke-width', 5);
+
+	legend.append('text').text('Actual cases:')
+			.attr('x', 270)
+			.attr('y', 20);
+	legend.append('line')
+		.attr('x1', 360)
+		.attr('y1', 0)
+		.attr('x2', 360)
+		.attr('y2', 20)
+		.attr('stroke', 'black')
+		.attr('stroke-width', 5);
+
 	d3.csv("data/detail.csv", function(data) {
 		drawDotChart(_.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); }));
-    detail();
+    detail(data);
 	});
 
 	function drawDotChart(dataset) {
@@ -221,12 +264,10 @@ $(function() {
 			.scale(xScale)
 			.orient('bottom')
 			.ticks(5);
-
 		svg.append('g')
 			.attr('class', 'x-axis')
 			.attr('transform', 'translate(0,' + (dataset.length * (yScale.rangeBand() * 1.3)) + ')')
 			.call(xAxis);
-
 
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
@@ -305,11 +346,13 @@ $(function() {
 					});
 
 				svg.selectAll('text.hospital')
-					.sort(function(a,b){
-							return b[infection + '_ratio'] - a[infection + '_ratio'];
-					})
-					.transition()
-					.duration(500).ease('circular')
+				.sort(function(a,b){
+					var aval = a[infection + '_ratio'] - a[infection + '_na'];
+					var bval = b[infection + '_ratio'] - b[infection + '_na'];
+					return bval - aval;
+				})
+				.transition()
+				.duration(500).ease('circular')
 					.attr('y', function(d,i){ return yScale(i) + yScale.rangeBand() - 2; });
 
 				svg.select('#avg-marker')
@@ -323,76 +366,25 @@ $(function() {
 			});
 		}
 
-		function detail(id) {
+		function detail(data, id) {
 			id = id || '110079';
-			var height = 170 - margin.top - margin.bottom;
+			var height = 170 - margin.top - margin.bottom,
+				provider  = _.findWhere(data, {provider_id: id}),
+				statement = _.findWhere(statements, {provider_id: id}),
+				ySpacing  = 10;
 
-			var legendSvg = d3.select('#legend')
-				.append('svg')
-					.attr('width', config.width)
-					.attr('height', 50)
-				.append('g')
-					.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-			var legend = legendSvg.append('g');
-
-			legend.append('rect')
-				.attr('x', 0)
-				.attr('y', 0)
-				.attr('width', config.width)
-				.attr('height', 50)
-				.attr('fill', '#F0F0F0');
-
-			legend.append('text').text('Expected cases and margin of error:')
-				.attr('x', 0)
-				.attr('y', 20);
-			legend.append('rect')
-				.attr('x', 218)
-				.attr('y', 0)
-				.attr('width', 40)
-				.attr('height', 20)
-				.attr('fill', config.lightgreen);
-			legend.append('line')
-				.attr('x1', 238)
-				.attr('y1', 0)
-				.attr('x2', 238)
-				.attr('y2', 20)
-				.attr('stroke', config.grey)
-				.attr('stroke-width', 5);
-
-			legend.append('text').text('Actual cases:')
-					.attr('x', 270)
-					.attr('y', 20);
-			legend.append('line')
-				.attr('x1', 360)
-				.attr('y1', 0)
-				.attr('x2', 360)
-				.attr('y2', 20)
-				.attr('stroke', 'black')
-				.attr('stroke-width', 5);
-
-			d3.csv("data/detail.csv", function(data) {
-				window.data = data;
-				drawDetailChart(data, 'clabsi',   config);
-				drawDetailChart(data, 'cauti',    config);
-				drawDetailChart(data, 'ssicolon', config);
-			});
-
-			function drawDetailChart(data, source, config) {
-				var provider  = _.findWhere(data, {provider_id: id}),
-						statement = _.findWhere(statements, {provider_id: id}),
-						observed  = provider[source + '_observed'],
+			_.each(['clabsi','cauti','ssicolon'], function(source) {
+				var observed  = provider[source + '_observed'],
 						predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
 						ratio     = provider[source + '_ratio'],
 						upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
 						lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
 						na        = provider[source.toLowerCase() + '_na'] === '1',
-						ySpacing  = 10;
+						max = d3.max( data, function(d){return parseInt(d[source + '_observed'], 10);});
 
-				var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
-						scale = d3.scale.linear()
-							.domain([0,max + 1])
-							.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
+				var scale = d3.scale.linear()
+					.domain([0,max + 1])
+					.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
 
 				d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
 				d3.select('#statement').text(statement.text);
@@ -424,7 +416,6 @@ $(function() {
 				chart.append('rect')
 					.attr('id', 'range-' + source)
 					.attr('x', function(){ return scale(lower); })
-					// .attr('y', 3 + margin.top )
 					.attr('y', ySpacing)
 					.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; })
 					.attr('height', 17)
@@ -470,73 +461,73 @@ $(function() {
 					.attr('class', 'x-axis')
 					.attr('transform', 'translate(' + (margin.left - 2) + ',' + (ySpacing + 40) + ')' )
 					.call(axis);
-			}
+			});
 		}
-	  var updateDetail = function(id) {
+		var updateDetail = function(id) {
 			d3.csv("data/detail.csv", function(data) {
-	  		var provider  = _.findWhere(data, {provider_id: id}),
-			  		statement = _.findWhere(statements, {provider_id: id}),
-	  		    ySpacing = 10;
+				var provider  = _.findWhere(data, {provider_id: id}),
+						statement = _.findWhere(statements, {provider_id: id}),
+						ySpacing = 10;
 
-	  		d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
-	  		d3.select('#statement').text(statement.text);
+			d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
+			d3.select('#statement').text(statement.text);
 
-	  		_.each(['clabsi','cauti','ssicolon'], function(source) {
-			    var observed  = provider[source + '_observed'],
-					    predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
-					    ratio     = provider[source + '_ratio'],
-					    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
-					    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
-					    na        = provider[source.toLowerCase() + '_na'] === '1',
-					    ySpacing  = 10;
+			_.each(['clabsi','cauti','ssicolon'], function(source) {
+				var observed  = provider[source + '_observed'],
+						predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
+						ratio     = provider[source + '_ratio'],
+						upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
+						lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0,
+						na        = provider[source.toLowerCase() + '_na'] === '1',
+						ySpacing  = 10;
 
-					var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
-					    scale = d3.scale.linear()
-						  	.domain([0,max + 1])
-						  	.range([0,config.width - margin.right - margin.left]);
+				var max = d3.max( data, function(d){return parseInt(d[source + '_observed'], 10);}),
+						scale = d3.scale.linear()
+							.domain([0,max + 1])
+							.range([0,config.width - margin.right - margin.left]);
 
-			  	var ratioText = function() {
-			  		if ( na ) {
-			  			return 'No data available';
-			  		}
-			  		return ratio > 0 ? 'SRI: ' + ratio : 'Cannot calculate confidence interval if infections = 0'
-			  	}();
-	  			d3.select('#ratio-' + source).text(ratioText);
+				var ratioText = function() {
+					if ( na ) {
+						return 'No data available';
+					}
+					return ratio > 0 ? 'SRI: ' + ratio : 'Cannot calculate confidence interval if infections = 0';
+				}();
 
-	  			d3.select('#range-' + source)
-	  				.transition().duration(1000)
+				d3.select('#ratio-' + source).text(ratioText);
+				d3.select('#range-' + source)
+					.transition().duration(1000)
 						.attr('x', function(){ return scale(lower); })
 						.attr('width', function(){ return na ? 0 : scale(upper - lower); });
 
-					d3.select('#predicted-' + source)
-	  				.transition().duration(1000)
-							.attr('x1', function(){ return scale(predicted); })
-							.attr('y1', ySpacing)
-							.attr('x2', function(){ return scale(predicted); })
-							.attr('y2', ySpacing + 17)
-							.attr('opacity', function() { return na ? 0 : 1; });
-					d3.select('#predicted-text-' + source)
-						.transition().duration(1000)
-						.text( function() { return na ? '' : predicted; } )
-							.attr('x', function(){ return scale(predicted); } )
-							.attr('y', Math.abs(observed - predicted) >= (max/20) ? ySpacing - 2 : ySpacing - 14)
-							.attr('text-anchor', 'middle');
+				d3.select('#predicted-' + source)
+					.transition().duration(1000)
+						.attr('x1', function(){ return scale(predicted); })
+						.attr('y1', ySpacing)
+						.attr('x2', function(){ return scale(predicted); })
+						.attr('y2', ySpacing + 17)
+						.attr('opacity', function() { return na ? 0 : 1; });
+				d3.select('#predicted-text-' + source)
+					.transition().duration(1000)
+					.text( function() { return na ? '' : predicted; } )
+						.attr('x', function(){ return scale(predicted); } )
+						.attr('y', Math.abs(observed - predicted) >= (max/20) ? ySpacing - 2 : ySpacing - 14)
+						.attr('text-anchor', 'middle');
 
-					d3.select('#observed-' + source)
-	  				.transition().duration(1000)
-							.attr('x1', function(){ return scale(observed); })
-							.attr('y1', ySpacing)
-							.attr('x2', function(){ return scale(observed); })
-							.attr('y2', ySpacing + 17)
-							.attr('stroke', 'black')
-							.attr('opacity', function() { return na ? 0 : 1; });
-					d3.select('#observed-text-' + source)
-						.transition().duration(1000)
-						.text( function() { return na ? '' : observed; } )
-							.attr('x', function(){ return scale(observed); } )
-							.attr('y', ySpacing - 2)
-							.attr('text-anchor', 'middle');
-		  	});
-	  	});
-	  }
+				d3.select('#observed-' + source)
+					.transition().duration(1000)
+						.attr('x1', function(){ return scale(observed); })
+						.attr('y1', ySpacing)
+						.attr('x2', function(){ return scale(observed); })
+						.attr('y2', ySpacing + 17)
+						.attr('stroke', 'black')
+						.attr('opacity', function() { return na ? 0 : 1; });
+				d3.select('#observed-text-' + source)
+					.transition().duration(1000)
+					.text( function() { return na ? '' : observed; } )
+						.attr('x', function(){ return scale(observed); } )
+						.attr('y', ySpacing - 2)
+						.attr('text-anchor', 'middle');
+			});
+		});
+	};
 });
