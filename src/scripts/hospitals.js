@@ -24,6 +24,7 @@ $(function() {
 		sourceText = data;
 	});
 
+	//  pulls text for tooltip on link id x-link from  div id x-text
 	$(document).tooltip({
 		items: '.moreinfo',
 		content: function() {
@@ -35,6 +36,7 @@ $(function() {
 		hide: 2000
 	});
 
+	///////////////////////////////////////////////////////////////////
 	// detail legend
 	var legendSvg = d3.select('#legend')
 		.append('svg')
@@ -80,11 +82,17 @@ $(function() {
 		.attr('stroke', 'black')
 		.attr('stroke-width', 5);
 
+	///////////////////////////////////////////////////////////////////
+	// read data and draw graphics
 	d3.csv("data/detail.csv", function(data) {
-		drawDotChart(_.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); }));
+		window.data = data;
+		data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
+		drawDotChart(data);
     detail(data);
 	});
 
+	///////////////////////////////////////////////////////////////////
+	// Draw dot chart
 	function drawDotChart(dataset) {
 		var height = (20 * dataset.length) - margin.top - margin.bottom,
 		left_pad = 235;
@@ -148,7 +156,7 @@ $(function() {
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
-				// tt.select('#source').text('CLABSI');
+
 				tt.select('#score').text('ratio: ' + d.clabsi_ratio);
 				tt.select('#predicted').text('predicted cases: ' + d.clabsi_predicted);
 				tt.select('#actual').text('actual cases: ' + d.clabsi_observed);
@@ -178,7 +186,6 @@ $(function() {
 					.style('left', x + 'px')
 					.style('top', y + 'px');
 
-				// tt.select('#source').text('CAUTI');
 				tt.select('#score').text('ratio: ' + d.cauti_ratio);
 				tt.select('#predicted').text('predicted cases: ' + d.cauti_predicted);
 				tt.select('#actual').text('actual cases: ' + d.cauti_observed);
@@ -206,7 +213,7 @@ $(function() {
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
-				// tt.select('#source').text('SSI Colon');
+
 				tt.select('#score').text('ratio: ' + d.ssicolon_ratio);
 				tt.select('#predicted').text('predicted cases: ' + d.ssicolon_predicted);
 				tt.select('#actual').text('actual cases: ' + d.ssicolon_observed);
@@ -216,7 +223,7 @@ $(function() {
 				d3.select('#tooltip').classed('hidden', true);
 			});
 
-		// Hospital names
+		// Hospital name links
 		svg.selectAll('a')
 			.data(dataset)
 			.enter()
@@ -245,6 +252,7 @@ $(function() {
 					.attr('fill','black')
 					.attr('font-size', '13px');});
 
+		// state average line
 		svg.append('line')
 			.attr('x1', xScale(ga_avg.clabsi))
 			.attr('x2', xScale(ga_avg.clabsi))
@@ -366,13 +374,16 @@ $(function() {
 			});
 		}
 
-		function detail(data, id) {
-			id = id || '110079';
+		///////////////////////////////////////////////////////////////////
+		// Draw hospital detail graphic
+		var detail = function(data, id) {
+			id = id || data[0].provider_id; //'110079';
 			var height = 170 - margin.top - margin.bottom,
 				provider  = _.findWhere(data, {provider_id: id}),
 				statement = _.findWhere(statements, {provider_id: id}),
 				ySpacing  = 10;
 
+			// Loop through infection types to draw graphics
 			_.each(['clabsi','cauti','ssicolon'], function(source) {
 				var observed  = provider[source + '_observed'],
 						predicted = Math.round(provider[source + '_predicted'] * 10) / 10,
@@ -397,13 +408,13 @@ $(function() {
 					.append('g')
 						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-				// Headline
 				var ratioText = function() {
 					if ( na ) {
 						return 'No data available';
 					}
 					return ratio > 0 ? 'SRI: ' + ratio : 'Cannot calculate confidence interval if infections = 0';
 				};
+
 				svg.append('text')
 					.text(ratioText)
 					.attr('id', 'ratio-' + source)
@@ -459,10 +470,11 @@ $(function() {
 
 				svg.append('g')
 					.attr('class', 'x-axis')
-					.attr('transform', 'translate(' + (margin.left - 2) + ',' + (ySpacing + 40) + ')' )
+					.attr('transform', 'translate(' + (margin.left - 5) + ',' + (ySpacing + 40) + ')' )
 					.call(axis);
 			});
-		}
+		};
+
 		var updateDetail = function(id) {
 			d3.csv("data/detail.csv", function(data) {
 				var provider  = _.findWhere(data, {provider_id: id}),
