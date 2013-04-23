@@ -30,7 +30,6 @@ $(function() {
 		content: function() {
 			var re = /(.+)-link/;
 			var idPrefix = $(this).attr('id').match(re)[1];
-			var infoWindow = $( '#' + idPrefix + '-text' );
 			return $('#' + idPrefix + '-text').html();
 		},
 		hide: 2000
@@ -141,7 +140,7 @@ $(function() {
 			.attr('height', yScale.rangeBand());
 
 		// CLABSI circles
-		var clabsi = svg.selectAll('.clabsi')
+		svg.selectAll('.clabsi')
 			.data(dataset)
 			.enter().append('circle')
 				.attr('class', 'clabsi')
@@ -153,6 +152,7 @@ $(function() {
 			.on('mouseover', function(d) {
 				var x = parseFloat(d3.event.clientX),
 						y = parseFloat(d3.event.clientY);
+
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
@@ -168,7 +168,7 @@ $(function() {
 
 
 		// CAUTI symbols
-		var cauti = svg.selectAll('.cauti')
+		svg.selectAll('.cauti')
 			.data(dataset)
 			.enter()
 			.append('circle')
@@ -179,9 +179,10 @@ $(function() {
 				.attr('fill','black')
 				.attr('opacity', 0)
 			.on('mouseover', function(d) {
-				var x = parseFloat(window.event.clientX),
-						y = parseFloat(window.event.clientY);
+				var x = parseFloat(d3.event.clientX),
+						y = parseFloat(d3.event.clientY);
 				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
+
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
@@ -196,7 +197,7 @@ $(function() {
 			});
 
 		// SSI:Colon symbols
-		var ssicol = svg.selectAll('.ssicol')
+		svg.selectAll('.ssicol')
 			.data(dataset)
 			.enter()
 				.append('circle')
@@ -207,9 +208,10 @@ $(function() {
 				.attr('fill','black')
 				.attr('opacity', 0)
 			.on('mouseover', function(d) {
-				var x = parseFloat(window.event.clientX),
-						y = parseFloat(window.event.clientY);
+				var x = parseFloat(d3.event.clientX),
+						y = parseFloat(d3.event.clientY);
 				x = x > 1000 ? x/100 : x; // why are x's near border 100x larger?
+
 				var tt = d3.select('#tooltip')
 					.style('left', x + 'px')
 					.style('top', y + 'px');
@@ -250,7 +252,8 @@ $(function() {
 			.on('mouseout', function(){
 				return d3.select(this)
 					.attr('fill','black')
-					.attr('font-size', '13px');});
+					.attr('font-size', '13px');
+			});
 
 		// state average line
 		svg.append('line')

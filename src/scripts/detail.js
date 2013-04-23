@@ -70,16 +70,16 @@ $(function() {
 
 	function drawDetailChart(data, source, config) {
 		var provider  = _.findWhere(data, {provider_id: config.id}),
-		    observed  = provider[source + '_observed'],
-		    predicted = provider[source + '_predicted'],
-		    ratio     = provider[source + '_ratio'],
-		    upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
-		    lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0;
+			observed  = provider[source + '_observed'],
+			predicted = provider[source + '_predicted'],
+			ratio     = provider[source + '_ratio'],
+			upper     = provider[source + '_lower'] > 0 ? observed / provider[source + '_lower'] : 0,
+			lower     = provider[source + '_upper'] > 0 ? observed / provider[source + '_upper'] : 0;
 
-		var max = d3.max( data, function(d){return parseInt(d[source + '_observed']);}),
-		    scale = d3.scale.linear()
-			  	.domain([0,max + 1])
-			  	.range([config.leftMargin, config.w - config.rightMargin]);
+		var max = d3.max( data, function(d){return parseInt(d[source + '_observed'], 10);}),
+			scale = d3.scale.linear()
+				.domain([0,max + 1])
+				.range([config.leftMargin, config.w - config.rightMargin]);
 
 		var svg = d3.select('#' + source.toLowerCase() + '-graphic' )
 			.append('svg')

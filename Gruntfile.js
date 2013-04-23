@@ -31,7 +31,9 @@ module.exports = function(grunt) {
         indent: 2,
         globals: {
           JQuery: true,
-          $: true
+          $: true,
+          d3: true,
+          _: true
         }
       }
     },
@@ -79,7 +81,7 @@ module.exports = function(grunt) {
       secret: "<%= aws.secret %>",
       bucket: "<%= aws.bucket %>",
       access: "public-read",
-      gzip: true,
+      gzip: false,
       debug: false,
       upload: [
         { src: 'build/*.html', dest: '.' },
