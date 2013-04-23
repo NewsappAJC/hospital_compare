@@ -39,15 +39,14 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        mangle: { except: ['d3', '_','$'] },
+        // mangle: { except: ['d3', '_','$'] },
+        mangle: false,
         compress: true,
         report: 'gzip'
       },
       my_target: {
         files: {
-          'build/scripts/states.js'   : ['src/scripts/states.js'],
-          'build/scripts/hospitals.js': ['src/scripts/hospitals.js'],
-          'build/scripts/detail.js'   : ['src/scripts/detail.js']
+          'build/scripts/hospitals.js': ['src/scripts/hospitals.js']
         }
       }
     },
@@ -60,8 +59,7 @@ module.exports = function(grunt) {
         },
         files: {
           'build/index.html'    : 'src/index.html',
-          'build/hospitals.html': 'src/hospitals.html',
-          'build/detail.html'   : 'src/detail.html'
+          'build/hospitals.html': 'src/hospitals.html'
         }
       }
     },
@@ -84,10 +82,12 @@ module.exports = function(grunt) {
       gzip: false,
       debug: false,
       upload: [
-        { src: 'build/*.html', dest: '.' },
-        { src: 'build/scripts/*', dest: 'scripts/' },
+        { src: 'build/hospitals.html', dest: '.' },
+        { src: 'build/scripts/hospitals.js', dest: 'scripts/' },
         { src: 'build/scripts/lib/*', dest: 'scripts/lib/' },
-        { src: 'build/data/*', dest: 'data/' },
+        { src: 'build/data/detail.csv', dest: 'data/' },
+        { src: 'build/data/statement.csv', dest: 'data/' },
+        { src: 'build/data/source_text.csv', dest: 'data/' },
         { src: 'build/style/*', dest: 'style/' },
         { src: 'build/images/*', dest: 'images/' }
       ]

@@ -386,6 +386,9 @@ $(function() {
 				statement = _.findWhere(statements, {provider_id: id}),
 				ySpacing  = 10;
 
+			d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
+			d3.select('#statement').text(statement.text);
+
 			// Loop through infection types to draw graphics
 			_.each(['clabsi','cauti','ssicolon'], function(source) {
 				var observed  = provider[source + '_observed'],
@@ -399,9 +402,6 @@ $(function() {
 				var scale = d3.scale.linear()
 					.domain([0,max + 1])
 					.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
-
-				d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
-				d3.select('#statement').text(statement.text);
 
 				var svg = d3.select('#' + source.toLowerCase() + '-detail' )
 					.append('svg')
