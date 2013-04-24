@@ -74,22 +74,10 @@ $(function() {
 	///////////////////////////////////////////////////////////////////
 	// read data and draw graphics
 	var statements, sourceText;
-	// d3.csv('data/statement.csv', function(d) {
-	// 	statements = d;
-	// 	d3.csv('data/source_text.csv', function(d) {
-	// 		sourceText = d;
-	// 		d3.csv("data/detail.csv", function(data) {
-	// 			data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
-	// 			drawDotChart(data);
-	// 			detail(data);
-	// 		});
-	// 	});
-	// });
 
 	Tabletop.init({
 		key: '0Ap9h1zLSgOWUdFdpTVFNTl9udW1yR0U2T2JHOEZSNkE',
 		callback: function(data, tabletop) {
-			window.t = tabletop;
 			statements = tabletop.sheets("statements").all();
 			sourceText = tabletop.sheets("infections").all();
 
@@ -100,7 +88,6 @@ $(function() {
 			});
 		}
 	});
-
 
 	///////////////////////////////////////////////////////////////////
 	// Draw dot chart
@@ -397,10 +384,6 @@ $(function() {
 				provider  = _.findWhere(data, {providerid: id}),
 				statement = _.findWhere(statements, {providerid: id}),
 				ySpacing  = 10;
-		window.data = data;
-		window.id = id;
-		window.statements = statements;
-		window.s = statement;
 
 			d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
 			d3.select('#statement').text(statement.text);
