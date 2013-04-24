@@ -74,17 +74,33 @@ $(function() {
 	///////////////////////////////////////////////////////////////////
 	// read data and draw graphics
 	var statements, sourceText;
-	d3.csv('data/statement.csv', function(d) {
-		statements = d;
-		d3.csv('data/source_text.csv', function(d) {
-			sourceText = d;
+	// d3.csv('data/statement.csv', function(d) {
+	// 	statements = d;
+	// 	d3.csv('data/source_text.csv', function(d) {
+	// 		sourceText = d;
+	// 		d3.csv("data/detail.csv", function(data) {
+	// 			data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
+	// 			drawDotChart(data);
+	// 			detail(data);
+	// 		});
+	// 	});
+	// });
+
+	Tabletop.init({
+		key: '0Ap9h1zLSgOWUdFdpTVFNTl9udW1yR0U2T2JHOEZSNkE',
+		callback: function(data, tabletop) {
+			window.t = tabletop;
+			statements = tabletop.sheets("statements").all();
+			sourceText = tabletop.sheets("infections").all();
+
 			d3.csv("data/detail.csv", function(data) {
 				data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
 				drawDotChart(data);
 				detail(data);
 			});
-		});
+		}
 	});
+
 
 	///////////////////////////////////////////////////////////////////
 	// Draw dot chart
@@ -237,7 +253,7 @@ $(function() {
 				.text(function(d){ return d.hospital_name;})
 			.on('click', function(d) {
 				d3.event.preventDefault();
-				updateDetail(d.provider_id);
+				updateDetail(d.providerid);
 				return false;
 			})
 			.on('mouseover', function(){
@@ -376,11 +392,15 @@ $(function() {
 		///////////////////////////////////////////////////////////////////
 		// Draw hospital detail graphic
 		var detail = function(data, id) {
-			id = id || data[0].provider_id; //'110079';
+			id = id || data[0].providerid; //'110079';
 			var height = 170 - margin.top - margin.bottom,
-				provider  = _.findWhere(data, {provider_id: id}),
-				statement = _.findWhere(statements, {provider_id: id}),
+				provider  = _.findWhere(data, {providerid: id}),
+				statement = _.findWhere(statements, {providerid: id}),
 				ySpacing  = 10;
+		window.data = data;
+		window.id = id;
+		window.statements = statements;
+		window.s = statement;
 
 			d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
 			d3.select('#statement').text(statement.text);
@@ -476,8 +496,8 @@ $(function() {
 
 		var updateDetail = function(id) {
 			d3.csv("data/detail.csv", function(data) {
-				var provider  = _.findWhere(data, {provider_id: id}),
-						statement = _.findWhere(statements, {provider_id: id}),
+				var provider  = _.findWhere(data, {providerid: id}),
+						statement = _.findWhere(statements, {providerid: id}),
 						ySpacing = 10;
 
 			d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
