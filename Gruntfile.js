@@ -39,8 +39,8 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        // mangle: { except: ['d3', '_','$'] },
-        mangle: false,
+        mangle: { except: ['d3', '_','$'] },
+        //mangle: false,
         compress: true,
         report: 'gzip'
       },

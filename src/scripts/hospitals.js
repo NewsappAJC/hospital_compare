@@ -14,16 +14,6 @@ $(function() {
 		ssicolon : 0.90
 	};
 
-	var statements;
-	d3.csv('data/statement.csv', function(data) {
-		statements = data;
-	});
-
-	var sourceText;
-	d3.csv('data/source_text.csv', function(data) {
-		sourceText = data;
-	});
-
 	//  pulls text for tooltip on link id x-link from  div id x-text
 	$(document).tooltip({
 		items: '.moreinfo',
@@ -83,11 +73,17 @@ $(function() {
 
 	///////////////////////////////////////////////////////////////////
 	// read data and draw graphics
-	d3.csv("data/detail.csv", function(data) {
-		window.data = data;
-		data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
-		drawDotChart(data);
-    detail(data);
+	var statements, sourceText;
+	d3.csv('data/statement.csv', function(d) {
+		statements = d;
+		d3.csv('data/source_text.csv', function(d) {
+			sourceText = d;
+			d3.csv("data/detail.csv", function(data) {
+				data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
+				drawDotChart(data);
+				detail(data);
+			});
+		});
 	});
 
 	///////////////////////////////////////////////////////////////////
