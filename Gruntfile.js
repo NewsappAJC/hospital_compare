@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       target: {
         files: [
           { expand: true, flatten: true, src: ['src/scripts/lib/*.js'], dest: 'build/scripts/lib/' },
-          { expand: true, flatten: true, src: ['src/data/*'], dest: 'build/data/' },
+          { expand: true, flatten: true, src: ['src/data/*.csv'], dest: 'build/data/' },
           { expand: true, flatten: true, src: ['src/images/*'], dest: 'build/images/' }
         ]
       }
@@ -33,7 +33,8 @@ module.exports = function(grunt) {
           JQuery: true,
           $: true,
           d3: true,
-          _: true
+          _: true,
+          Tabletop: true
         }
       }
     },
@@ -58,8 +59,7 @@ module.exports = function(grunt) {
           useShortDoctype: true
         },
         files: {
-          'build/index.html'    : 'src/index.html',
-          'build/hospitals.html': 'src/hospitals.html'
+          'build/index.html'    : 'src/index.html'
         }
       }
     },

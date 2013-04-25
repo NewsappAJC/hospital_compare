@@ -3,29 +3,127 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" /> 
-  <title>State Comparison</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+  <title>Hospital Quality Tracker</title>
   <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->    
+  <![endif]-->
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<link rel="stylesheet" href="http://host.coxmediagroup.com/ajc/digitalprojects/global/css/iFrame_Medley.css" type="text/css"/>
   <link rel="stylesheet" href="style/app.css" type="text/css"/>
+  <link rel="stylesheet" href="style/skeleton.css" type="text/css"/>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/ui-lightness/jquery-ui.css" type="text/css">
 </head>
 <body>
   <div id='tooltip' class='hidden'>
-    <p id='state'></p>
-    <p id='score'></p>
-    <p id='rank'></p>
+    <p>
+      <span id='score'></span><br/>
+      <span id='predicted'></span><br/>
+      <span id='actual'></span>
+    </p>
   </div>
-  <div id="clabsi-state"></div>
-  <div id="new-measures">
-    <div id="ssicolon-state"></div>
-    <div id="cauti-state"></div>
+
+  <section id="top-text" class="container row">
+    <article class="column">
+      <p>Information on how well individual hospitals control infections is now available, thanks to new federal reporting requirements. The Atlanta Journal-Constitution believes public reporting of this information is important, but it’s important that readersunderstand the limitations of this data.<img src="images/moreInfo_small.png" id='limitations-link' class='moreinfo'/></p>
+    </article>
+  </section>
+
+
+  <div id="graphics" class="container row">
+  <div id="hospital-compare" class="eight columns alpha">
+    <h2>Standardized Infection Ratio (SIR):<img src="images/moreInfo.png" alt="More Information" id="sri-link" class="moreinfo"> </h2>
+    <hr/>
+    <p>Infection type:
+    <select id="sortby">
+      <option value='clabsi'>Central-line-associated blood stream infections (CLABSI)</option>
+      <option value='cauti'>Catheter associated urinary tract infections (CAUTI)</option>
+      <option value='ssicolon'>Surgical site infection from colon surgery (SSI Colon)</option>
+    </select></p>
+
+    <section id="source-explain">
+      <h3 id="source-head">Central-Line-Associated Bloodstream Infections (CLABSI)</h3>
+      <p id="source-text">A central line is a narrow tube inserted by a doctor into a large vein of a patient's neck or chest to give important medical treatment. When not put in correctly or kept clean, central lines can become an easy way for germs to enter the body and cause serious infections in the blood. These infections are called Central Line-Associated Bloodstream Infections (CLABSIs), and they can be deadly.</p>
+      <p>(Click on hospital name to see detail on right. Hold the mouse over a dot on this chart to see values)</p>
+    </section>
+
+    <div id="hospitals"></div>
+    <p><strong><span id="source-date">Data collected 4/1/2011 to 3/31/2012</span></strong><p>
+    </div>
+
+    <div id="detail" class="eight columns omega">
+      <header>
+        <h2>
+          <span id="hospital_name"></span>
+          <img src="images/moreInfo.png" alt="More Information" id="detail-link" class="moreinfo">
+        </h2>
+      </header>
+
+      <hr/>
+      <div id="legend"></div>
+
+      <article id='clabsi' class="detail">
+        <header>
+          <h3>Central-Line-Associated Blood Stream Infections</h3>
+        </header>
+        <div id="clabsi-detail"></div>
+      </article>
+
+      <article id="cauti" class="detail">
+        <header>
+          <h3>Catheter Associated Urinary Tract Infections</h3>
+        </header>
+        <div id="cauti-detail"></div>
+      </article>
+
+      <article id="ssicolon" class="detail">
+        <header>
+          <h3>Surgical Site Infection from colon surgery</h3>
+        </header>
+        <div id="ssicolon-detail"></div>
+      </article>
+
+      <h3>Response from this hospital:</h3>
+      <p id="statement"></p>
+    </div>
   </div>
+</div>
+
+  <footer class="container">
+    <div class="textblock">
+      <p>Data about infections in Georgia hospitals is collected by the National Healthcare Safety Network (NHSN) at the U.S Centers for Disease Control and Prevention in Atlanta (CDC). It is the nation’s most widely-used system for tracking healthcare-associated infections. The system now serves 11,000 medical facilities, including hospitals, nursing homes, dialysis centers, surgery centers and others.</p>
+    </div>
+
+    <div id="sri-text" class="textblock">
+      <h3>Standardized Infection Ratio</h3>
+      <p>To arrive at the standardized infection ratio, or SIR, the government calculates the number of infections that are expected at a given hospital and compares that to the reported number. How does it figure out how many infections would be expected? This is based on a benchmark – the number of infections recorded previously. The kinds of patients a hospital serves also is a factor. Here’s how the CDC’s website describes the ratio:</p>
+      <ul>
+        <li><strong>If the SIR is 1:</strong> the number of infections reported is the same as the number of predicted infections. Another way to think about this – if the SIR is 1, then we saw the same number of infections in 2012 as we did during the baseline period – no progress has been made in reducing infections. </li>
+        <li><strong>If the SIR is less than 1:</strong> there were fewer infections reported in 2012 than what we would have predicted given the baseline data. In other words, progress has been made since the baseline period.</li>
+        <li><strong>If the SIR is greater than 1:</strong> there were more infections reported in 2012 than what we would have predicted given the baseline data.</li>
+      </ul>
+    </div>
+
+    <div id="detail-text" class="textblock">
+      <h3>Hospital Detail</h3>
+      <p>The detailed information about individual hospitals includes the actual numbers of infections, the CDC's estimate of the number or infections expected for similar hospitals, and the 95 percent confidence interval, or margin of error, for the estimate. If the number of infections is within the margin of error or below, this means that a hospital's infection rate is similar to comparable hospitals. If a hospital has a number of infections above the top limit of the confidence interval, this means that the hospital is experiencing more infections than similar hospitals.</p>
+    </div>
+
+    <div id="limitations-text" class="textblock">
+      <h3>Limitations To The Data</h3>
+      <ul id="caveats">
+        <li><strong>Limited reporting periods.</strong> We are reporting hospital-specific information on two newly available measures: catheter-associated urinary tract infections and surgical site infections for colon surgeries.  This information is based on just six months of data covering Jan 1, 2012, to June 30, 2012. Two quarter’s worth of data may not fully represent a hospital’s typical performance. Additional data will continued to be rolled out to the public throughout the year, making these measures more reliable. The information on central line-associated bloodstream infections is stronger because it contains a full year’s worth of reports.</li>
+        <li><strong>Time lags in reporting.</strong> The infection data available may not represent what’s currently happening in a hospital. Data is usually released about a year after hospitals begin reporting it, so conditions may have changed.</li>
+        <li><strong>Validation.</strong> The National Healthcare Safety Network, the CDC’s system that collects this data, is highly respected. But even those who run it would like to see more validation of the data to make sure hospitals are accurately reporting their figures. Deciding which cases to report can be complicated, and this is a new effort for many hospitals. While some states have programs to validate this information, Georgia’s public health officials are just now trying to get such a program off the ground.</li>
+      </ul>
+    </div>
+  </footer>
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
   <script src="scripts/lib/underscore-min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
-	<script src="scripts/states.js"></script>
+  <script src="scripts/lib/tabletop.js"></script>
+	<script src="scripts/hospitals.js"></script>
 </body>
 </html>
