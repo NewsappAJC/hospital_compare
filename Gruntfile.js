@@ -86,8 +86,6 @@ module.exports = function(grunt) {
         { src: 'build/scripts/hospitals.js', dest: 'scripts/' },
         { src: 'build/scripts/lib/*', dest: 'scripts/lib/' },
         { src: 'build/data/detail.csv', dest: 'data/' },
-        { src: 'build/data/statement.csv', dest: 'data/' },
-        { src: 'build/data/source_text.csv', dest: 'data/' },
         { src: 'build/style/*', dest: 'style/' },
         { src: 'build/images/*', dest: 'images/' }
       ]
