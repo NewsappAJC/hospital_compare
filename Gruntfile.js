@@ -82,11 +82,11 @@ module.exports = function(grunt) {
       gzip: false,
       debug: false,
       upload: [
-        { src: 'build/hospitals.html', dest: '.' },
-        { src: 'build/scripts/hospitals.js', dest: 'scripts/' },
+        { src: 'build/index.html', dest: 'index.html' },
+        { src: 'build/scripts/hospitals.js', dest: 'scripts/hospitals.js' },
         { src: 'build/scripts/lib/*', dest: 'scripts/lib/' },
-        { src: 'build/data/detail.csv', dest: 'data/' },
-        { src: 'build/style/*', dest: 'style/' },
+        { src: 'build/data/detail.csv', dest: 'data/detail.csv' },
+        { src: 'build/style/*', dest: 'style/detail.csv' },
         { src: 'build/images/*', dest: 'images/' }
       ]
     }
