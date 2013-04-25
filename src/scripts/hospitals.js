@@ -135,7 +135,7 @@ $(function() {
 					return yScale(i);
 				})
 			.attr('fill', config.lightred)
-			.attr('width', xScale(5) - xScale(1) + left_pad + 2)
+			.attr('width', xScale(5) - xScale(1))
 			.attr('height', yScale.rangeBand());
 
 		// CLABSI circles
