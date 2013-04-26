@@ -77,7 +77,7 @@ $(function() {
 
 	d3.csv("data/statements.csv", function(data) {
 		statements = data;
-		d3.csv("data/infectoins.csv", function(data) {
+		d3.csv("data/infections.csv", function(data) {
 			sourceText = data;
 			d3.csv("data/detail.csv", function(data) {
 				data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
@@ -475,6 +475,7 @@ $(function() {
 			});
 		};
 
+		// Updaye detail
 		var updateDetail = function(id) {
 			d3.csv("data/detail.csv", function(data) {
 				var provider  = _.findWhere(data, {providerid: id}),
