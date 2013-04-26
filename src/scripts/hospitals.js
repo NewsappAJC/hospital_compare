@@ -1,7 +1,7 @@
 $(function() {
 	"use strict";
 
-	var margin = {top: 20, right: 10, bottom: 20, left: 10};
+	var margin = {top: 20, right: 18, bottom: 20, left: 10};
 	var config = {
 		width: $("div#hospitals").width() - margin.left - margin.right,
     lightred: '#F8E0E0',
@@ -75,18 +75,16 @@ $(function() {
 	// read data and draw graphics
 	var statements, sourceText;
 
-	Tabletop.init({
-		key: '0Ap9h1zLSgOWUdFdpTVFNTl9udW1yR0U2T2JHOEZSNkE',
-		callback: function(data, tabletop) {
-			statements = tabletop.sheets("statements").all();
-			sourceText = tabletop.sheets("infections").all();
-
+	d3.csv("data/statements.csv", function(data) {
+		statements = data;
+		d3.csv("data/infectoins.csv", function(data) {
+			sourceText = data;
 			d3.csv("data/detail.csv", function(data) {
 				data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
 				drawDotChart(data);
 				detail(data);
 			});
-		}
+		});
 	});
 
 	///////////////////////////////////////////////////////////////////
@@ -400,7 +398,7 @@ $(function() {
 
 				var scale = d3.scale.linear()
 					.domain([0,max + 1])
-					.range([0, config.width - margin.right - margin.left - 5]); // -5 keeps ssi:colon scale on svg
+					.range([0, config.width - margin.right - margin.left]); // -5 keeps ssi:colon scale on svg
 
 				var svg = d3.select('#' + source.toLowerCase() + '-detail' )
 					.append('svg')
@@ -468,11 +466,11 @@ $(function() {
 				var axis = d3.svg.axis()
 					.scale(scale)
 					.orient('bottom')
-					.ticks(7);
+					.ticks(5);
 
 				svg.append('g')
 					.attr('class', 'x-axis')
-					.attr('transform', 'translate(' + (margin.left - 5) + ',' + (ySpacing + 40) + ')' )
+					.attr('transform', 'translate(' + (margin.left) + ',' + (ySpacing + 40) + ')' )
 					.call(axis);
 			});
 		};
