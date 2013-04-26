@@ -44,30 +44,30 @@ $(function() {
 			.attr('height', 50)
 			.attr('fill', '#F0F0F0');
 
-		legend.append('text').text('Predicted cases and likely range:')
+		legend.append('text').text('Predicted cases:')
 			.attr('x', 0)
 			.attr('y', 20);
-		legend.append('rect')
-			.attr('x', 198)
-			.attr('y', 0)
-			.attr('width', 40)
-			.attr('height', 20)
-			.attr('fill', config.lightgreen);
+		// legend.append('rect')
+		// 	.attr('x', 198)
+		// 	.attr('y', 0)
+		// 	.attr('width', 40)
+		// 	.attr('height', 20)
+		// 	.attr('fill', config.lightgreen);
 		legend.append('line')
-			.attr('x1', 218)
+			.attr('x1', 104)
 			.attr('y1', 0)
-			.attr('x2', 218)
+			.attr('x2', 104)
 			.attr('y2', 20)
 			.attr('stroke', config.grey)
 			.attr('stroke-width', 5);
 
 		legend.append('text').text('Actual cases:')
-				.attr('x', 250)
+				.attr('x', 150)
 				.attr('y', 20);
 		legend.append('line')
-			.attr('x1', 340)
+			.attr('x1', 240)
 			.attr('y1', 0)
-			.attr('x2', 340)
+			.attr('x2', 240)
 			.attr('y2', 20)
 			.attr('stroke', 'black')
 			.attr('stroke-width', 5);
@@ -418,7 +418,7 @@ $(function() {
 					if ( na ) {
 						return 'No data available';
 					}
-					return ratio > 0 ? 'SIR: ' + ratio : 'Cannot calculate confidence interval if infections = 0';
+					return 'SIR: ' + ratio;
 				};
 
 				svg.append('text')
@@ -430,13 +430,13 @@ $(function() {
 				var chart = svg.append('g')
 						.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-				chart.append('rect')
-					.attr('id', 'range-' + source)
-					.attr('x', function(){ return scale(lower); })
-					.attr('y', ySpacing)
-					.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; })
-					.attr('height', 17)
-					.attr('fill', config.lightgreen);
+				// chart.append('rect')
+				// 	.attr('id', 'range-' + source)
+				// 	.attr('x', function(){ return scale(lower); })
+				// 	.attr('y', ySpacing)
+				// 	.attr('width', function(){ return (lower > 0 && upper > 0) ? scale(upper - lower) : 0; })
+				// 	.attr('height', 17)
+				// 	.attr('fill', config.lightgreen);
 
 				// predicted value marker
 				chart.append('line')
@@ -509,7 +509,7 @@ $(function() {
 					if ( na ) {
 						return 'No data available';
 					}
-					return ratio > 0 ? 'SIR: ' + ratio : 'Cannot calculate confidence interval if infections = 0';
+					return 'SIR: ' + ratio;
 				}();
 
 				d3.select('#ratio-' + source).text(ratioText);
