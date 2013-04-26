@@ -44,30 +44,30 @@ $(function() {
 			.attr('height', 50)
 			.attr('fill', '#F0F0F0');
 
-		legend.append('text').text('Expected cases and margin of error:')
+		legend.append('text').text('Predicted cases and likely range:')
 			.attr('x', 0)
 			.attr('y', 20);
 		legend.append('rect')
-			.attr('x', 218)
+			.attr('x', 198)
 			.attr('y', 0)
 			.attr('width', 40)
 			.attr('height', 20)
 			.attr('fill', config.lightgreen);
 		legend.append('line')
-			.attr('x1', 238)
+			.attr('x1', 218)
 			.attr('y1', 0)
-			.attr('x2', 238)
+			.attr('x2', 218)
 			.attr('y2', 20)
 			.attr('stroke', config.grey)
 			.attr('stroke-width', 5);
 
 		legend.append('text').text('Actual cases:')
-				.attr('x', 270)
+				.attr('x', 250)
 				.attr('y', 20);
 		legend.append('line')
-			.attr('x1', 360)
+			.attr('x1', 340)
 			.attr('y1', 0)
-			.attr('x2', 360)
+			.attr('x2', 340)
 			.attr('y2', 20)
 			.attr('stroke', 'black')
 			.attr('stroke-width', 5);
