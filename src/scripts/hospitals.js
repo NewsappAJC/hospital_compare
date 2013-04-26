@@ -1,7 +1,7 @@
 $(function() {
 	"use strict";
 
-	var margin = {top: 20, right: 18, bottom: 20, left: 10};
+	var margin = {top: 20, right: 20, bottom: 20, left: 10};
 	var config = {
 		width: $("div#hospitals").width() - margin.left - margin.right,
     lightred: '#F8E0E0',
