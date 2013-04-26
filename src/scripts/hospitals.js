@@ -88,7 +88,7 @@ $(function() {
 			});
 		});
 	} else {
-		$("div#graphics").replaceWith("<h2 style='color:red;'>Oops. Viewing the interactive graphics requires a modern web browser such as Firefox, Google Chrome or Internet Explorer 9 or greater. To view the graphics, please update your browser</h2>");
+		$("div#graphics").replaceWith("<h2 style='color:red;'>Oops! Viewing this interactive graphic requires a newer web browser. To view the graphics, please update your browser to the most current version.</h2>");
 	}
 
 	///////////////////////////////////////////////////////////////////
