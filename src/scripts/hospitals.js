@@ -88,7 +88,9 @@ $(function() {
 			});
 		});
 	} else {
-		$("div#graphics").replaceWith("<h2 style='color:red;'>Oops! Viewing this interactive graphic requires a newer web browser. To view the graphics, please update your browser to the most current version.</h2>");
+		$("div#graphics").replaceWith("<div class='textblock'><h2 style='color:blue;'>Oops! Viewing this interactive graphic requires a newer web browser. To view the graphics, please update your browser to the most current version.</h2><img src='images/clabsi_compare.png'></div>");
+		$("div#detail_text").addClass('hidden');
+		$("select#sortby").addClass('hidden');
 	}
 
 	///////////////////////////////////////////////////////////////////
