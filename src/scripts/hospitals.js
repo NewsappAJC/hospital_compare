@@ -1,5 +1,7 @@
+var statements, sourceText, data;
 $(function() {
 	"use strict";
+
 	if (Modernizr.svg) {
 
 		var margin = {top: 20, right: 20, bottom: 20, left: 10};
@@ -74,14 +76,14 @@ $(function() {
 
 		///////////////////////////////////////////////////////////////////
 		// read data and draw graphics
-		var statements, sourceText;
 
 		d3.csv("data/statements.csv", function(data) {
 			statements = data;
 			d3.csv("data/infections.csv", function(data) {
 				sourceText = data;
-				d3.csv("data/detail.csv", function(data) {
+				d3.csv("data/new_detail.csv", function(data) {
 					data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
+					window.data = data;
 					drawDotChart(data);
 					detail(data);
 				});
@@ -485,10 +487,9 @@ $(function() {
 
 		// Updaye detail
 		var updateDetail = function(id) {
-			d3.csv("data/detail.csv", function(data) {
-				var provider  = _.findWhere(data, {providerid: id}),
-						statement = _.findWhere(statements, {providerid: id}),
-						ySpacing = 10;
+			var provider  = _.findWhere(data, {providerid: id}),
+					statement = _.findWhere(statements, {providerid: id}),
+					ySpacing = 10;
 
 			d3.select('#hospital_name').text('Hospital Detail: ' + provider.hospital_name);
 			d3.select('#statement').text('"' + statement.text + '"');
@@ -548,7 +549,6 @@ $(function() {
 						.attr('x', function(){ return scale(observed); } )
 						.attr('y', ySpacing - 2)
 						.attr('text-anchor', 'middle');
-			});
 		});
 	};
 });
