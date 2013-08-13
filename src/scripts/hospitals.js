@@ -12,9 +12,9 @@ $(function() {
 			grey: '#A4A4A4'
 		};
 		var ga_avg = {
-			clabsi   : 0.79,
-			cauti    : 0.80,
-			ssicolon : 0.90
+			clabsi   : 0.701,
+			cauti    : 0.980,
+			ssicolon : 0.826
 		};
 
 		//  pulls text for tooltip on link id x-link from  div id x-text
