@@ -81,7 +81,7 @@ $(function() {
 			statements = data;
 			d3.csv("data/infections.csv", function(data) {
 				sourceText = data;
-				d3.csv("data/new_detail.csv", function(data) {
+				d3.csv("data/detail.csv", function(data) {
 					data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
 					window.data = data;
 					drawDotChart(data);
@@ -290,7 +290,7 @@ $(function() {
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
 				var infection = this.value,
-          warningText = (infection === 'clabsi') ? '' : ' (data for six months only)',
+          warningText = (infection === 'clabsi') ? '' : ' (data for nine months only)',
           explainText = _.findWhere( sourceText, {source: infection});
 
 				d3.select('#source-head').text(explainText.head);
