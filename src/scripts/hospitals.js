@@ -81,7 +81,7 @@ $(function() {
 			statements = data;
 			d3.csv("data/infections.csv", function(data) {
 				sourceText = data;
-				d3.csv("data/new_detail.csv", function(data) {
+				d3.csv("data/detail.csv", function(data) {
 					data = _.sortBy(data, function(d){ return -1 * (d.clabsi_ratio - d.clabsi_na); });
 					window.data = data;
 					drawDotChart(data);
