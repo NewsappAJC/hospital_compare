@@ -290,7 +290,7 @@ $(function() {
 		// sort by different infection sources
 		d3.select('#sortby').on('change', function() {
 				var infection = this.value,
-          warningText = (infection === 'clabsi') ? '' : ' (data for six months only)',
+          warningText = (infection === 'clabsi') ? '' : ' (data for nine months only)',
           explainText = _.findWhere( sourceText, {source: infection});
 
 				d3.select('#source-head').text(explainText.head);
